@@ -365,6 +365,8 @@ In AggLayer Rust client, the pessimistic proof computation process is as follows
 3. Verify the Proofs in Local Rust client.
 4. If passes, return the `CertificateOutput`.
 
+**TODO: Add a flow diagram here**
+
 Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/agglayer-aggregator-notifier/src/certifier/mod.rs#L94)
 
 ## 5.Generate Pessimistic Proof in Action
@@ -392,6 +394,8 @@ Let's explore a bit on the ppgen.rs file.
     
     - The implementation of the generation of the ELF file can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-program/src/main.rs).
 6. Saving the Proof locally.
+
+**TODO: Add a flow diagram here**
 
 To Learn more about the Pessimistic Proof Generator, please refer to [here](https://github.com/agglayer/agglayer/tree/main/crates/pessimistic-proof-test-suite/src/bin) 
 
