@@ -13,6 +13,37 @@
 
 This repo explains the design and the usage of Pessimistic Proof in AggLayer. It compares the bench performance of running pessimistic proof in SP1, Valida, and Risc0 zkVMs.
 
+# Table of Contents
+
+- [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
+   - [Background](#0background)
+     - [Chains connected on AggLayer](#chains-connected-on-agglayer)
+     - [Security of AggLayer](#security-of-agglayer)
+   - [Pessimistic Proof Overview](#1pessimistic-proof-overview)
+   - [Data Structure in Pessimistic Proof](#2data-structure-in-pessimistic-proof)
+     - [Unified Bridge Data Structure](#unified-bridge-data-structure)
+     - [Local Balance Tree & TokenInfo](#local-balance-tree-tokeninfo)
+     - [Nullifier Tree](#nullifier-tree)
+     - [Bridge Exits](#bridge-exits)
+     - [Imported Bridge Exits](#imported-bridge-exits)
+     - [Multi Batch Header](#multi-batch-header)
+     - [Local State](#local-state)
+     - [Pessimistic Proof Output](#pessimistic-proof-output)
+     - [Certificate](#certificate)
+   - [How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work---pessimistic-proof-flow)
+     - [Step 1: Check the validity of the state transition](#step-1-check-the-validity-of-the-state-transition)
+     - [Step 2: Run the Pessimistic Proof Program in zkVM](#step-2-run-the-pessimistic-proof-program-in-zkvm)
+   - [Pessimistic Proof in AggLayer](#4pessimistic-proof-in-agglayer)
+   - [Generate Pessimistic Proof in Action](#5generate-pessimistic-proof-in-action)
+
+- [Benchmark on zkVMs](#benchmark-on-zkvms)
+   - [Benchmark on SP1](#1benchmark-on-sp1)
+   - [Benchmark on Valida](#2benchmark-on-valida)
+   - [Benchmark on Risc0](#3benchmark-on-risc0)
+
+- [References](#references)
+
+
 # Architecture of Pessimistic Proof
 
 ## 0.Background
