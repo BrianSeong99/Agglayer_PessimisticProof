@@ -111,8 +111,6 @@ If you are in a rush, here's the **TLDR**:
 - **L1 Info Tree**: L1 Info Tree is a Sparse Merkle Tree that stores the Global Exit Root.
 - **Global Index**: Unique reference of one leaf within a Global Exit Root.
 
-> Once an asset is bridged out from the chain, a bridging record is appended to the Local Exit Tree at the `depositCount`, and add 1 to it to update the counter.
-
 Code can be found [here](https://github.com/agglayer/agglayer/tree/main/crates/pessimistic-proof/src/local_exit_tree)
 
 ![UnifiedBridge Merkle Tree](./pics/UnifiedBridgeTree.png)
