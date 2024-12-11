@@ -28,13 +28,13 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
      - [Nullifier Tree](#nullifier-tree)
      - [Bridge Exits](#bridge-exits)
      - [Imported Bridge Exits](#imported-bridge-exits)
-     - [Multi Batch Header](#multi-batch-header)
      - [Local State](#local-state)
+     - [Multi Batch Header](#multi-batch-header)
      - [Pessimistic Proof Output](#pessimistic-proof-output)
      - [Certificate](#certificate)
    - [How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work---pessimistic-proof-flow)
      - [Step 0: Local Chain to prepare the data & Send them to AggLayer](#step-0-local-chain-to-prepare-the-data--send-them-to-agglayer)
-     - [Step 1: AggLayer Client to populate data](#step-1-agglayer-client-to-populate-data)
+     - [Step 1: AggLayer Client to populate data needed for Pessimistic Proof](#step-1-agglayer-client-to-populate-data-needed-for-pessimistic-proof)
      - [Step 2: AggLayer to Run Pessimistic Proof in native rust](#step-2-agglayer-to-run-pessimistic-proof-in-native-rust)
      - [Step 3: Run the Pessimistic Proof Program in zkVM](#step-3-run-the-pessimistic-proof-program-in-zkvm)
    - [Generate Pessimistic Proof in Action](#4generate-pessimistic-proof-in-action)
@@ -111,9 +111,9 @@ If you are in a rush, here's the **TLDR**:
 - **L1 Info Tree**: L1 Info Tree is a Sparse Merkle Tree that stores the Global Exit Root.
 - **Global Index**: Unique reference of one leaf within a Global Exit Root.
 
-Code can be found [here](https://github.com/agglayer/agglayer/tree/main/crates/pessimistic-proof/src/local_exit_tree)
-
 ![UnifiedBridge Merkle Tree](./pics/UnifiedBridgeTree.png)
+
+Code can be found [here](https://github.com/agglayer/agglayer/tree/main/crates/pessimistic-proof/src/local_exit_tree)
 
 ### Local Balance Tree & TokenInfo
 
@@ -124,31 +124,41 @@ The Local Balance Tree implements a Sparse Merkle Tree with 192-bit depth to tra
 - First 32 bits: Origin network ID where the token originated (`origin_network`)
 - Next 160 bits: Token address on the origin chain (`origin_token_address`)
 
-By accessing the leaf node via `TokenInfo` key, you can access the leaf node's balance, which is the token balance of a token on this chain.
+```rust
+pub struct TokenInfo {
+    /// Network which the token originates from
+    pub origin_network: NetworkId,
+    /// The address of the token on the origin network
+    pub origin_token_address: Address,
+}
+```
+
+By accessing the leaf node via `TokenInfo` key, you can access the leaf node's balance, which is the balance of a token on this chain.
 
 > Once an asset is bridged out from or claimed to the chain, the token balance of the asset in the Local Balance Tree will be updated accordingly.
 
-Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/local_balance_tree.rs)
-
 ![Local Balance Tree](./pics/LocalBalanceTree.png)
+
+Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/local_balance_tree.rs)
 
 ### Nullifier Tree
 
-The Nullifier Tree is a powerful security mechanism implemented as a Sparse Merkle Tree with the depth of 64, that prevents double-spending and ensures transaction uniqueness across the network. Each chain maintains its own Nullifier Tree.
+The Nullifier Tree is a powerful security mechanism that prevents double-spending and ensures transaction uniqueness across the network. Each chain maintains its own Nullifier Tree.
 
-The Nullifier Tree's key can be constructed using the following information:
+It is a Sparse Merkle Tree with the depth of 64. The Nullifier Tree's key can be constructed using the following information:
+
 - **network_id**: First 32 bits are the network ID of the chain where the transaction originated.
-- **let_index**: The remaining 32 bits are the index of the bridge exit within the LET of the source chain. In [Unified Bridge](https://github.com/BrianSeong99/AggLayer_UnifiedBridge?tab=readme-ov-file#local-exit-root--local-index), it is called `Local Index` or `leaf_index` of the LET.
+- **let_index**: The remaining 32 bits are the index of the bridge exit within the LET of the source chain. In [Unified Bridge](https://github.com/BrianSeong99/AggLayer_UnifiedBridge?tab=readme-ov-file#local-exit-root--local-index), it is called `Local Index` / `leaf_index` / `depositCount` of the LET.
 
-> Once an asset or message is claimed, the corresponding nullifier leaf is marked as `true`. This ensures that the transaction cannot be claimed again.
-
-Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/nullifier_tree/mod.rs)
+> Once an asset or message is claimed, the corresponding nullifier leaf is marked as `true`. By default, all leaf nodes of Nullifier Tree is `false`. This ensures that the transaction cannot be claimed again.
 
 ![Nullifier Tree](./pics/NullifierTree.png)
 
+Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/nullifier_tree/mod.rs)
+
 ### Bridge Exits
 
-This is the data structure that represents a single bridge exit. In pessimistic proof, all the ***outbound*** transactions of the chain are represented in a `BridgeExit` vector. Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/bridge_exit.rs).
+This is the data structure that represents a single bridge exit. In pessimistic proof, all the ***outbound*** transactions of the chain are represented in a `BridgeExit` vector.
 
 ```rust
 pub struct BridgeExit {
@@ -167,9 +177,11 @@ pub struct BridgeExit {
 }
 ```
 
+Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/bridge_exit.rs).
+
 ### Imported Bridge Exits
 
-This is the data structure that represents a single bridge exit to be claimed on destination chain. In pessimistic proof, all the ***inbound*** transactions of the chain are represented in a `ImportedBridgeExit` vector. It's also a wrapper on top of `BridgeExit` with additional `claim_data` needed for verifying SMT proof. Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/imported_bridge_exit.rs)
+This is the data structure that represents a single bridge exit to be claimed on destination chain. In pessimistic proof, all the ***inbound*** transactions of the chain are represented in a `ImportedBridgeExit` vector. It's also a wrapper on top of `BridgeExit` with additional `claim_data` needed for verifying SMT proof.
 
 The reason why Mainnet and Rollup are separated for claiming is because the proof from Mainnet Exit Root to L1 Info Root is different from the proof from Local Exit Root to Rollup Exit Root to L1 Info Root.
 
@@ -212,9 +224,29 @@ pub struct ClaimFromRollup {
 }
 ```
 
+Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/imported_bridge_exit.rs)
+
+### Local State
+
+A local state is the state of the local chain, which compose of three merkle trees. It is used to generate the proof. 
+
+```rust
+pub struct LocalNetworkState {
+    /// Commitment to the [`BridgeExit`].
+    pub exit_tree: LocalExitTree<Keccak256Hasher>,
+    /// Commitment to the balance for each token.
+    pub balance_tree: LocalBalanceTree<Keccak256Hasher>,
+    /// Commitment to the Nullifier tree for the local network tracks claimed
+    /// assets on foreign networks
+    pub nullifier_tree: NullifierTree<Keccak256Hasher>,
+}
+```
+
+Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/local_state.rs).
+
 ### Multi Batch Header
 
-This is a master input that serves as the comprehensive state transition record for the pessimistic proof program. It captures the complete set of changes between states, containing all vital data points required for proof generation. Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/multi_batch_header.rs)
+This is a master input that serves as the comprehensive state transition record for the pessimistic proof program. It captures the complete set of changes between `old local state` & `new local state`, containing all vital data points required for pessimistic proof generation. 
 
 ```rust
 pub struct MultiBatchHeader<H>
@@ -256,25 +288,11 @@ where
 }
 ```
 
-### Local State
-
-A local state is the state of the local chain, which compose of three merkle trees. It is used to generate the proof. Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/local_state.rs).
-
-```rust
-pub struct LocalNetworkState {
-    /// Commitment to the [`BridgeExit`].
-    pub exit_tree: LocalExitTree<Keccak256Hasher>,
-    /// Commitment to the balance for each token.
-    pub balance_tree: LocalBalanceTree<Keccak256Hasher>,
-    /// Commitment to the Nullifier tree for the local network tracks claimed
-    /// assets on foreign networks
-    pub nullifier_tree: NullifierTree<Keccak256Hasher>,
-}
-```
+Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/multi_batch_header.rs)
 
 ### Pessimistic Proof Output
 
-The result of Pessimistic Proof Computation Output, Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/proof.rs)
+The result of Pessimistic Proof Computation Output.
 
 Pessimistic Proof Root is a hash of Local Balance Root and Nullifier Root. Therefore `prev_pessimistic_root` is the hash of `prev_local_exit_root` and `prev_nullifier_root`. The `new_pessimistic_root` is the hash of `new_local_exit_root` and new `nullifier_root`.
 
@@ -299,13 +317,15 @@ pub struct PessimisticProofOutput {
 }
 ```
 
+Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/proof.rs)
+
 ### Certificate
 
-A `Certificate` is a data structure that represents a state transition of a chain, which is used to create `MultiBatchHeader` for pessimistic proof.
+A `Certificate` is a data structure that represents a state transition of a chain. A chain will be submiting its `certificate` to AggLayer to generate pessimistic proof.
 
 If a certificate is invalid, any state transitions in the current epoch will be reverted.
 
-> Will talk about Epoch, Certificate, Network Task in the next doc.
+> Will talk more about Epoch, Certificate, Network Task in the next doc.
 
 ```rust
 pub struct CertifierOutput {
@@ -348,7 +368,7 @@ Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crate
     - `bridge_exits`: the assets that are sent to other chains from the local chain.
     - `imported_bridge_exits`: the assets that are claimed to the local chain from other chains.
 
-### Step 1: AggLayer Client to populate data
+### Step 1: AggLayer Client to populate data needed for Pessimistic Proof
 
 - **AggLayer Client to populate `batch_header`, which is `MultiBatchHeader` using the `Certificate` data**. 
     - `target`: the expected transitioned local chain state `StateCommitment`.
@@ -358,22 +378,23 @@ Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crate
 
 Because running a zkVM to generate proof is expensive, an ideal strategy is to run the Pessimistic Proof Program in native Rust execution to make sure the `PessimisticProofOutput` can be computed correctly. The Pessimistic Proof Program to run can be found in [`generate_pessimistic_proof`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/proof.rs#L166) function. The general process of this function can be found as follows:
 
-- **Compute the new transitioned state using `initial_network_state` and `batch_header`**
-- **Compare the computed state transition result with the expected state transitioned result**
-- **If results are equal, Return `PessimisticProofOutput`**
+- **Compute the new transitioned state using `initial_network_state`(old local state) and `batch_header`(MultiBatchHeader)**
+- **Compare the computed new local state based on provided old local state and `batch_header` with the expected state transitioned result in `batch_header.target`**
+- **If results are equal, the provided data is indeed valid and state transition is computed correctly, Return `PessimisticProofOutput`, Otherwise return ErrorCode**
 
 ### Step 3: Run the Pessimistic Proof Program in zkVM
 
 - **Run the same program in SP1**:
-    - If the program execution passes in native rust, we will then run the same exact program with the same inputs in zkVM. In the case of AggLayer, we are currently using [SP1](https://github.com/succinctlabs/sp1) from Succinct Labs.
+    - If the program execution passes in native rust, we will then run the same exact program with the same inputs in zkVM. In the case of AggLayer, we are currently using [SP1](https://github.com/succinctlabs/sp1) Provers Netowrk from Succinct Labs.
 
-    - Otherwise, if the Pessimsitic Proof Program fails, the SP1 execution proof will still be able to generate, but its useless.
+    - Otherwise, if the Pessimsitic Proof Program fails, the SP1 execution proof will still be able to generate, but its useless, since the its proving the execution of a failed Pessimistic Proof Program execution.
 
 > Succinct provides a much faster proof generation service called Provers Network which AggLayer also utilizes, therefore the zkVM execution in this step is actually done in the Provers Network instead of the local machine thats running AggLayer client.
 
 ### Step 4: Validates ZK Proof
 
-- **Validate the zk proof of correct Pessimistic Proof Program execution in AggLayer**
+- **Validate the zk proof returned from Succinct's Provers Network in AggLayer**:
+    - If the zk proof is successfully generated, Provers Network will return the proof to AggLayer, where then we will verify the zk proof our end before we accepts the pessimistic proof result.
 
 Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/agglayer-aggregator-notifier/src/certifier/mod.rs#L94)
 
@@ -385,10 +406,10 @@ If you want to test run a Pessimistic Proof locally, you can use the following c
 
 Run the Pessimistic Proof Program in a local SP1 Prover ([`ppgen.rs`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-test-suite/src/bin/ppgen.rs)):
 ```bash
-cargo run --package pessimistic-proof-test-suite --bin ppgen
+cargo run --release --package pessimistic-proof-test-suite --bin ppgen
 ```
 
-### Breakdown of the local test Pessimistic Proof script
+### Breakdown of the local test Pessimistic Proof script using SP1
 
 Let's explore a bit on the ppgen.rs file.
 1. Load sample local state data from [`sample_data.rs`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-test-suite/src/sample_data.rs)
