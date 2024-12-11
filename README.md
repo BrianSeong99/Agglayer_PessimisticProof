@@ -101,9 +101,9 @@ Let's go through them one-by-one.
 
 ### Unified Bridge Data Structure
 
-There's a DETAILED explanation of Unified Bridge data structure writtened in [here](https://github.com/BrianSeong99/AggLayer_UnifiedBridge?tab=readme-ov-file#2-data-structure-in-unified-bridge). You should read the entire section to understand Local Exit Tree, Mainnet Exit Tree, Rollup Exit Tree, Global Exit Root, and L1 Info Tree. 
+[READ THIS to learn more about Unified Bridge Data Structure](https://github.com/BrianSeong99/AggLayer_UnifiedBridge?tab=readme-ov-file#2-data-structure-in-unified-bridge). You should read the entire section to understand Local Exit Tree, Mainnet Exit Tree, Rollup Exit Tree, Global Exit Root, and L1 Info Tree in Unified Bridge.
 
-Here's the TLDR:
+If you are in a rush, here's the **TLDR**:
 - **Local Exit Tree**: All cross-chain transactions using the Unified Bridge are recorded in a Sparse Merkle Tree called Local Exit Tree. Each AggLayer connected chain maintains its own local exit tree.
 - **Mainnet Exit Tree**: Mainnet Exit Tree is the same thing as Local Exit Tree, but it is maintained on L1, which tracks the Bridging activities of L1 to all AggLayer connected L2s.
 - **Rollup Exit Tree**: Rollup Exit Tree is the Sparse Merkle Tree, where all L2s' Local Exit Root are the leaves of the tree.
