@@ -79,24 +79,23 @@ The second aspect is secured via *Pessimistic Proof*.
 
 AggLayer assumes every prover can be unsound. The pessimistic proof guarantees that even if a prover for a chain is unsound, that prover cannot drain more funds than are currently deposited on that chain. In this way, the soundness issue cannot infect the rest of the ecosystem.
 
-AggLayer takes a pessimistic stand by treating all provers as potentially unsound. The pessimistic proof mechanism implements a safety boundary, "firewall" between chains - it ensures that even if a chain's prover becomes compromised or unsound, the damage is strictly limited to the funds currently deposited on that specific chain. This containment strategy prevents any security issues from spreading across the broader network of connected chains.
+The pessimistic proof mechanism implements a safety boundary, "firewall" between chains - it ensures that even if a chain's prover becomes compromised or unsound, the damage is strictly limited to the funds currently deposited on that specific chain. This containment strategy prevents any security issues from spreading across the broader network of connected chains.
 
 This design creates strong isolation between chains while still allowing them to interact, making the overall system more resilient and trustworthy. Each chain effectively has a financial "blast radius" limited to its own deposits, protecting the wider ecosystem.
 
 ## 2.Data Structure in Pessimistic Proof
 Pessimistic Proof exist to compute the state transaction in between bridging events. Here's TLDR of all major data structure in Pessimistic Proof:
-- Sparse Merkle Trees
+- **Sparse Merkle Trees**:
     - Local Exit Tree (LET): SMT Tree that records the state transitions of assets briding out from a chain.
     - Nullifier Tree: SMT Tree that records the state transitions of assets being claimed to a chain.
     - Local Balance Tree (LBT): SMT Tree that records the asset states of a chain, its updates are described by Local Exit Tree and Nullifier Tree.
-- State Transitions
+- **State Transitions**:
     - Bridge Exits: The leaf nodes that are being appeneded to LET in this epoch.
     - Imported Bridge Exits: The leaf nodes of other chain's LET in this epoch, used to update Nullifier Tree.
-- State Representations
+- **State Representations**:
     - Local State: State of a Local Chain.
     - Multi Batch Header: A master data struct that includes all state transitions from local state to the new local state
     - Pessimistic Proof Output: The final output of Pessimistic Proof Program.
-
 
 Let's go through them one-by-one.
 
