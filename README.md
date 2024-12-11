@@ -115,7 +115,7 @@ Code can be found [here](https://github.com/agglayer/agglayer/tree/main/crates/p
 
 ![UnifiedBridge Merkle Tree](./pics/UnifiedBridgeTree.png)
 
-### Local Balance Tree, TokenInfo, 
+### Local Balance Tree & TokenInfo
 
 A Local Balance Tree tracks all token balances in a chain. Each chain maintains its own LBT. 
 
