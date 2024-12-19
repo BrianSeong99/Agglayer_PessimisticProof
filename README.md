@@ -15,8 +15,6 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 # Table of Contents
 
-# Table of Contents
-
 - [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
    - [Background](#0background)
      - [Chains connected on AggLayer](#chains-connected-on-agglayer)
