@@ -1,4 +1,4 @@
-# AggLayer PessimisticProof
+# Agglayer PessimisticProof
 
 <div align="center">
   <p align="center">
@@ -17,8 +17,8 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 - [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
    - [Background](#0background)
-     - [Chains connected on AggLayer](#chains-connected-on-agglayer)
-     - [Security of AggLayer](#security-of-agglayer)
+     - [Chains connected on Agglayer](#chains-connected-on-Agglayer)
+     - [Security of Agglayer](#security-of-Agglayer)
    - [Pessimistic Proof Overview](#1pessimistic-proof-overview)
    - [Data Structure in Pessimistic Proof](#2data-structure-in-pessimistic-proof)
      - [Unified Bridge Data Structure](#unified-bridge-data-structure)
@@ -31,6 +31,9 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
      - [Pessimistic Proof Output](#pessimistic-proof-output)
      - [Certificate](#certificate)
    - [How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work---pessimistic-proof-flow)
+     - [Step 0: Local Chain to prepare the data & Send them to Agglayer](#step-0-local-chain-to-prepare-the-data--send-them-to-Agglayer)
+     - [Step 1: Agglayer Client to populate data](#step-1-Agglayer-client-to-populate-data)
+     - [Step 2: Agglayer to Run Pessimistic Proof in native rust](#step-2-Agglayer-to-run-pessimistic-proof-in-native-rust)
      - [Step 0: Local Chain to prepare the data & Send them to AggLayer](#step-0-local-chain-to-prepare-the-data--send-them-to-agglayer)
      - [Step 1: AggLayer Client to populate data needed for Pessimistic Proof](#step-1-agglayer-client-to-populate-data-needed-for-pessimistic-proof)
      - [Step 2: AggLayer to Run Pessimistic Proof in native rust](#step-2-agglayer-to-run-pessimistic-proof-in-native-rust)
@@ -53,9 +56,9 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 ## 0.Background
 
-### Chains connected on AggLayer
+### Chains connected on Agglayer
 
-AggLayer creates a seamless network that bridges independent blockchain ecosystems into one cohesive experience. By connecting sovereign chains, it enables:
+Agglayer creates a seamless network that bridges independent blockchain ecosystems into one cohesive experience. By connecting sovereign chains, it enables:
 
 Unified liquidity pools across chains
 Seamless user experience as if operating on a single chain
@@ -63,20 +66,20 @@ Shared state and network effects between different blockchains
 Enhanced security through its interconnected design
 This architecture delivers the best of both worlds - chains maintain their sovereignty while users benefit from a smooth, integrated multi-chain experience with improved capital efficiency and stronger network effects.
 
-### Security of AggLayer
+### Security of Agglayer
 
-The Unified Bridge serves as the foundation for secure and reliable cross-chain transactions on AggLayer. While the bridge itself provides robust security, AggLayer implements additional protective measures to handle potential L2 compromises.
+The Unified Bridge serves as the foundation for secure and reliable cross-chain transactions on Agglayer. While the bridge itself provides robust security, Agglayer implements additional protective measures to handle potential L2 compromises.
 
 This multi-layered security approach addresses two key aspects:
 
 1. The bridge ensures safe cross-chain transaction flows
-2. Protection mechanisms safeguard funds on AggLayer even if connected L2s become compromised
+2. Protection mechanisms safeguard funds on Agglayer even if connected L2s become compromised
 
 The second aspect is secured via *Pessimistic Proof*.
 
 ## 1.Pessimistic Proof Overview
 
-AggLayer assumes every prover can be unsound. The pessimistic proof guarantees that even if a prover for a chain is unsound, that prover cannot drain more funds than are currently deposited on that chain. In this way, the soundness issue cannot infect the rest of the ecosystem.
+Agglayer assumes every prover can be unsound. The pessimistic proof guarantees that even if a prover for a chain is unsound, that prover cannot drain more funds than are currently deposited on that chain. In this way, the soundness issue cannot infect the rest of the ecosystem.
 
 The pessimistic proof mechanism implements a safety boundary, "firewall" between chains - it ensures that even if a chain's prover becomes compromised or unsound, the damage is strictly limited to the funds currently deposited on that specific chain. This containment strategy prevents any security issues from spreading across the broader network of connected chains.
 
@@ -354,28 +357,29 @@ pub struct Certificate {
 }
 ```
 
-Code can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/agglayer-types/src/lib.rs#L242)
+Code can be found in [here](https://github.com/Agglayer/Agglayer/blob/main/crates/Agglayer-types/src/lib.rs#L242)
 
 ## 3.How does Pessimistic Proof Work?
 
 ![Pessimistic Proof Flow](./pics/PessimisticProofFlow.png)
 
-### Step 0: Local Chain to prepare the data & Send them to AggLayer
+### Step 0: Local Chain to prepare the data & Send them to Agglayer
 
 - **Prepare previous/old local chain states & Transition Data in `Certificate`:**
     - `initial_network_state`: the state of the local chain before the state transition, has LET, LBT, and NT
     - `bridge_exits`: the assets that are sent to other chains from the local chain.
     - `imported_bridge_exits`: the assets that are claimed to the local chain from other chains.
 
+### Step 1: Agglayer Client to populate data
 ### Step 1: AggLayer Client to populate data needed for Pessimistic Proof
 
-- **AggLayer Client to populate `batch_header`, which is `MultiBatchHeader` using the `Certificate` data**. 
+- **Agglayer Client to populate `batch_header`, which is `MultiBatchHeader` using the `Certificate` data**. 
     - `target`: the expected transitioned local chain state `StateCommitment`.
     - `batch_header`: packaged data of every thing prepared above with some additional authendification data.
 
-### Step 2: AggLayer to Run Pessimistic Proof in native rust!
+### Step 2: Agglayer to Run Pessimistic Proof in native rust!
 
-Because running a zkVM to generate proof is expensive, an ideal strategy is to run the Pessimistic Proof Program in native Rust execution to make sure the `PessimisticProofOutput` can be computed correctly. The Pessimistic Proof Program to run can be found in [`generate_pessimistic_proof`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof/src/proof.rs#L166) function. The general process of this function can be found as follows:
+Because running a zkVM to generate proof is expensive, an ideal strategy is to run the Pessimistic Proof Program in native Rust execution to make sure the `PessimisticProofOutput` can be computed correctly. The Pessimistic Proof Program to run can be found in [`generate_pessimistic_proof`](https://github.com/Agglayer/Agglayer/blob/main/crates/pessimistic-proof/src/proof.rs#L166) function. The general process of this function can be found as follows:
 
 - **Compute the new transitioned state using `initial_network_state`(old local state) and `batch_header`(MultiBatchHeader)**
 - **Compare the computed new local state based on provided old local state and `batch_header` with the expected state transitioned result in `batch_header.target`**
@@ -388,14 +392,14 @@ Because running a zkVM to generate proof is expensive, an ideal strategy is to r
 
     - Otherwise, if the Pessimsitic Proof Program fails, the SP1 execution proof will still be able to generate, but its useless, since the its proving the execution of a failed Pessimistic Proof Program execution.
 
-> Succinct provides a much faster proof generation service called Provers Network which AggLayer also utilizes, therefore the zkVM execution in this step is actually done in the Provers Network instead of the local machine thats running AggLayer client.
+> Succinct provides a much faster proof generation service called Provers Network which Agglayer also utilizes, therefore the zkVM execution in this step is actually done in the Provers Network instead of the local machine thats running Agglayer client.
 
 ### Step 4: Validates ZK Proof
 
 - **Validate the zk proof returned from Succinct's Provers Network in AggLayer**:
     - If the zk proof is successfully generated, Provers Network will return the proof to AggLayer, where then we will verify the zk proof our end before we accepts the pessimistic proof result.
 
-Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/agglayer-aggregator-notifier/src/certifier/mod.rs#L94)
+Code can be found [here](https://github.com/Agglayer/Agglayer/blob/main/crates/Agglayer-aggregator-notifier/src/certifier/mod.rs#L94)
 
 ## 4.Generate Pessimistic Proof in Action
 
@@ -403,7 +407,7 @@ Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/a
 
 If you want to test run a Pessimistic Proof locally, you can use the following command to run the test suite:
 
-Run the Pessimistic Proof Program in a local SP1 Prover ([`ppgen.rs`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-test-suite/src/bin/ppgen.rs)):
+Run the Pessimistic Proof Program in a local SP1 Prover ([`ppgen.rs`](https://github.com/Agglayer/Agglayer/blob/main/crates/pessimistic-proof-test-suite/src/bin/ppgen.rs)):
 ```bash
 cargo run --release --package pessimistic-proof-test-suite --bin ppgen
 ```
@@ -411,18 +415,18 @@ cargo run --release --package pessimistic-proof-test-suite --bin ppgen
 ### Breakdown of the local test Pessimistic Proof script using SP1
 
 Let's explore a bit on the ppgen.rs file.
-1. Load sample local state data from [`sample_data.rs`](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-test-suite/src/sample_data.rs)
+1. Load sample local state data from [`sample_data.rs`](https://github.com/Agglayer/Agglayer/blob/main/crates/pessimistic-proof-test-suite/src/sample_data.rs)
 2. Loading `BridgeExit`s and `ImportedBridgeExit`s from the sample data.
 3. Constructing `Certificate` from the `prev_local_exit_root`, `BridgeExit`s, `ImportedBridgeExit`s, and `new_local_exit_root`.
 4. Construct `MultiBatchHeader` from `Certificate`
 5. Loading Local State Data of Old State and `MultiBatchHeader` to SP1 prover locally.
 
-    - During this process, SP1 prover requires a `generate_pessimistic_proof` function's ELF to feed into the prover, which can be found in [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-program/elf/riscv32im-succinct-zkvm-elf).
+    - During this process, SP1 prover requires a `generate_pessimistic_proof` function's ELF to feed into the prover, which can be found in [here](https://github.com/Agglayer/Agglayer/blob/main/crates/pessimistic-proof-program/elf/riscv32im-succinct-zkvm-elf).
     
-    - The implementation of the generation of the ELF file can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/pessimistic-proof-program/src/main.rs).
+    - The implementation of the generation of the ELF file can be found [here](https://github.com/Agglayer/Agglayer/blob/main/crates/pessimistic-proof-program/src/main.rs).
 6. Saving the Proof locally.
 
-To Learn more about the Pessimistic Proof Generator, please refer to [here](https://github.com/agglayer/agglayer/tree/main/crates/pessimistic-proof-test-suite/src/bin) 
+To Learn more about the Pessimistic Proof Generator, please refer to [here](https://github.com/Agglayer/Agglayer/tree/main/crates/pessimistic-proof-test-suite/src/bin) 
 
 # Benchmark on zkVMs
 
