@@ -400,7 +400,7 @@ Code can be found [here](https://github.com/agglayer/agglayer/blob/main/crates/a
 
 ## 4.Generate Pessimistic Proof in Action
 
-### Running Pessimistic Proof Program Locally
+### Running Pessimistic Proof Program Locally from [AggLayer Repo](https://github.com/agglayer/agglayer)
 
 If you want to test run a Pessimistic Proof locally, you can use the following command to run the test suite:
 
@@ -427,7 +427,18 @@ To Learn more about the Pessimistic Proof Generator, please refer to [here](http
 
 # Benchmark on zkVMs
 
+In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
+
 ## 1.Benchmark on SP1
+
+If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/getting-started/install).
+
+You can build the SP1 Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-sp1 && cargo prove build --output-directory ./pessimistic-proof-sp1/elf
+```
+
+Then you will get an elf file at `pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf`.
 
 ## 2.Benchmark on Valida
 

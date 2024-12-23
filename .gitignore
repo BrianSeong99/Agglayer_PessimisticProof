@@ -1,1 +1,4 @@
 .obsidian
+.idea
+/target
+.DS_Store
