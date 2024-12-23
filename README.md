@@ -11,9 +11,7 @@
   </p>
 </div>
 
-This repo explains the design and the usage of Pessimistic Proof in AggLayer. It compares the bench performance of running pessimistic proof in SP1, Valida, and Risc0 zkVMs.
-
-# Table of Contents
+This repo explains the design and the usage of Pessimistic Proof in AggLayer. It compares the bench performance of running pessimistic proof in SP1, Valida, Risc0, and OpenVM zkVMs.
 
 # Table of Contents
 
@@ -45,6 +43,7 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
    - [Benchmark on SP1](#1benchmark-on-sp1)
    - [Benchmark on Valida](#2benchmark-on-valida)
    - [Benchmark on Risc0](#3benchmark-on-risc0)
+   - [Benchmark on Openvm](#4benchmark-on-openvm)
 
 - [References](#references)
 
