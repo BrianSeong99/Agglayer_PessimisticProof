@@ -438,10 +438,15 @@ If you haven't installed sp1 commandline tool, you can do so via following this 
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-sp1 && cargo prove build --output-directory ./pessimistic-proof-sp1/elf
+cd pessimistic-proof-sp1 && cargo prove build --output-directory ./pessimistic-proof-sp1/elf && cd ..
 ```
 
 Then you will get an elf file at `pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf`.
+
+You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
+```bash
+cargo run --release --package pp-test-sp1 --bin ppgen
+```
 
 ## 2.Benchmark on Valida
 

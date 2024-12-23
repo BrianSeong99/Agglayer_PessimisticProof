@@ -2,6 +2,9 @@
 resolver = "2"
 members = [
     "pessimistic-proof-sp1",
+    "pessimistic-proof-sp1/pessimistic-proof",
+    "pessimistic-proof-sp1/pp-test-sp1",
+    "pessimistic-proof-sp1/pp-test-sp1/agglayer-types"
 ]
 
 [workspace.package]
