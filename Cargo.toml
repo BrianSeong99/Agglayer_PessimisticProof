@@ -6,6 +6,7 @@ members = [
     "pessimistic-proof-test-suite",
     
     "pessimistic-proof-sp1",
+    "pessimistic-proof-openvm"
 ]
 
 [workspace.package]

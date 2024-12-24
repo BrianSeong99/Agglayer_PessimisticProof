@@ -458,7 +458,7 @@ If you haven't installed sp1 commandline tool, you can do so via following this 
 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
-cargo openvm build
+cargo openvm build --exe-output ./elf/
 ```
 
 # References

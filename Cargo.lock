@@ -3576,6 +3576,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "num-bigint-dig"
+version = "0.8.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc84195820f291c7697304f3cbdadd1cb7199c0efc917ff5eafd71225c136151"
+dependencies = [
+ "byteorder",
+ "lazy_static",
+ "libm",
+ "num-integer",
+ "num-iter",
+ "num-traits",
+ "smallvec",
+]
+
+[[package]]
 name = "num-complex"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3807,6 +3822,40 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
+]
+
+[[package]]
+name = "openvm"
+version = "0.1.0-alpha"
+source = "git+https://github.com/openvm-org/openvm.git#e88d71b81bc426bd899a084af2b46a3d4fd44cae"
+dependencies = [
+ "bytemuck",
+ "hex-literal",
+ "num-bigint-dig",
+ "num-traits",
+ "openvm-platform",
+ "openvm-rv32im-guest",
+ "serde",
+]
+
+[[package]]
+name = "openvm-platform"
+version = "0.1.0-alpha"
+source = "git+https://github.com/openvm-org/openvm.git#e88d71b81bc426bd899a084af2b46a3d4fd44cae"
+dependencies = [
+ "getrandom",
+ "libm",
+ "stability",
+ "strum_macros",
+]
+
+[[package]]
+name = "openvm-rv32im-guest"
+version = "0.1.0-alpha"
+source = "git+https://github.com/openvm-org/openvm.git#e88d71b81bc426bd899a084af2b46a3d4fd44cae"
+dependencies = [
+ "openvm-platform",
+ "strum_macros",
 ]
 
 [[package]]
@@ -4245,6 +4294,15 @@ dependencies = [
  "thiserror 1.0.69",
  "tiny-keccak 2.0.2 (git+https://github.com/sp1-patches/tiny-keccak?branch=patch-v2.0.2)",
  "tracing",
+]
+
+[[package]]
+name = "pessimistic-proof-openvm"
+version = "0.1.0"
+dependencies = [
+ "bincode",
+ "openvm",
+ "pessimistic-proof",
 ]
 
 [[package]]
@@ -6275,6 +6333,16 @@ checksum = "d91ed6c858b01f942cd56b37a94b3e0a1798290327d1236e4d9cf4eaca44d29d"
 dependencies = [
  "base64ct",
  "der",
+]
+
+[[package]]
+name = "stability"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d904e7009df136af5297832a3ace3370cd14ff1546a232f4f185036c2736fcac"
+dependencies = [
+ "quote",
+ "syn 2.0.91",
 ]
 
 [[package]]
