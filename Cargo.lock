@@ -4253,9 +4253,34 @@ version = "0.1.0"
 dependencies = [
  "bincode",
  "pessimistic-proof",
- "pp-test-sp1",
  "sp1-cli",
  "sp1-zkvm",
+]
+
+[[package]]
+name = "pessimistic-proof-test-suite"
+version = "0.1.0"
+dependencies = [
+ "agglayer-types",
+ "anyhow",
+ "base64 0.22.1",
+ "bincode",
+ "clap",
+ "ethers-signers",
+ "hex",
+ "hex-literal",
+ "lazy_static",
+ "pessimistic-proof",
+ "rand",
+ "regex",
+ "reth-primitives",
+ "serde",
+ "serde_json",
+ "sp1-core-machine",
+ "sp1-sdk",
+ "thiserror 1.0.69",
+ "tracing",
+ "uuid 1.11.0",
 ]
 
 [[package]]
@@ -4405,32 +4430,6 @@ name = "powerfmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391"
-
-[[package]]
-name = "pp-test-sp1"
-version = "0.1.0"
-dependencies = [
- "agglayer-types",
- "anyhow",
- "base64 0.22.1",
- "bincode",
- "clap",
- "ethers-signers",
- "hex",
- "hex-literal",
- "lazy_static",
- "pessimistic-proof",
- "rand",
- "regex",
- "reth-primitives",
- "serde",
- "serde_json",
- "sp1-core-machine",
- "sp1-sdk",
- "thiserror 1.0.69",
- "tracing",
- "uuid 1.11.0",
-]
 
 [[package]]
 name = "ppv-lite86"

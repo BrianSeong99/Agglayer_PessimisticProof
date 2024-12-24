@@ -7,4 +7,4 @@ pub mod sample_data;
 
 /// The ELF we want to execute inside the zkVM.
 pub const PESSIMISTIC_PROOF_ELF: &[u8] =
-    include_bytes!("../../elf/riscv32im-succinct-zkvm-elf");
+    include_bytes!("../../pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf");

@@ -6,7 +6,7 @@ use pessimistic_proof::{
     bridge_exit::{NetworkId, TokenInfo},
     PessimisticProofOutput,
 };
-use pp_test_sp1::{
+use pessimistic_proof_test_suite::{
     runner::Runner,
     sample_data::{self as data},
 };

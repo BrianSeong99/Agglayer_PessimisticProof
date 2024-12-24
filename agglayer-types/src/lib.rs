@@ -42,7 +42,7 @@ use sp1_sdk::SP1VerificationError;
 
 /// ELF of the pessimistic proof program
 pub(crate) const ELF: &[u8] =
-    include_bytes!("../../../elf/riscv32im-succinct-zkvm-elf");
+    include_bytes!("../../pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf");
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ExecutionMode {
