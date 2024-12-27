@@ -461,7 +461,7 @@ If you haven't installed sp1 commandline tool, you can do so via following this 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
 cd pessimistic-proof-openvm/pessimistic-proof-program
-cargo openvm build --exe-output ./elf/
+cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf
 ```
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
