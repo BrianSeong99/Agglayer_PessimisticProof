@@ -438,13 +438,15 @@ If you haven't installed sp1 commandline tool, you can do so via following this 
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-sp1 && cargo prove build --output-directory ./pessimistic-proof-sp1/elf && cd ..
+cd pessimistic-proof-sp1/pessimistic-proof-program
+cargo prove build --output-directory pessimistic-proof-program/elf
 ```
 
 Then you will get an elf file at `pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf`.
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
+cd pessimistic-proof-sp1
 cargo run --release --package pessimistic-proof-test-suite --bin ppgen-sp1
 ```
 
@@ -458,7 +460,14 @@ If you haven't installed sp1 commandline tool, you can do so via following this 
 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
+cd pessimistic-proof-openvm/pessimistic-proof-program
 cargo openvm build --exe-output ./elf/
+```
+
+You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
+```bash
+cd pessimistic-proof-openvm
+cargo run --release --package pessimistic-proof-test-suite --bin ppgen-openvm
 ```
 
 # References

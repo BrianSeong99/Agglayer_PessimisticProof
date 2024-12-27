@@ -7,10 +7,6 @@ edition.workspace = true
 name = "ppgen-sp1"
 path = "src/bin/ppgen-sp1.rs"
 
-# [[bin]]
-# name = "ppgen-openvm"
-# path = "src/bin/ppgen-openvm.rs"
-
 [dependencies]
 agglayer-types = { path = "../agglayer-types" }
 pessimistic-proof = { path = "../pessimistic-proof" }

@@ -69,4 +69,11 @@ sp1-prover = "3.1.0"
 # being distinct from the source. That is to work around the current limitation in Cargo where
 # patches differing solely in git branch/tag are not allowed. This may stop working in the future.
 [patch.'https://github.com/succinctlabs/sp1']
-sp1-precompiles = { git = "https://github.com/succinctlabs//sp1", tag = "v1.0.8-testnet" }
+sp1-precompiles = { git = "https://github.com/succinctlabs//sp1", tag = "v1.0.8-testnet", optional = true }
+
+[patch.crates-io]
+revm = { git = "https://github.com/axiom-crypto/revm", branch = "v43-openvm", optional = true }
+revm-primitives = { git = "https://github.com/axiom-crypto/revm", branch = "v43-openvm", optional = true }
+revm-interpreter = { git = "https://github.com/axiom-crypto/revm", branch = "v43-openvm", optional = true }
+revm-precompile = { git = "https://github.com/axiom-crypto/revm", branch = "v43-openvm", optional = true }
+ruint = { git = "https://github.com/axiom-crypto/uint", branch = "v1.12.3-openvm", optional = true }
