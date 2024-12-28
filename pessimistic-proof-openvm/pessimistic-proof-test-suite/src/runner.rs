@@ -85,7 +85,7 @@ impl Runner {
             .io(Default::default())
             .build();
 
-        let elf_bytes = fs::read("pessimistic-proof-program/elf/riscv32im-openvm-zkvm-elf")?;
+        let elf_bytes = fs::read("target/riscv32im-risc0-zkvm-elf/release/pessimistic-proof-openvm")?;
         let elf = Elf::decode(&elf_bytes, MEM_SIZE as u32)?;
 
         // 3. Transpile the ELF into a VmExe
