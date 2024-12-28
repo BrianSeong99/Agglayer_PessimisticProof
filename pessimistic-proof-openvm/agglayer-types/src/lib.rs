@@ -25,11 +25,6 @@ use reth_primitives::B256;
 pub use reth_primitives::U256;
 pub use reth_primitives::{Address, Signature};
 use serde::{Deserialize, Serialize};
-use sp1_sdk::provers::ProofOpts;
-use sp1_sdk::{
-    MockProver, Prover, SP1Context, SP1Proof, SP1ProofKind, SP1ProofWithPublicValues,
-    SP1PublicValues, SP1Stdin,
-};
 
 pub type EpochNumber = u64;
 pub type CertificateIndex = u64;
@@ -38,11 +33,10 @@ pub type Height = u64;
 pub type Metadata = Digest;
 
 pub use pessimistic_proof::bridge_exit::NetworkId;
-use sp1_sdk::SP1VerificationError;
 
 /// ELF of the pessimistic proof program
 pub(crate) const ELF: &[u8] =
-    include_bytes!("../../pessimistic-proof-program/elf/riscv32im-succinct-zkvm-elf");
+    include_bytes!("../../pessimistic-proof-program/elf/riscv32im-openvm-zkvm-elf");
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ExecutionMode {
@@ -193,26 +187,26 @@ pub enum ProofVerificationError {
     InvalidPublicValues,
 }
 
-impl From<SP1VerificationError> for ProofVerificationError {
-    fn from(err: SP1VerificationError) -> Self {
-        match err {
-            SP1VerificationError::VersionMismatch(version) => {
-                ProofVerificationError::VersionMismatch(version)
-            }
-            SP1VerificationError::Core(core) => ProofVerificationError::Core(core.to_string()),
-            SP1VerificationError::Recursion(recursion) => {
-                ProofVerificationError::Recursion(recursion.to_string())
-            }
-            SP1VerificationError::Plonk(error) => ProofVerificationError::Plonk(error.to_string()),
-            SP1VerificationError::Groth16(error) => {
-                ProofVerificationError::Groth16(error.to_string())
-            }
-            SP1VerificationError::InvalidPublicValues => {
-                ProofVerificationError::InvalidPublicValues
-            }
-        }
-    }
-}
+// impl From<SP1VerificationError> for ProofVerificationError {
+//     fn from(err: SP1VerificationError) -> Self {
+//         match err {
+//             SP1VerificationError::VersionMismatch(version) => {
+//                 ProofVerificationError::VersionMismatch(version)
+//             }
+//             SP1VerificationError::Core(core) => ProofVerificationError::Core(core.to_string()),
+//             SP1VerificationError::Recursion(recursion) => {
+//                 ProofVerificationError::Recursion(recursion.to_string())
+//             }
+//             SP1VerificationError::Plonk(error) => ProofVerificationError::Plonk(error.to_string()),
+//             SP1VerificationError::Groth16(error) => {
+//                 ProofVerificationError::Groth16(error.to_string())
+//             }
+//             SP1VerificationError::InvalidPublicValues => {
+//                 ProofVerificationError::InvalidPublicValues
+//             }
+//         }
+//     }
+// }
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub enum CertificateStatus {
@@ -235,41 +229,41 @@ impl std::fmt::Display for CertificateStatus {
     }
 }
 
-/// Proof is a wrapper around all the different types of proofs that can be
-/// generated
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum Proof {
-    SP1(sp1_sdk::SP1ProofWithPublicValues),
-}
+// /// Proof is a wrapper around all the different types of proofs that can be
+// /// generated
+// #[derive(Debug, Clone, Serialize, Deserialize)]
+// pub enum Proof {
+//     SP1(sp1_sdk::SP1ProofWithPublicValues),
+// }
 
-impl Proof {
-    pub fn dummy() -> Self {
-        Self::SP1(SP1ProofWithPublicValues {
-            proof: SP1Proof::Core(vec![]),
-            stdin: SP1Stdin::new(),
-            public_values: SP1PublicValues::new(),
-            sp1_version: "".to_string(),
-        })
-    }
-    pub fn new_for_test(
-        state: &LocalNetworkState,
-        multi_batch_header: &MultiBatchHeader<Keccak256Hasher>,
-    ) -> Self {
-        let mock = MockProver::new();
-        let (p, _v) = mock.setup(ELF);
+// impl Proof {
+//     pub fn dummy() -> Self {
+//         Self::SP1(SP1ProofWithPublicValues {
+//             proof: SP1Proof::Core(vec![]),
+//             stdin: SP1Stdin::new(),
+//             public_values: SP1PublicValues::new(),
+//             sp1_version: "".to_string(),
+//         })
+//     }
+//     pub fn new_for_test(
+//         state: &LocalNetworkState,
+//         multi_batch_header: &MultiBatchHeader<Keccak256Hasher>,
+//     ) -> Self {
+//         let mock = MockProver::new();
+//         let (p, _v) = mock.setup(ELF);
 
-        let mut stdin = SP1Stdin::new();
-        stdin.write(state);
-        stdin.write(multi_batch_header);
+//         let mut stdin = SP1Stdin::new();
+//         stdin.write(state);
+//         stdin.write(multi_batch_header);
 
-        let opts = ProofOpts::default();
-        let context = SP1Context::default();
-        let kind = SP1ProofKind::Plonk;
-        let proof = mock.prove(&p, stdin, opts, context, kind).unwrap();
+//         let opts = ProofOpts::default();
+//         let context = SP1Context::default();
+//         let kind = SP1ProofKind::Plonk;
+//         let proof = mock.prove(&p, stdin, opts, context, kind).unwrap();
 
-        Proof::SP1(proof)
-    }
-}
+//         Proof::SP1(proof)
+//     }
+// }
 
 /// Represents the data submitted by the chains to the AggLayer.
 ///
