@@ -83,15 +83,26 @@ impl Runner {
             .rv32i(Default::default())
             .rv32m(Default::default())
             .io(Default::default())
+            .bigint(Default::default())
+            .native(Default::default())
+            .keccak(Default::default())
             .build();
+
+        println!("here");
 
         let elf_bytes = fs::read("target/riscv32im-risc0-zkvm-elf/release/pessimistic-proof-openvm")?;
         let elf = Elf::decode(&elf_bytes, MEM_SIZE as u32)?;
 
+        println!("here1");
+
         // 3. Transpile the ELF into a VmExe
         let exe = self.sdk.transpile(elf, vm_config.transpiler())?;
 
+        println!("here2");
+
         let output = self.sdk.execute(exe.clone(), vm_config.clone(), stdin.clone())?;
+
+        println!("here3");
 
         println!("public values output: {:?}", output);
 
