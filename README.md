@@ -31,13 +31,11 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
      - [Pessimistic Proof Output](#pessimistic-proof-output)
      - [Certificate](#certificate)
    - [How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work---pessimistic-proof-flow)
-     - [Step 0: Local Chain to prepare the data & Send them to Agglayer](#step-0-local-chain-to-prepare-the-data--send-them-to-Agglayer)
-     - [Step 1: Agglayer Client to populate data](#step-1-Agglayer-client-to-populate-data)
-     - [Step 2: Agglayer to Run Pessimistic Proof in native rust](#step-2-Agglayer-to-run-pessimistic-proof-in-native-rust)
      - [Step 0: Local Chain to prepare the data & Send them to AggLayer](#step-0-local-chain-to-prepare-the-data--send-them-to-agglayer)
      - [Step 1: AggLayer Client to populate data needed for Pessimistic Proof](#step-1-agglayer-client-to-populate-data-needed-for-pessimistic-proof)
      - [Step 2: AggLayer to Run Pessimistic Proof in native rust](#step-2-agglayer-to-run-pessimistic-proof-in-native-rust)
      - [Step 3: Run the Pessimistic Proof Program in zkVM](#step-3-run-the-pessimistic-proof-program-in-zkvm)
+     - [Step 4: Validates ZK Proof](#step-4-validates-zk-proof)
    - [Generate Pessimistic Proof in Action](#4generate-pessimistic-proof-in-action)
      - [Running Pessimistic Proof Program Locally](#running-pessimistic-proof-program-locally)
      - [Breakdown of the local test Pessimistic Proof script](#breakdown-of-the-local-test-pessimistic-proof-script)
@@ -370,7 +368,6 @@ Code can be found in [here](https://github.com/Agglayer/Agglayer/blob/main/crate
     - `bridge_exits`: the assets that are sent to other chains from the local chain.
     - `imported_bridge_exits`: the assets that are claimed to the local chain from other chains.
 
-### Step 1: Agglayer Client to populate data
 ### Step 1: AggLayer Client to populate data needed for Pessimistic Proof
 
 - **Agglayer Client to populate `batch_header`, which is `MultiBatchHeader` using the `Certificate` data**. 
