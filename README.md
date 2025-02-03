@@ -425,7 +425,7 @@ Let's explore a bit on the ppgen.rs file.
 
 To Learn more about the Pessimistic Proof Generator, please refer to [here](https://github.com/Agglayer/Agglayer/tree/main/crates/pessimistic-proof-test-suite/src/bin) 
 
-# Benchmark on zkVMs
+# (WIP) Benchmark on zkVMs
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
 
