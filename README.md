@@ -40,14 +40,7 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
      - [Running Pessimistic Proof Program Locally](#running-pessimistic-proof-program-locally)
      - [Breakdown of the local test Pessimistic Proof script](#breakdown-of-the-local-test-pessimistic-proof-script)
 
-- [Benchmark on zkVMs](#benchmark-on-zkvms)
-   - [Benchmark on SP1](#1benchmark-on-sp1)
-   - [Benchmark on Valida](#2benchmark-on-valida)
-   - [Benchmark on Risc0](#3benchmark-on-risc0)
-   - [Benchmark on Openvm](#4benchmark-on-openvm)
-
-- [References](#references)
-
+- [WIP: Benchmark on zkVMs](#benchmark-on-zkvms)
 
 
 # Architecture of Pessimistic Proof
@@ -428,44 +421,3 @@ To Learn more about the Pessimistic Proof Generator, please refer to [here](http
 # (WIP) Benchmark on zkVMs
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
-
-## 1.Benchmark on SP1
-
-If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/getting-started/install).
-
-You can build the SP1 Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-sp1/pessimistic-proof-program
-cargo prove build --output-directory pessimistic-proof-program/elf
-```
-
-Then you will get an elf file at `pessimistic-proof-sp1/elf/riscv32im-succinct-zkvm-elf`.
-
-You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
-```bash
-cd pessimistic-proof-sp1
-cargo run --release --package pessimistic-proof-test-suite --bin ppgen-sp1
-```
-
-## 2.Benchmark on Valida
-
-## 3.Benchmark on Risc0
-
-## 4.Benchmark on OpenVM
-
-If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
-
-You can build the OpenVM Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-openvm/pessimistic-proof-program
-cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
-cargo openvm build --no-transpile # This is for accessing the built using SDK.
-```
-
-You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
-```bash
-cd pessimistic-proof-openvm
-cargo run --release --package pessimistic-proof-test-suite --bin ppgen-openvm
-```
-
-# References
