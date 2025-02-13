@@ -1,0 +1,53 @@
+name: Build and host documentation on GH pages
+
+on:
+  merge_group:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@nightly
+
+      - uses: taiki-e/install-action@protoc
+
+      - name: Build Documentation
+        run: cargo +nightly doc --no-deps --all --all-features
+
+      - name: Add index file
+        run: |
+          mkdir host-docs
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=agglayer\">" > target/doc/index.html
+          cp -r target/doc/* ./host-docs
+      - name: Upload documentation
+        uses: actions/upload-pages-artifact@v3.0.0
+        with:
+          path: "host-docs/"
+
+  deploy:
+    name: Deploy documentation
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

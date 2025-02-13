@@ -15,32 +15,34 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 # Table of Contents
 
+- [Agglayer PessimisticProof](#agglayer-pessimisticproof)
+- [Table of Contents](#table-of-contents)
 - [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
-   - [Background](#0background)
-     - [Chains connected on Agglayer](#chains-connected-on-Agglayer)
-     - [Security of Agglayer](#security-of-Agglayer)
-   - [Pessimistic Proof Overview](#1pessimistic-proof-overview)
-   - [Data Structure in Pessimistic Proof](#2data-structure-in-pessimistic-proof)
-     - [Unified Bridge Data Structure](#unified-bridge-data-structure)
-     - [Local Balance Tree & TokenInfo](#local-balance-tree-tokeninfo)
-     - [Nullifier Tree](#nullifier-tree)
-     - [Bridge Exits](#bridge-exits)
-     - [Imported Bridge Exits](#imported-bridge-exits)
-     - [Local State](#local-state)
-     - [Multi Batch Header](#multi-batch-header)
-     - [Pessimistic Proof Output](#pessimistic-proof-output)
-     - [Certificate](#certificate)
-   - [How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work---pessimistic-proof-flow)
-     - [Step 0: Local Chain to prepare the data & Send them to AggLayer](#step-0-local-chain-to-prepare-the-data--send-them-to-agglayer)
-     - [Step 1: AggLayer Client to populate data needed for Pessimistic Proof](#step-1-agglayer-client-to-populate-data-needed-for-pessimistic-proof)
-     - [Step 2: AggLayer to Run Pessimistic Proof in native rust](#step-2-agglayer-to-run-pessimistic-proof-in-native-rust)
-     - [Step 3: Run the Pessimistic Proof Program in zkVM](#step-3-run-the-pessimistic-proof-program-in-zkvm)
-     - [Step 4: Validates ZK Proof](#step-4-validates-zk-proof)
-   - [Generate Pessimistic Proof in Action](#4generate-pessimistic-proof-in-action)
-     - [Running Pessimistic Proof Program Locally](#running-pessimistic-proof-program-locally)
-     - [Breakdown of the local test Pessimistic Proof script](#breakdown-of-the-local-test-pessimistic-proof-script)
-
-- [WIP: Benchmark on zkVMs](#benchmark-on-zkvms)
+  - [0.Background](#0background)
+    - [Chains connected on Agglayer](#chains-connected-on-agglayer)
+    - [Security of Agglayer](#security-of-agglayer)
+  - [1.Pessimistic Proof Overview](#1pessimistic-proof-overview)
+  - [2.Data Structure in Pessimistic Proof](#2data-structure-in-pessimistic-proof)
+    - [Unified Bridge Data Structure](#unified-bridge-data-structure)
+    - [Local Balance Tree \& TokenInfo](#local-balance-tree--tokeninfo)
+    - [Nullifier Tree](#nullifier-tree)
+    - [Bridge Exits](#bridge-exits)
+    - [Imported Bridge Exits](#imported-bridge-exits)
+    - [Local State](#local-state)
+    - [Multi Batch Header](#multi-batch-header)
+    - [Pessimistic Proof Output](#pessimistic-proof-output)
+    - [Certificate](#certificate)
+  - [3.How does Pessimistic Proof Work?](#3how-does-pessimistic-proof-work)
+    - [Step 0: Local Chain to prepare the data \& Send them to Agglayer](#step-0-local-chain-to-prepare-the-data--send-them-to-agglayer)
+    - [Step 1: AggLayer Client to populate data needed for Pessimistic Proof](#step-1-agglayer-client-to-populate-data-needed-for-pessimistic-proof)
+    - [Step 2: Agglayer to Run Pessimistic Proof in native rust!](#step-2-agglayer-to-run-pessimistic-proof-in-native-rust)
+    - [Step 3: Run the Pessimistic Proof Program in zkVM](#step-3-run-the-pessimistic-proof-program-in-zkvm)
+    - [Step 4: Validates ZK Proof](#step-4-validates-zk-proof)
+  - [4.Generate Pessimistic Proof in Action](#4generate-pessimistic-proof-in-action)
+    - [Running Pessimistic Proof Program Locally from AggLayer Repo](#running-pessimistic-proof-program-locally-from-agglayer-repo)
+    - [Breakdown of the local test Pessimistic Proof script using SP1](#breakdown-of-the-local-test-pessimistic-proof-script-using-sp1)
+- [(WIP) Benchmark on zkVMs](#wip-benchmark-on-zkvms)
+  - [Pessimistic Proof in SP1](#pessimistic-proof-in-sp1)
 
 
 # Architecture of Pessimistic Proof
@@ -421,3 +423,5 @@ To Learn more about the Pessimistic Proof Generator, please refer to [here](http
 # (WIP) Benchmark on zkVMs
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
+
+## Pessimistic Proof in SP1
