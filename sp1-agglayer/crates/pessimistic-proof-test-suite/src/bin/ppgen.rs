@@ -18,11 +18,11 @@ use uuid::Uuid;
 #[clap(author, version, about, long_about = None)]
 struct PPGenArgs {
     /// The number of bridge exits.
-    #[clap(long, default_value = "5")]
+    #[clap(long, default_value = "10")]
     n_exits: usize,
 
     /// The number of imported bridge exits.
-    #[clap(long, default_value = "5")]
+    #[clap(long, default_value = "10")]
     n_imported_exits: usize,
 
     /// The optional output directory to write the proofs in JSON. If not set,

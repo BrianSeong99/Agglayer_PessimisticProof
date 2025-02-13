@@ -42,12 +42,14 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
     - [Running Pessimistic Proof Program Locally from AggLayer Repo](#running-pessimistic-proof-program-locally-from-agglayer-repo)
     - [Breakdown of the local test Pessimistic Proof script using SP1](#breakdown-of-the-local-test-pessimistic-proof-script-using-sp1)
 - [Benchmark on zkVMs](#benchmark-on-zkvms)
-  - [1.Benchmark on SP1](#1benchmark-on-sp1)
-  - [2.Benchmark on Valida](#2benchmark-on-valida)
-  - [3.Benchmark on OpenVM](#3benchmark-on-openvm)
-  - [4.Benchmark on Brevis Pico](#4benchmark-on-brevis-pico)
-  - [5.Benchmark on Risc0](#5benchmark-on-risc0)
-  - [6.Benchmark on Nexus](#6benchmark-on-nexus)
+  - [Reports](#reports)
+  - [How to Benchmark?](#how-to-benchmark)
+    - [1.Benchmark on SP1](#1benchmark-on-sp1)
+    - [2.Benchmark on Valida](#2benchmark-on-valida)
+    - [3.Benchmark on OpenVM](#3benchmark-on-openvm)
+    - [4.Benchmark on Brevis Pico](#4benchmark-on-brevis-pico)
+    - [5.Benchmark on Risc0](#5benchmark-on-risc0)
+    - [6.Benchmark on Nexus](#6benchmark-on-nexus)
 
 
 # Architecture of Pessimistic Proof
@@ -429,9 +431,13 @@ To Learn more about the Pessimistic Proof Generator, please refer to [here](http
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
 
-[Pessimistic Proof Code](https://github.com/agglayer/agglayer/tree/7c65f274a95e076311e096d358418d75691b235f) version used in this repo.
+[Pessimistic Proof Code](https://github.com/agglayer/agglayer/commit/bc5e9b04f5f90e01691bc6aa0c86205518badf2c) version used in this repo.
 
-## 1.Benchmark on SP1
+## Reports
+
+## How to Benchmark?
+
+### 1.Benchmark on SP1
 
 If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/getting-started/install).
 
@@ -449,18 +455,20 @@ cd sp1-agglayer
 cargo run --release --package pessimistic-proof-test-suite --bin ppgen
 ```
 
-## 2.Benchmark on Valida
+### 2.Benchmark on Valida
 
-## 3.Benchmark on OpenVM
+### 3.Benchmark on OpenVM
 
-If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
+If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-openvm/pessimistic-proof-program
+cd openvm-agglayer/crates/pessimistic-proof-program
 cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
 cargo openvm build --no-transpile # This is for accessing the built using SDK.
 ```
+
+Then you will get an elf file at ``
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
@@ -468,8 +476,8 @@ cd pessimistic-proof-openvm
 cargo run --release --package pessimistic-proof-test-suite --bin ppgen-openvm
 ```
 
-## 4.Benchmark on Brevis Pico
+### 4.Benchmark on Brevis Pico
 
-## 5.Benchmark on Risc0
+### 5.Benchmark on Risc0
 
-## 6.Benchmark on Nexus
+### 6.Benchmark on Nexus
