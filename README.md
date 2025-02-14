@@ -44,12 +44,12 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 - [Benchmark on zkVMs](#benchmark-on-zkvms)
   - [Reports](#reports)
   - [How to Benchmark?](#how-to-benchmark)
-    - [1.Benchmark on SP1](#1benchmark-on-sp1)
-    - [2.Benchmark on Valida](#2benchmark-on-valida)
-    - [3.Benchmark on OpenVM](#3benchmark-on-openvm)
+    - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
+    - [2.Benchmark on Lita Valida](#2benchmark-on-lita-valida)
+    - [3.Benchmark on Axiom OpenVM](#3benchmark-on-axiom-openvm)
     - [4.Benchmark on Brevis Pico](#4benchmark-on-brevis-pico)
-    - [5.Benchmark on Risc0](#5benchmark-on-risc0)
-    - [6.Benchmark on Nexus](#6benchmark-on-nexus)
+    - [5.Benchmark on RiscZero zkVM](#5benchmark-on-risczero-zkvm)
+    - [6.Benchmark on Nexus zkVM](#6benchmark-on-nexus-zkvm)
 
 
 # Architecture of Pessimistic Proof
@@ -437,27 +437,27 @@ This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglaye
 
 ## How to Benchmark?
 
-### 1.Benchmark on SP1
+### 1.Benchmark on Succinct SP1
 
 If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/getting-started/install).
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
-cd sp1-agglayer/crates/pessimistic-proof-program
-cargo prove build --output-directory pessimistic-proof-program/elf
+cd pessimistic-proof-bench/crates/program-sp1
+cargo prove build --output-directory program-sp1/elf
 ```
 
-Then you will get an elf file at `sp1-agglayer/crates/pessimistic-proof-program/elf/riscv32im-succinct-zkvm-elf`.
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-sp1/elf/riscv32im-succinct-zkvm-elf`.
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
-cd sp1-agglayer
-cargo run --release --package pessimistic-proof-test-suite --bin ppgen
+cd pessimistic-proof-bench
+cargo run --release --package test-sp1 --bin ppgen
 ```
 
-### 2.Benchmark on Valida
+### 2.Benchmark on Lita Valida
 
-### 3.Benchmark on OpenVM
+### 3.Benchmark on Axiom OpenVM
 
 If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
 
@@ -478,6 +478,6 @@ cargo run --release --package pessimistic-proof-test-suite --bin ppgen-openvm
 
 ### 4.Benchmark on Brevis Pico
 
-### 5.Benchmark on Risc0
+### 5.Benchmark on RiscZero zkVM
 
-### 6.Benchmark on Nexus
+### 6.Benchmark on Nexus zkVM
