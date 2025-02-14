@@ -7,10 +7,6 @@ edition.workspace = true
 name = "ppgen"
 path = "src/bin/ppgen.rs"
 
-[[bin]]
-name = "convertor"
-path = "src/bin/convertor.rs"
-
 [dependencies]
 agglayer-primitives.workspace = true
 agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
