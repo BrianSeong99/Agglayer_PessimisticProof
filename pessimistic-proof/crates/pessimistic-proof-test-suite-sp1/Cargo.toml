@@ -1,0 +1,39 @@
+[package]
+name = "pessimistic-proof-test-suite-sp1"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "ppgen"
+path = "src/bin/ppgen.rs"
+
+[[bin]]
+name = "convertor"
+path = "src/bin/convertor.rs"
+
+[dependencies]
+agglayer-primitives.workspace = true
+agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../pessimistic-proof" }
+
+base64.workspace = true
+bincode.workspace = true
+clap.workspace = true
+ethers-signers.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sp1-sdk = "=4.1.1"
+sp1-core-machine = "=4.1.1"
+lazy_static.workspace = true
+anyhow.workspace = true
+rand.workspace = true
+hex-literal = "0.4"
+hex.workspace = true
+tracing.workspace = true
+uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
+regex = "1.11"
+
+[dev-dependencies]
+rstest.workspace = true
+tracing.workspace = true

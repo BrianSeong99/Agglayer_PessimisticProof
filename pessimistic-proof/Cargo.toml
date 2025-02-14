@@ -19,7 +19,7 @@ agglayer-primitives = { path = "crates/agglayer-primitives" }
 agglayer-types = { path = "crates/agglayer-types" }
 pessimistic-proof = { path = "crates/pessimistic-proof" }
 pessimistic-proof-core = { path = "crates/pessimistic-proof-core" }
-pessimistic-proof-test-suite = { path = "crates/pessimistic-proof-test-suite" }
+pessimistic-proof-test-suite-sp1 = { path = "crates/pessimistic-proof-test-suite-sp1" }
 
 # Core dependencies
 alloy = { version = "0.8.1", features = ["full"] }
@@ -67,7 +67,7 @@ rand = "0.8.5"
 rstest = "0.22.0"
 test-log = "0.2.16"
 
-# SP1 dependencies
-sp1-core-machine = "=4.1.1"
-sp1-sdk = "=4.1.1"
-sp1-prover = "=4.1.1"
+# # SP1 dependencies
+# sp1-core-machine = "=4.1.1"
+# sp1-sdk = "=4.1.1"
+# sp1-prover = "=4.1.1"

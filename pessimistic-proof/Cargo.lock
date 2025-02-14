@@ -71,8 +71,6 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "serde_with",
- "sp1-core-machine",
- "sp1-sdk",
  "thiserror 2.0.11",
 ]
 
@@ -4214,7 +4212,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pessimistic-proof-test-suite"
+name = "pessimistic-proof-test-suite-sp1"
 version = "0.2.1"
 dependencies = [
  "agglayer-primitives",
