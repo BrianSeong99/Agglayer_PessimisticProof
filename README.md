@@ -463,7 +463,7 @@ If you haven't installed OpenVM commandline tool, you can do so via following th
 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
-cd openvm-agglayer/crates/pessimistic-proof-program
+cd pessimistic-proof-bench/crates/program-openvm
 cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
 cargo openvm build --no-transpile # This is for accessing the built using SDK.
 ```

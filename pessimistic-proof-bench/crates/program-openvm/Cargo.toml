@@ -1,0 +1,13 @@
+[package]
+name = "program-openvm"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+bincode = { workspace = true }
+pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
+openvm = { git = "https://github.com/openvm-org/openvm.git", features = ["std"] }
+
+[features]
+std = ["openvm/std"]
