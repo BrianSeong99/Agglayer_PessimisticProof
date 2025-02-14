@@ -33,10 +33,6 @@ pub use agglayer_primitives as primitives;
 pub use agglayer_primitives::{Address, Signature, SignatureError, B256, U256, U512};
 pub use pessimistic_proof::bridge_exit::NetworkId;
 
-/// ELF of the pessimistic proof program
-pub(crate) const ELF: &[u8] =
-    include_bytes!("../../pessimistic-proof-program/elf/riscv32im-succinct-zkvm-elf");
-
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ExecutionMode {
     Default,

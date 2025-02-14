@@ -1,11 +1,7 @@
 [package]
-name = "pessimistic-proof-test-suite-sp1"
+name = "pessimistic-proof-test-suite"
 version.workspace = true
 edition.workspace = true
-
-[[bin]]
-name = "ppgen"
-path = "src/bin/ppgen.rs"
 
 [dependencies]
 agglayer-primitives.workspace = true
@@ -19,8 +15,6 @@ ethers-signers.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
-sp1-sdk = "=4.1.1"
-sp1-core-machine = "=4.1.1"
 lazy_static.workspace = true
 anyhow.workspace = true
 rand.workspace = true
