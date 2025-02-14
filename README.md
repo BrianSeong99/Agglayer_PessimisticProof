@@ -431,7 +431,7 @@ To Learn more about the Pessimistic Proof Generator, please refer to [here](http
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
 
-[Pessimistic Proof Code](https://github.com/agglayer/agglayer/commit/bc5e9b04f5f90e01691bc6aa0c86205518badf2c) version used in this repo.
+This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglayer/tree/release/0.2.1)'s Pessimistic Proof.
 
 ## Reports
 
