@@ -1,17 +1,13 @@
-use bincode::config::Options;
 use pessimistic_proof::NetworkState;
 pub use pessimistic_proof::PessimisticProofOutput;
 use eyre::Result;
 
 use std::{fs, sync::Arc};
 use openvm::platform::memory::MEM_SIZE;
-use openvm_stark_sdk::{
-    config::{
+use openvm_stark_sdk::config::{
         baby_bear_poseidon2::{BabyBearPoseidon2Config},
         FriParameters,
-    },
-    p3_baby_bear::BabyBear,
-};
+    };
 use openvm_sdk::{
     config::{AppConfig, SdkVmConfig},
     prover::{
@@ -23,7 +19,7 @@ use openvm_sdk::{
 };
 use openvm_transpiler::elf::Elf;
 
-use crate::PESSIMISTIC_PROOF_ELF;
+// use crate::PESSIMISTIC_PROOF_ELF;
 
 pub type Hasher = pessimistic_proof::local_exit_tree::hasher::Keccak256Hasher;
 pub type Digest = <Hasher as pessimistic_proof::local_exit_tree::hasher::Hasher>::Digest;
@@ -91,7 +87,7 @@ impl Runner {
 
         println!("here");
 
-        let elf_bytes = fs::read("../../program-openvm/target/riscv32im-risc0-zkvm-elf/release/program-openvm")?;
+        let elf_bytes = fs::read("target/riscv32im-risc0-zkvm-elf/release/program-openvm")?;
         let elf = Elf::decode(&elf_bytes, MEM_SIZE as u32)?;
 
         println!("here1");
