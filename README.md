@@ -480,8 +480,8 @@ Then you will get an elf file at ``
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
-cd pessimistic-proof-openvm
-cargo run --release --package pessimistic-proof-test-suite --bin ppgen-openvm
+cd pessimistic-proof-bench
+cargo run --release --package test-openvm --bin ppgen
 ```
 
 ### 4.Benchmark on Brevis Pico
