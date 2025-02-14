@@ -439,7 +439,11 @@ This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglaye
 
 ### 1.Benchmark on Succinct SP1
 
-If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/getting-started/install).
+Version used:
+- sp1-sdk: 4.1.0
+- sp1-core-machine: 4.1.0
+
+If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
@@ -458,6 +462,10 @@ cargo run --release --package test-sp1 --bin ppgen
 ### 2.Benchmark on Lita Valida
 
 ### 3.Benchmark on Axiom OpenVM
+
+Version used: 
+- OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
+- stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
 
 If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
 

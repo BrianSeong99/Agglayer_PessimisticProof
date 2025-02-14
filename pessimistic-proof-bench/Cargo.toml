@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = ["crates/*"]
-exclude = ["crates/program-sp1"]
+exclude = ["crates/program-sp1", "crates/program-openvm"]
 
 [workspace.package]
 version = "0.2.1"
@@ -66,8 +66,3 @@ mockall = "0.13.1"
 rand = "0.8.5"
 rstest = "0.22.0"
 test-log = "0.2.16"
-
-# # SP1 dependencies
-# sp1-core-machine = "=4.1.1"
-# sp1-sdk = "=4.1.1"
-# sp1-prover = "=4.1.1"

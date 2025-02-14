@@ -20,8 +20,6 @@ ethers-signers.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
-sp1-sdk = "=4.1.1"
-sp1-core-machine = "=4.1.1"
 lazy_static.workspace = true
 anyhow.workspace = true
 rand.workspace = true
@@ -30,6 +28,9 @@ hex.workspace = true
 tracing.workspace = true
 uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
+
+sp1-sdk = "=4.1.0"
+sp1-core-machine = "=4.1.0"
 
 [dev-dependencies]
 rstest.workspace = true
