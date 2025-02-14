@@ -476,7 +476,7 @@ cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will gene
 cargo openvm build --no-transpile # This is for accessing the built using SDK.
 ```
 
-Then you will get an elf file at ``
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-openvm/elf/riscv32im-openvm-zkvm-elf`.
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash

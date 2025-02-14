@@ -91,7 +91,7 @@ impl Runner {
 
         println!("here");
 
-        let elf_bytes = fs::read("target/riscv32im-risc0-zkvm-elf/release/program-openvm")?;
+        let elf_bytes = fs::read("../../program-openvm/target/riscv32im-risc0-zkvm-elf/release/program-openvm")?;
         let elf = Elf::decode(&elf_bytes, MEM_SIZE as u32)?;
 
         println!("here1");
