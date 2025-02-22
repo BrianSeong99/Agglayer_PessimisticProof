@@ -9176,6 +9176,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "test-valida"
+version = "0.2.1"
+dependencies = [
+ "agglayer-primitives",
+ "agglayer-types",
+ "anyhow",
+ "base64 0.22.1",
+ "bincode",
+ "clap",
+ "ethers-signers",
+ "hex",
+ "hex-literal",
+ "lazy_static",
+ "pessimistic-proof",
+ "pessimistic-proof-core",
+ "pessimistic-proof-test-suite",
+ "rand 0.8.5",
+ "regex",
+ "rstest",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.11",
+ "tracing",
+ "uuid 1.13.1",
+ "valida-rs",
+]
+
+[[package]]
 name = "textwrap"
 version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -9846,6 +9874,11 @@ dependencies = [
  "getrandom 0.3.1",
  "rand 0.9.0",
 ]
+
+[[package]]
+name = "valida-rs"
+version = "0.1.0"
+source = "git+https://github.com/lita-xyz/valida-rs.git?branch=no-deps#d39b1e5d4e41c2ebf4a6d8ff817ef202527da50c"
 
 [[package]]
 name = "valuable"

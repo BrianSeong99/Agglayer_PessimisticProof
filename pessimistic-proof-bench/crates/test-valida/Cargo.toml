@@ -1,0 +1,37 @@
+[package]
+name = "test-valida"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "ppgen"
+path = "src/bin/ppgen.rs"
+
+[dependencies]
+agglayer-primitives.workspace = true
+agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../pessimistic-proof" }
+pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
+pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
+
+base64.workspace = true
+bincode.workspace = true
+clap.workspace = true
+ethers-signers.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+lazy_static.workspace = true
+anyhow.workspace = true
+rand.workspace = true
+hex-literal = "0.4"
+hex.workspace = true
+tracing.workspace = true
+uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
+regex = "1.11"
+
+valida-rs = { git = "https://github.com/lita-xyz/valida-rs.git", branch = "no-deps" }
+
+[dev-dependencies]
+rstest.workspace = true
+tracing.workspace = true
