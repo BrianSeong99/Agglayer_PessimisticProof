@@ -461,6 +461,30 @@ cargo run --release --package test-sp1 --bin ppgen
 
 ### 2.Benchmark on Lita Valida
 
+Version used:
+- valida: v0.8.0-alpha-arm64
+
+If you haven't installed valida docker tool, you can do so via following this [guide](https://lita.gitbook.io/lita-documentation/quick-start/installation-and-system-requirements). Try to run this in a Linux machine.
+
+You can build the Valida Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/program-valida
+# For x86_64 systems
+docker run --platform linux/amd64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
+# For arm64 systems
+docker run --platform linux/arm64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
+# Run this inside the container
+cargo +valida build --release
+```
+
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-valida/target/valida-unknown-baremetal-gnu/release/program-valida`.
+
+You can then test the pessimsitic-proof-program in Valida via this command at root folder: 
+```bash
+cd pessimistic-proof-bench
+cargo run --release --package test-valida --bin ppgen
+```
+
 ### 3.[WIP] Benchmark on Axiom OpenVM
 
 Version used: 
@@ -497,7 +521,7 @@ cd pessimistic-proof-bench/crates/program-pico
 RUST_LOG=info cargo pico build --output-directory elf
 ```
 
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/...`.
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
 cd pessimistic-proof-bench/crates/test-pico
