@@ -486,6 +486,41 @@ cargo run --release --package test-openvm --bin ppgen
 
 ### 4.Benchmark on Brevis Pico
 
+Version used:
+- Pico zkVM: 1.0.0
+
+If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
+
+You can build the Pico zkVM Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/program-pico
+RUST_LOG=info cargo pico build --output-directory elf
+```
+
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/...`.
+You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
+```bash
+
+```
+
 ### 5.Benchmark on RiscZero zkVM
+
+Version used:
+- RiscZero zkVM: 
+
+If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
+
+You can build the RiscZero zkVM Pessimistic Proof ELF by running this command:
+```bash
+
+```
+
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-risc0/elf/....`.
+
+You can then test the pessimistic-proof-program in Risc0 zkVM via this command at root folder:
+```bash
+RISC0_DEV_MODE=1 cargo run --release # for Dev Mode
+RISC0_DEV_MODE=0 cargo run --release # for Actual Proof Generation
+```
 
 ### 6.Benchmark on Nexus zkVM
