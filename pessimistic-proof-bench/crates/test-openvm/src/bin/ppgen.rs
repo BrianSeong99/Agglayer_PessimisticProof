@@ -1,13 +1,24 @@
 use std::{path::PathBuf, time::Instant};
+use openvm_circuit::arch::{instructions::exe::VmExe, VmExecutor};
+use openvm_keccak256_circuit::Keccak256Rv32Config;
+use openvm_keccak256_transpiler::Keccak256TranspilerExtension;
+use openvm_rv32im_circuit::Rv32ImConfig;
+use openvm_rv32im_transpiler::{
+    Rv32ITranspilerExtension, Rv32IoTranspilerExtension, Rv32MTranspilerExtension,
+};
+use openvm_sdk::StdIn;
+use openvm_stark_sdk::p3_baby_bear::BabyBear;
+use openvm_transpiler::{
+    elf::Elf, openvm_platform::memory::MEM_SIZE, transpiler::Transpiler, FromElf,
+};
+use openvm_stark_sdk::openvm_stark_backend::p3_field::PrimeField32;
 
-use agglayer_primitives::Address;
-use agglayer_types::{Certificate, U256};
-use clap::Parser;
-use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
+use pessimistic_proof::bridge_exit::TokenInfo;
 use pessimistic_proof::PessimisticProofOutput;
 use pessimistic_proof_test_suite::sample_data::{self as data};
-use test_openvm::runner::Runner;
-use serde::{Deserialize, Serialize};
+use pessimistic_proof_core::{generate_pessimistic_proof, NetworkState};
+use agglayer_types::U256;
+use clap::Parser;
 use tracing::{info, warn};
 use uuid::Uuid;
 
@@ -23,8 +34,7 @@ struct PPGenArgs {
     #[clap(long, default_value = "10")]
     n_imported_exits: usize,
 
-    /// The optional output directory to write the proofs in JSON. If not set,
-    /// the proof is simply logged.
+    /// The optional output directory to write the proofs in JSON.
     #[clap(long)]
     proof_dir: Option<PathBuf>,
 
@@ -49,12 +59,19 @@ fn get_events(n: usize, path: Option<PathBuf>) -> Vec<(TokenInfo, U256)> {
     }
 }
 
-pub fn main() {
+fn main() {
     let args = PPGenArgs::parse();
 
-    let mut state = data::sample_state_00();
+    // Load the ELF file
+    let elf = Elf::decode(
+        include_bytes!("../../../../target/riscv32im-risc0-zkvm-elf/release/program-openvm"),
+        MEM_SIZE as u32,
+    ).unwrap();
+    info!("Loaded ELF file, length: {}", elf.instructions.len());
 
+    let mut state = data::sample_state_00();
     let old_state = state.state_b.clone();
+    let old_network_state = NetworkState::from(old_state.clone());
 
     let bridge_exits = get_events(args.n_exits, args.sample_path.clone());
     let imported_bridge_exits = get_events(args.n_imported_exits, args.sample_path);
@@ -78,96 +95,62 @@ pub fn main() {
         imported_bridge_exits.len()
     );
 
-    let result = Runner::new().execute(&old_state.into(), &multi_batch_header);
-    println!("result: {:?}", result);
-
-
-
-    // let start = Instant::now();
-    // let (proof, vk, new_roots) = Runner::new()
-    //     .generate_proof(&old_state.into(), &multi_batch_header)
-    //     .expect("proving failed");
-    // let duration = start.elapsed();
-    // info!(
-    //     "Successfully generated the proof with a latency of {:?}",
-    //     duration
-    // );
-
-    // let vkey = vk.bytes32().to_string();
-    // info!("vkey: {}", vkey);
-
-    // let fixture = PessimisticProofFixture {
-    //     certificate,
-    //     pp_inputs: new_roots.into(),
-    //     signer: state.get_signer(),
-    //     vkey: vkey.clone(),
-    //     public_values: format!("0x{}", hex::encode(proof.public_values.as_slice())),
-    //     proof: format!("0x{}", hex::encode(proof.bytes())),
-    // };
-
-    // if let Some(proof_dir) = args.proof_dir {
-    //     // Save the plonk proof to a json file.
-    //     let proof_path = proof_dir.join(format!(
-    //         "{}-exits-v{}-{}.json",
-    //         args.n_exits,
-    //         &vkey[..8],
-    //         Uuid::new_v4()
-    //     ));
-    //     if let Err(e) = std::fs::create_dir_all(&proof_dir) {
-    //         warn!("Failed to create directory: {e}");
-    //     }
-    //     info!("Writing the proof to {:?}", proof_path);
-    //     std::fs::write(proof_path, serde_json::to_string_pretty(&fixture).unwrap())
-    //         .expect("failed to write fixture");
-    // } else {
-    //     info!("Proof: {:?}", fixture);
-    // }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-pub struct VerifierInputs {
-    /// The previous local exit root.
-    pub prev_local_exit_root: String,
-    /// The previous pessimistic root.
-    pub prev_pessimistic_root: String,
-    /// The l1 info root against which we prove the inclusion of the
-    /// imported bridge exits.
-    pub l1_info_root: String,
-    /// The origin network of the pessimistic proof.
-    pub origin_network: NetworkId,
-    /// The consensus hash.
-    pub consensus_hash: String,
-    /// The new local exit root.
-    pub new_local_exit_root: String,
-    /// The new pessimistic root which commits to the balance and nullifier
-    /// tree.
-    pub new_pessimistic_root: String,
-}
-
-impl From<PessimisticProofOutput> for VerifierInputs {
-    fn from(v: PessimisticProofOutput) -> Self {
-        Self {
-            prev_local_exit_root: format!("0x{}", hex::encode(v.prev_local_exit_root)),
-            prev_pessimistic_root: format!("0x{}", hex::encode(v.prev_pessimistic_root)),
-            l1_info_root: format!("0x{}", hex::encode(v.l1_info_root)),
-            origin_network: v.origin_network.into(),
-            consensus_hash: format!("0x{}", hex::encode(v.consensus_hash)),
-            new_local_exit_root: format!("0x{}", hex::encode(v.new_local_exit_root)),
-            new_pessimistic_root: format!("0x{}", hex::encode(v.new_pessimistic_root)),
+    // Validate inputs first
+    match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
+        Ok(_) => {
+            info!("Input validation successful, proceeding with proof generation");
+        }
+        Err(e) => {
+            panic!("Input validation failed: {:?}", e);
         }
     }
-}
 
-/// A fixture that can be used to test the verification of OpenVM zkVM proofs
-/// inside Solidity.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-struct PessimisticProofFixture {
-    certificate: Certificate,
-    pp_inputs: VerifierInputs,
-    signer: Address,
-    vkey: String,
-    public_values: String,
-    proof: String,
-}
+    // Create transpiler with extensions
+    let mut transpiler = Transpiler::<BabyBear>::default();
+    transpiler = transpiler.with_extension(Rv32ITranspilerExtension);
+    transpiler = transpiler.with_extension(Rv32MTranspilerExtension);
+    transpiler = transpiler.with_extension(Rv32IoTranspilerExtension);
+    transpiler = transpiler.with_extension(Keccak256TranspilerExtension);
+
+    // Create VM executable
+    let exe = VmExe::from_elf(elf, transpiler).unwrap();
+
+    // Configure and create VM executor
+    let mut config = Keccak256Rv32Config::default();
+    config.system = config.system.with_continuations();
+    let executor = VmExecutor::<BabyBear, _>::new(config);
+
+    // Prepare input data as bytes
+    let mut input_data = Vec::new();
+    input_data.extend_from_slice(&bincode::serialize(&old_network_state).unwrap());
+    input_data.extend_from_slice(&bincode::serialize(&multi_batch_header).unwrap());
+
+    let start = Instant::now();
+    let result = executor
+        .execute(exe.clone(), StdIn::from_bytes(&input_data))
+        .unwrap();
+    let duration = start.elapsed();
+    info!(
+        "Successfully generated the proof with a latency of {:?}",
+        duration
+    );
+
+    // Get the proof output from stdout
+    let pp_output: PessimisticProofOutput = bincode::deserialize(&result.stdout).unwrap();
+    
+    if let Some(proof_dir) = args.proof_dir {
+        let proof_path = proof_dir.join(format!(
+            "{}-exits-{}.json",
+            args.n_exits,
+            Uuid::new_v4()
+        ));
+        if let Err(e) = std::fs::create_dir_all(&proof_dir) {
+            warn!("Failed to create directory: {e}");
+        }
+        info!("Writing the proof to {:?}", proof_path);
+        std::fs::write(proof_path, serde_json::to_string_pretty(&pp_output).unwrap())
+            .expect("failed to write proof");
+    } else {
+        info!("Proof: {:?}", pp_output);
+    }
+} 

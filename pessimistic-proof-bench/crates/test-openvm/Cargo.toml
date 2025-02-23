@@ -12,6 +12,7 @@ agglayer-primitives.workspace = true
 agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
 pessimistic-proof = { path = "../pessimistic-proof" }
 pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
+pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
 
 base64.workspace = true
 bincode.workspace = true
@@ -38,6 +39,10 @@ openvm-circuit = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0
 openvm-stark-backend = { git = "https://github.com/openvm-org/stark-backend.git", tag = "v1.0.0-rc.0", default-features = false }
 openvm-stark-sdk = { git = "https://github.com/openvm-org/stark-backend.git", tag = "v1.0.0-rc.0", default-features = false }
 openvm-transpiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
+openvm-keccak256-circuit = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
+openvm-keccak256-transpiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
+openvm-rv32im-transpiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
+openvm-rv32im-circuit = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
 
 [dev-dependencies]
 rstest.workspace = true

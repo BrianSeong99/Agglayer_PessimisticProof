@@ -1,23 +1,27 @@
+#![no_std]
+#![no_main]
+
+use openvm_sdk::io::{read, reveal};
+
 use bincode::Options;
-use pessimistic_proof_core::local_exit_tree::hasher::Keccak256Hasher;
-use pessimistic_proof_core::multi_batch_header::MultiBatchHeader;
-use pessimistic_proof_core::{generate_pessimistic_proof, NetworkState, PessimisticProofOutput};
+use pessimistic_proof_core::{
+    local_exit_tree::hasher::Keccak256Hasher,
+    multi_batch_header::MultiBatchHeader,
+    NetworkState,
+    generate_pessimistic_proof,
+    PessimisticProofOutput,
+};
 
-use openvm::io::{read, reveal};
-
-openvm::entry!(main);
-
+#[no_mangle]
 pub fn main() {
-    let initial_state: NetworkState = read();
-    let batch_header: MultiBatchHeader<Keccak256Hasher> = read();
+    // Read inputs using read
+    let initial_state: NetworkState = bincode::deserialize(&read()).unwrap();
+    let batch_header: MultiBatchHeader<Keccak256Hasher> = bincode::deserialize(&read()).unwrap();
 
+    // Generate the proof
     let outputs = generate_pessimistic_proof(initial_state, &batch_header).unwrap();
 
-    let pp_inputs = PessimisticProofOutput::bincode_options()
-        .serialize(&outputs)
-        .unwrap();
-
-    for (index, &element) in pp_inputs.iter().enumerate() {
-        reveal(element as u32, index);
-    }
+    // Serialize and output the result
+    let output_bytes = bincode::serialize(&outputs).unwrap();
+    openvm_sdk::io::write(&output_bytes);
 }

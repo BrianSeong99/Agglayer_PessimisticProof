@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = ["crates/*"]
-exclude = ["crates/program-pico", "crates/program-valida"]
+exclude = ["crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/program-openvm", "crates/test-openvm"]
 
 [workspace.package]
 version = "0.2.1"

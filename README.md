@@ -456,7 +456,7 @@ Then you will get an elf file at `pessimistic-proof-bench/crates/program-sp1/elf
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench
-cargo run --release --package test-sp1 --bin ppgen
+RUST_LOG=info cargo run --release --package test-sp1 --bin ppgen
 ```
 
 ### 2.Benchmark on Lita Valida
@@ -505,7 +505,7 @@ Then you will get an elf file at `pessimistic-proof-bench/crates/program-openvm/
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench
-cargo run --release --package test-openvm --bin ppgen
+RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
 ```
 
 ### 4.Benchmark on Brevis Pico
