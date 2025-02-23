@@ -67,11 +67,11 @@ pub fn main() {
 
     let certificate = state.apply_events(&imported_bridge_exits, &bridge_exits);
 
-    // info!(
-    //     "Certificate {}: [{}]",
-    //     certificate.hash(),
-    //     serde_json::to_string(&certificate).unwrap()
-    // );
+    info!(
+        "Certificate {}: [{}]",
+        certificate.hash(),
+        serde_json::to_string(&certificate).unwrap()
+    );
 
     let l1_info_root = certificate.l1_info_root().unwrap().unwrap_or_default();
     let multi_batch_header = old_state
@@ -106,7 +106,7 @@ pub fn main() {
     let proof = client.prove_fast().expect("proving failed");
     let duration = start.elapsed();
     info!(
-        "Successfully generated the plonk proof with a latency of {:?}",
+        "Successfully generated the proof with a latency of {:?}",
         duration
     );
 
