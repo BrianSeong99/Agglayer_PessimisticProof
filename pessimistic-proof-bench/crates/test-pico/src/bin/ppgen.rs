@@ -65,11 +65,11 @@ pub fn main() {
 
     let certificate = state.apply_events(&imported_bridge_exits, &bridge_exits);
 
-    info!(
-        "Certificate {}: [{}]",
-        certificate.hash(),
-        serde_json::to_string(&certificate).unwrap()
-    );
+    // info!(
+    //     "Certificate {}: [{}]",
+    //     certificate.hash(),
+    //     serde_json::to_string(&certificate).unwrap()
+    // );
 
     let l1_info_root = certificate.l1_info_root().unwrap().unwrap_or_default();
     let multi_batch_header = old_state
