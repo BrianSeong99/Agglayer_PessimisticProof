@@ -4,6 +4,7 @@ use agglayer_types::{Certificate, U256};
 use clap::Parser;
 use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
 use pessimistic_proof::PessimisticProofOutput;
+use pessimistic_proof_core::{generate_pessimistic_proof, NetworkState};
 use pessimistic_proof_test_suite::sample_data::{self as data};
 use serde::{Deserialize, Serialize};
 use tracing::{info, warn};
@@ -59,6 +60,7 @@ pub fn main() {
 
     let mut state = data::sample_state_00();
     let old_state = state.state_b.clone();
+    let old_network_state = NetworkState::from(old_state.clone());
 
     let bridge_exits = get_events(args.n_exits, args.sample_path.clone());
     let imported_bridge_exits = get_events(args.n_imported_exits, args.sample_path);
@@ -76,6 +78,16 @@ pub fn main() {
         .make_multi_batch_header(&certificate, state.get_signer(), l1_info_root)
         .unwrap();
 
+    // Validate inputs by running generate_pessimistic_proof first
+    match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
+        Ok(_) => {
+            info!("Input validation successful, proceeding with proof generation");
+        }
+        Err(e) => {
+            panic!("Input validation failed: {:?}", e);
+        }
+    }
+
     info!(
         "Generating the proof for {} bridge exit(s) and {} imported bridge exit(s)",
         bridge_exits.len(),
@@ -87,7 +99,7 @@ pub fn main() {
     let stdin_builder = client.get_stdin_builder();
 
     // Write inputs to the VM
-    stdin_builder.borrow_mut().write(&old_state);
+    stdin_builder.borrow_mut().write(&old_network_state);
     stdin_builder.borrow_mut().write(&multi_batch_header);
 
     let start = Instant::now();
