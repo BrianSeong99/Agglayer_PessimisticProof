@@ -534,12 +534,13 @@ Version used:
 - RiscZero zkVM: v1.2.4
 
 > If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
+> Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
 
 You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
 ```bash
 cd pessimistic-proof-bench/crates/pp-risc0/host
 RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
-RISC0_DEV_MODE=0 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Actual Proof Generation
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
 ```
 
 ### 6.Benchmark on Nexus zkVM
