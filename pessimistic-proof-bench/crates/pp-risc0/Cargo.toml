@@ -14,8 +14,3 @@ opt-level = 3
 [profile.release]
 debug = 1
 lto = true
-
-[features]
-cuda = ["risc0-zkvm/cuda"]
-default = []
-prove = ["risc0-zkvm/prove"]
