@@ -36,3 +36,8 @@ tracing.workspace = true
 uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
 serde_cbor = "0.11.2"
+
+[features]
+cuda = ["risc0-zkvm/cuda"]
+default = []
+prove = ["risc0-zkvm/prove"]
