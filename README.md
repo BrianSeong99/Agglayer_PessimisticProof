@@ -539,7 +539,7 @@ You can build & test the pessimistic-proof-program in Risc0 zkVM via this comman
 ```bash
 cd pessimistic-proof-bench/crates/pp-risc0/host
 RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
-RISC0_DEV_MODE=0 cargo run --release # for Actual Proof Generation
+RISC0_DEV_MODE=0 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Actual Proof Generation
 ```
 
 ### 6.Benchmark on Nexus zkVM
