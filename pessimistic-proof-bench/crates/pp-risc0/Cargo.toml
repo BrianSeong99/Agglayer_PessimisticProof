@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 host = { path = "./host" }
 methods = { path = "./methods" }
+risc0-zkvm = { version = "1.2.4", features = ["cuda"]}
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]
