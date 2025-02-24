@@ -443,7 +443,7 @@ Version used:
 - sp1-sdk: 4.1.0
 - sp1-core-machine: 4.1.0
 
-If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
+> If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
@@ -464,7 +464,7 @@ RUST_LOG=info cargo run --release --package test-sp1 --bin ppgen
 Version used:
 - valida: v0.8.0-alpha-arm64
 
-If you haven't installed valida docker tool, you can do so via following this [guide](https://lita.gitbook.io/lita-documentation/quick-start/installation-and-system-requirements). Try to run this in a Linux machine.
+> If you haven't installed valida docker tool, you can do so via following this [guide](https://lita.gitbook.io/lita-documentation/quick-start/installation-and-system-requirements). Try to run this in a Linux machine.
 
 You can build the Valida Pessimistic Proof ELF by running this command:
 ```bash
@@ -491,7 +491,7 @@ Version used:
 - OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
 - stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
 
-If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
+> If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
 
 You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
@@ -513,7 +513,7 @@ RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
 Version used:
 - Pico zkVM: 1.0.0
 
-If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
+> If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
 
 You can build the Pico zkVM Pessimistic Proof ELF by running this command:
 ```bash
@@ -531,20 +531,14 @@ RUST_LOG=info cargo run --release
 ### 5.Benchmark on RiscZero zkVM
 
 Version used:
-- RiscZero zkVM: 
+- RiscZero zkVM: v1.2.4
 
-If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
+> If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
 
-You can build the RiscZero zkVM Pessimistic Proof ELF by running this command:
+You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
 ```bash
-
-```
-
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-risc0/elf/....`.
-
-You can then test the pessimistic-proof-program in Risc0 zkVM via this command at root folder:
-```bash
-RISC0_DEV_MODE=1 cargo run --release # for Dev Mode
+cd pessimistic-proof-bench/crates/pp-risc0/host
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
 RISC0_DEV_MODE=0 cargo run --release # for Actual Proof Generation
 ```
 

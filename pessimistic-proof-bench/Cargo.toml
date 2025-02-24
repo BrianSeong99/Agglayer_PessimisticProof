@@ -1,6 +1,9 @@
 [workspace]
 resolver = "2"
-members = ["crates/*"]
+members = [
+    "crates/*",
+    "crates/pp-risc0/methods/guest"
+]
 exclude = ["crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/program-openvm", "crates/test-openvm"]
 
 [workspace.package]

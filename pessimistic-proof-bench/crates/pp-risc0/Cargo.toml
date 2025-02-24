@@ -1,0 +1,16 @@
+[package]
+name = "pp-risc0"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+host = { path = "./host" }
+methods = { path = "./methods" }
+
+# Always optimize; building and running the guest takes much longer without optimization.
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+debug = 1
+lto = true
