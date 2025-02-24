@@ -10,6 +10,9 @@ path = "src/lib.rs"
 name = "host"
 path = "src/main.rs"
 
+[features]
+cuda = []
+
 [dependencies]
 methods = { path = "../methods" }
 risc0-zkvm = { version = "1.2.4", features = ["cuda"] }
