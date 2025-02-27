@@ -135,22 +135,22 @@ fn main() {
         duration
     );
 
-    // Get the proof output from stdout
-    let pp_output: PessimisticProofOutput = bincode::deserialize(&result.stdout).unwrap();
+    // // Get the proof output from stdout
+    // let pp_output: PessimisticProofOutput = bincode::deserialize(&result.unwrap()).unwrap();
     
-    if let Some(proof_dir) = args.proof_dir {
-        let proof_path = proof_dir.join(format!(
-            "{}-exits-{}.json",
-            args.n_exits,
-            Uuid::new_v4()
-        ));
-        if let Err(e) = std::fs::create_dir_all(&proof_dir) {
-            warn!("Failed to create directory: {e}");
-        }
-        info!("Writing the proof to {:?}", proof_path);
-        std::fs::write(proof_path, serde_json::to_string_pretty(&pp_output).unwrap())
-            .expect("failed to write proof");
-    } else {
-        info!("Proof: {:?}", pp_output);
-    }
+    // if let Some(proof_dir) = args.proof_dir {
+    //     let proof_path = proof_dir.join(format!(
+    //         "{}-exits-{}.json",
+    //         args.n_exits,
+    //         Uuid::new_v4()
+    //     ));
+    //     if let Err(e) = std::fs::create_dir_all(&proof_dir) {
+    //         warn!("Failed to create directory: {e}");
+    //     }
+    //     info!("Writing the proof to {:?}", proof_path);
+    //     std::fs::write(proof_path, serde_json::to_string_pretty(&pp_output).unwrap())
+    //         .expect("failed to write proof");
+    // } else {
+    //     info!("Proof: {:?}", pp_output);
+    // }
 } 
