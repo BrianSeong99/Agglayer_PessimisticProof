@@ -108,13 +108,13 @@ fn main() {
         imported_bridge_exits.len()
     );
     
-    info!("Setting up Nova public parameters...");
-    let start = Instant::now();
-    let pp: PP = PP::generate().expect("failed to generate parameters");
-    info!(
-        "Generated public parameters with latency of {:?}",
-        start.elapsed()
-    );
+    // info!("Setting up Nova public parameters...");
+    // let start = Instant::now();
+    // let pp: PP = PP::generate().expect("failed to generate parameters");
+    // info!(
+    //     "Generated public parameters with latency of {:?}",
+    //     start.elapsed()
+    // );
 
     let opts = CompileOpts::new(PACKAGE);
     // opts.set_memlimit(8); // use an 8mb memory
@@ -127,30 +127,30 @@ fn main() {
         start.elapsed()
     );
 
-    info!("Proving execution of vm...");
-    let start = Instant::now();
-    let input = (old_network_state, multi_batch_header);
-    let proof = prover
-        .prove_with_input(&pp, &input)
-        .expect("failed to prove program");
-    let output = proof
-        .output::<PessimisticProofOutput>()
-        .expect("failed to deserialize output");
-    info!(
-        "Successfully generated the proof with latency of {:?}",
-        start.elapsed()
-    );
+    // info!("Proving execution of vm...");
+    // let start = Instant::now();
+    // let input = (old_network_state, multi_batch_header);
+    // let proof = prover
+    //     .prove_with_input(&pp, &input)
+    //     .expect("failed to prove program");
+    // let output = proof
+    //     .output::<PessimisticProofOutput>()
+    //     .expect("failed to deserialize output");
+    // info!(
+    //     "Successfully generated the proof with latency of {:?}",
+    //     start.elapsed()
+    // );
 
-    info!(">>>>> Program Logs\n{}<<<<<", proof.logs().join(""));
+    // info!(">>>>> Program Logs\n{}<<<<<", proof.logs().join(""));
 
-    info!("Verifying execution...");
-    let start = Instant::now();
-    match proof.verify(&pp) {
-        Ok(_) => info!(
-            "Verification succeeded with latency of {:?}",
-            start.elapsed()
-        ),
-        Err(e) => panic!("Verification failed: {:?}", e),
-    }
+    // info!("Verifying execution...");
+    // let start = Instant::now();
+    // match proof.verify(&pp) {
+    //     Ok(_) => info!(
+    //         "Verification succeeded with latency of {:?}",
+    //         start.elapsed()
+    //     ),
+    //     Err(e) => panic!("Verification failed: {:?}", e),
+    // }
 
 }

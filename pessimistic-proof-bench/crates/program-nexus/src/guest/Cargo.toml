@@ -1,8 +1,0 @@
-[package]
-name = "pp-nexus-guest"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-pessimistic-proof-core = { path = "../../../pessimistic-proof-core" }
-bincode = "1.3.3"
