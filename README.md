@@ -544,3 +544,14 @@ RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features
 ```
 
 ### 6.Benchmark on Nexus zkVM
+
+Version used:
+- RiscZero zkVM: v0.2.4
+
+> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
+
+You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
+```bash
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run -r --bin program-nexus
+```

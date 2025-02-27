@@ -4,7 +4,7 @@ members = [
     "crates/*",
     "crates/pp-risc0/methods/guest"
 ]
-exclude = ["crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/program-openvm", "crates/test-openvm"]
+exclude = ["crates/pp-risc0","crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/program-openvm", "crates/test-openvm"]
 
 [workspace.package]
 version = "0.2.1"
