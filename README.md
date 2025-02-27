@@ -45,11 +45,11 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
   - [Reports](#reports)
   - [How to Benchmark?](#how-to-benchmark)
     - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
-    - [2.Benchmark on Lita Valida](#2benchmark-on-lita-valida)
-    - [3.\[WIP\] Benchmark on Axiom OpenVM](#3wip-benchmark-on-axiom-openvm)
-    - [4.Benchmark on Brevis Pico](#4benchmark-on-brevis-pico)
-    - [5.Benchmark on RiscZero zkVM](#5benchmark-on-risczero-zkvm)
-    - [6.Benchmark on Nexus zkVM](#6benchmark-on-nexus-zkvm)
+    - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
+    - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
+    - [4.Benchmark on Nexus zkVM](#4benchmark-on-nexus-zkvm)
+    - [5.\[WIP\] Benchmark on Lita Valida](#5wip-benchmark-on-lita-valida)
+    - [6.\[WIP\] Benchmark on Axiom OpenVM](#6wip-benchmark-on-axiom-openvm)
 
 
 # Architecture of Pessimistic Proof
@@ -459,7 +459,55 @@ cd pessimistic-proof-bench
 RUST_LOG=info cargo run --release --package test-sp1 --bin ppgen
 ```
 
-### 2.Benchmark on Lita Valida
+### 2.Benchmark on Brevis Pico
+
+Version used:
+- Pico zkVM: 1.0.0
+
+> If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
+
+You can build the Pico zkVM Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/program-pico
+RUST_LOG=info cargo pico build --output-directory elf
+```
+
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
+You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
+```bash
+cd pessimistic-proof-bench/crates/test-pico
+RUST_LOG=info cargo run --release 
+```
+
+### 3.Benchmark on RiscZero zkVM
+
+Version used:
+- RiscZero zkVM: v1.2.4
+
+> If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
+> Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
+
+You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
+```bash
+cd pessimistic-proof-bench/crates/pp-risc0/host
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
+```
+
+### 4.Benchmark on Nexus zkVM
+
+Version used:
+- Nexus zkVM: v0.2.4
+
+> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
+
+You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
+```bash
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run -r --bin program-nexus
+```
+
+### 5.[WIP] Benchmark on Lita Valida
 
 Version used:
 - valida: v0.8.0-alpha-arm64
@@ -485,7 +533,7 @@ cd pessimistic-proof-bench
 cargo run --release --package test-valida --bin ppgen
 ```
 
-### 3.[WIP] Benchmark on Axiom OpenVM
+### 6.[WIP] Benchmark on Axiom OpenVM
 
 Version used: 
 - OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
@@ -506,52 +554,4 @@ You can then test the pessimsitic-proof-program in SP1 via this command at root 
 ```bash
 cd pessimistic-proof-bench
 RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
-```
-
-### 4.Benchmark on Brevis Pico
-
-Version used:
-- Pico zkVM: 1.0.0
-
-> If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
-
-You can build the Pico zkVM Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-bench/crates/program-pico
-RUST_LOG=info cargo pico build --output-directory elf
-```
-
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
-You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
-```bash
-cd pessimistic-proof-bench/crates/test-pico
-RUST_LOG=info cargo run --release 
-```
-
-### 5.Benchmark on RiscZero zkVM
-
-Version used:
-- RiscZero zkVM: v1.2.4
-
-> If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
-> Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
-
-You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
-```bash
-cd pessimistic-proof-bench/crates/pp-risc0/host
-RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
-RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
-```
-
-### 6.Benchmark on Nexus zkVM
-
-Version used:
-- RiscZero zkVM: v0.2.4
-
-> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
-
-You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
-```bash
-cd pessimistic-proof-bench/
-RUST_LOG=info cargo run -r --bin program-nexus
 ```
