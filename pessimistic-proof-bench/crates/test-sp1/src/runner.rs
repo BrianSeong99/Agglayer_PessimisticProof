@@ -2,7 +2,7 @@ use bincode::config::Options;
 use pessimistic_proof::NetworkState;
 pub use pessimistic_proof::PessimisticProofOutput;
 
-use sp1_sdk::SP1PublicValues;
+use sp1_sdk::{Prover, SP1PublicValues};
 pub use sp1_sdk::{ExecutionReport, SP1Proof};
 use sp1_sdk::{SP1ProofWithPublicValues, SP1Stdin, SP1VerifyingKey};
 
@@ -16,7 +16,7 @@ pub struct ProofOutput {}
 
 /// A convenient interface to run the pessimistic proof ELF bytecode.
 pub struct Runner {
-    client: sp1_sdk::EnvProver,
+    client: sp1_sdk::CudaProver,
 }
 
 impl Default for Runner {
@@ -28,11 +28,11 @@ impl Default for Runner {
 impl Runner {
     /// Create a new pessimistic proof client.
     pub fn new() -> Self {
-        Self::from_client(sp1_sdk::ProverClient::from_env())
+        Self::from_client(sp1_sdk::ProverClient::builder().cuda().build())
     }
 
     /// Create a new pessimistic proof client from a custom generic client.
-    pub fn from_client(client: sp1_sdk::EnvProver) -> Self {
+    pub fn from_client(client: sp1_sdk::CudaProver) -> Self {
         Self { client }
     }
 
