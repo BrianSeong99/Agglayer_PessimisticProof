@@ -451,8 +451,6 @@ cd pessimistic-proof-bench/crates/pp-sp1/pp-sp1-guest
 cargo prove build --output-directory pp-sp1-guest/elf
 ```
 
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-sp1/elf/riscv32im-succinct-zkvm-elf`.
-
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench
@@ -472,7 +470,6 @@ cd pessimistic-proof-bench/crates/pp-pico/pp-pico-guest
 RUST_LOG=info cargo pico build --output-directory elf
 ```
 
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
 cd pessimistic-proof-bench/
@@ -509,12 +506,10 @@ cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will gene
 cargo openvm build --no-transpile # This is for accessing the built using SDK.
 ```
 
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-openvm/elf/riscv32im-openvm-zkvm-elf`.
-
-You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
+You can then test the pessimsitic-proof-program in OpenVM via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench
-RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
+RUST_LOG=info cargo run --release --package pp-openvm-host --bin ppgen
 ```
 
 ### 5.[WIP] Benchmark on Lita Valida
@@ -534,8 +529,6 @@ docker run --platform linux/arm64 --entrypoint=/bin/bash -it --rm -v $(realpath 
 # Run this inside the container
 cargo +valida build --release
 ```
-
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-valida/target/valida-unknown-baremetal-gnu/release/program-valida`.
 
 You can then test the pessimsitic-proof-program in Valida via this command at root folder: 
 ```bash

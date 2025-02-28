@@ -21,6 +21,7 @@ use agglayer_types::U256;
 use clap::Parser;
 use tracing::{info, warn};
 use uuid::Uuid;
+use bincode::{serialize, deserialize};
 
 /// The arguments for the pp generator.
 #[derive(Parser, Debug)]
@@ -64,7 +65,7 @@ fn main() {
 
     // Load the ELF file
     let elf = Elf::decode(
-        include_bytes!("../../../../../target/riscv32im-risc0-zkvm-elf/release/pp-openvm-guest"),
+        include_bytes!("../../../pp-openvm-guest/target/riscv32im-risc0-zkvm-elf/release/pp-openvm-guest"),
         MEM_SIZE as u32,
     ).unwrap();
     info!("Loaded ELF file, length: {}", elf.instructions.len());
@@ -121,9 +122,8 @@ fn main() {
     let executor = VmExecutor::<BabyBear, _>::new(config);
 
     // Serialize test data
-    let config_serialize = standard();
-    let mut input_data = encode_to_vec(&old_network_state, config_serialize)?;
-    let batch_header_bytes = encode_to_vec(&multi_batch_header, config_serialize)?;
+    let mut input_data = serialize(&old_network_state).unwrap();
+    let batch_header_bytes = serialize(&multi_batch_header).unwrap();
     input_data.extend(batch_header_bytes);
 
     // Create stdin from serialized data
