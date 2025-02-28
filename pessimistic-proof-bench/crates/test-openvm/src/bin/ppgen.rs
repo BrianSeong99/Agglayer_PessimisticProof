@@ -120,15 +120,17 @@ fn main() {
     config.system = config.system.with_continuations();
     let executor = VmExecutor::<BabyBear, _>::new(config);
 
-    // Prepare input data as bytes
-    let mut input_data = Vec::new();
-    input_data.extend_from_slice(&bincode::serialize(&old_network_state).unwrap());
-    input_data.extend_from_slice(&bincode::serialize(&multi_batch_header).unwrap());
+    // Serialize test data
+    let config_serialize = standard();
+    let mut input_data = encode_to_vec(&initial_state, config_serialize)?;
+    let batch_header_bytes = encode_to_vec(&batch_header, config_serialize)?;
+    input_data.extend(batch_header_bytes);
+
+    // Create stdin from serialized data
+    let stdin = StdIn::from_bytes(&input_data);
 
     let start = Instant::now();
-    let result = executor
-        .execute(exe.clone(), StdIn::from_bytes(&input_data))
-        .unwrap();
+    let result = exe.run(Rv32ImConfig::default(), stdin).unwrap();
     let duration = start.elapsed();
     info!(
         "Successfully generated the proof with a latency of {:?}",
