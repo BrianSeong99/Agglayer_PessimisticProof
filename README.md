@@ -450,31 +450,38 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Pico | ✅                | ❌        | ✅        |
 | RiscZero | ❌(Will Add Soon)| ❌       | ✅       |
 | OpenVM | Coming Soon  | Coming Soon | Coming Soon |
-| Valida | -               | -       | -        |
+| Valida | Coming Soon | Coming Soon  | Coming Soon |
+| Nexus (std library not supported) | - | - | - |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642 | 100M | 100M     | -      | -      |
-| Time(Seconds) | 123.85   | 10s  | 10s      | -      | -      |
+| Cycle Count   | 5009642 | 100M | 82313216 | -      | -      |
+| Time(Seconds) | 123.85   | 10s  | 76.81   | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 20161597  | 100M | 100M     | -      | -      |
-| Time          | 135.62   | 10s  | 10s      | -      | -      |
+| Cycle Count   | 20161597  | 100M | 295698432 | -      | -      |
+| Time(Seconds) | 135.62   | 10s  | 277.53      | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
 | Cycle Count   | 40011300  | 100M | 100M     | -      | -      |
-| Time          | 142.89   | 10s  | 10s      | -      | -      |
+| Time(Seconds) | 142.89   | 10s  | 10s      | -      | -      |
 
 ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 100M  | 100M | 100M     | -      | -      |
-| Time          | 10s   | 10s  | 10s      | -      | -      |
+| Cycle Count   | 194751260  | 100M | 100M     | -      | -      |
+| Time(Seconds) | 227.19   | 10s  | 10s      | -      | -      |
+
+### 1000 Bridge Exits & 1000 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 389952652  | 100M | 100M     | -      | -      |
+| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      |
 
 ## How to Benchmark?
 
