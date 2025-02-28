@@ -447,7 +447,7 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | zkVM | Used Precompiles? | Used AVX? | Used GPU? |
 |------|-------------------|-----------|-----------|
 | SP1(Plonky3)  | ✅               | ❌       | ✅        |
-| Pico(Plonky3) | ✅                | ✅        | ❌        |
+| Pico(Plonky3) | ✅                | ❌(Will Add Soon)        | ❌        |
 | RiscZero | ❌(Will Add Soon)| ❌       | ✅       |
 | OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
 | Valida | Coming Soon | Coming Soon  | Coming Soon |
@@ -468,8 +468,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 40011300  | 100M | 576192512     | -      | -      |
-| Time(Seconds) | 142.89   | 10s  | 543.87      | -      | -      |
+| Cycle Count   | 40011300  | - (Took too long) | 576192512     | -      | -      |
+| Time(Seconds) | 142.89   | - (Took too long)  | 543.87      | -      | -      |
 
 <!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
