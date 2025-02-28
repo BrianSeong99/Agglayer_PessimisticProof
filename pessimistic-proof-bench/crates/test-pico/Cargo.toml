@@ -31,7 +31,7 @@ uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
 serde_cbor = "0.11.2"
 
-pico-sdk = { git = "https://github.com/brevis-network/pico" }
+pico-sdk = { git = "https://github.com/brevis-network/pico", features = ["prover"] }
 
 [dev-dependencies]
 rstest.workspace = true
