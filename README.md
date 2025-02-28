@@ -456,7 +456,7 @@ Then you will get an elf file at `pessimistic-proof-bench/crates/program-sp1/elf
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench
-RUST_LOG=info cargo run --release --package test-sp1 --bin ppgen
+RUST_LOG=info cargo run --release --package pp-sp1-host --bin ppgen
 ```
 
 ### 2.Benchmark on Brevis Pico

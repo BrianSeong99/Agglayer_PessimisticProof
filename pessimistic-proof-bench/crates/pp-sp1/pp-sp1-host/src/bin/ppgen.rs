@@ -6,7 +6,7 @@ use clap::Parser;
 use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
 use pessimistic_proof::PessimisticProofOutput;
 use pessimistic_proof_test_suite::sample_data::{self as data};
-use test_sp1::runner::Runner;
+use pp_sp1_host::runner::Runner;
 use serde::{Deserialize, Serialize};
 use sp1_sdk::HashableKey;
 use tracing::{info, warn};
