@@ -55,7 +55,7 @@ pub fn main() {
     let args = PPGenArgs::parse();
 
     // Load the ELF file
-    let elf = std::fs::read("../pp-pico-guest/elf/riscv32im-pico-zkvm-elf").expect("Failed to load ELF file");
+    let elf = std::fs::read("crates/pp-pico/pp-pico-guest/elf/riscv32im-pico-zkvm-elf").expect("Failed to load ELF file");
     info!("Loaded ELF file, length: {}", elf.len());
 
     let mut state = data::sample_state_00();

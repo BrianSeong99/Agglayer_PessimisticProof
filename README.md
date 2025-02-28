@@ -475,8 +475,8 @@ RUST_LOG=info cargo pico build --output-directory elf
 Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
-cd pessimistic-proof-bench/crates/pp-pico/pp-pico-host
-RUST_LOG=info cargo run --release 
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
 ```
 
 ### 3.Benchmark on RiscZero zkVM
