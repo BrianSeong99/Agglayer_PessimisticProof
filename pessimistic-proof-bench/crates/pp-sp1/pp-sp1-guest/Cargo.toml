@@ -1,12 +1,12 @@
 [package]
-name = "program-sp1"
+name = "pp-sp1-guest"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
 bincode = "1.3.3"
-pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
+pessimistic-proof-core = { path = "../../pessimistic-proof-core", default-features = false }
 sp1-zkvm = "=4.1.0"
 
 [build-dependencies]

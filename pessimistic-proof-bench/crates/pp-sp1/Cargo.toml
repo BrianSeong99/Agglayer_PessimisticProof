@@ -1,0 +1,16 @@
+[package]
+name = "pp-sp1"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pp-sp1-host = { path = "./pp-sp1-host" }
+pp-sp1-guest = { path = "./pp-sp1-guest" }
+
+# Always optimize; building and running the guest takes much longer without optimization.
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+debug = 1
+lto = true

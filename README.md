@@ -447,8 +447,8 @@ Version used:
 
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-bench/crates/program-sp1
-cargo prove build --output-directory program-sp1/elf
+cd pessimistic-proof-bench/crates/pp-sp1/pp-sp1-guest
+cargo prove build --output-directory pp-sp1-guest/elf
 ```
 
 Then you will get an elf file at `pessimistic-proof-bench/crates/program-sp1/elf/riscv32im-succinct-zkvm-elf`.

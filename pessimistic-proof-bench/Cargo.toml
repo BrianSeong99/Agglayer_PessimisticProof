@@ -1,11 +1,16 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/*",
-    "crates/pp-risc0/methods/guest",
-    "crates/program-nexus/src/pp-nexus-guest"
+    "crates/agglayer-primitives",
+    "crates/agglayer-types",
+    "crates/pessimistic-proof",
+    "crates/pessimistic-proof-core",
+    "crates/pessimistic-proof-test-suite",
+    "crates/pp-sp1*",
+    # "crates/pp-risc0/methods/guest",
+    # "crates/pp-nexus/src/pp-nexus-guest"
 ]
-exclude = ["crates/pp-risc0","crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/program-openvm"]
+# exclude = ["crates/pp-risc0","crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/pp-openvm"]
 
 [workspace.package]
 version = "0.2.1"

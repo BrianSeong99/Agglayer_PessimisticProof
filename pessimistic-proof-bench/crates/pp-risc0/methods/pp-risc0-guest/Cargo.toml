@@ -1,5 +1,5 @@
 [package]
-name = "program_risc0"
+name = "pp-risc0-guest"
 version = "0.1.0"
 edition = "2021"
 

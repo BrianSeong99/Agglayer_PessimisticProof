@@ -1,5 +1,5 @@
 [package]
-name = "test-sp1"
+name = "pp-sp1-host"
 version.workspace = true
 edition.workspace = true
 
@@ -9,9 +9,9 @@ path = "src/bin/ppgen.rs"
 
 [dependencies]
 agglayer-primitives.workspace = true
-agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
-pessimistic-proof = { path = "../pessimistic-proof" }
-pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
+agglayer-types = { path = "../../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../../pessimistic-proof" }
+pessimistic-proof-test-suite = { path = "../../pessimistic-proof-test-suite" }
 
 base64.workspace = true
 bincode.workspace = true
