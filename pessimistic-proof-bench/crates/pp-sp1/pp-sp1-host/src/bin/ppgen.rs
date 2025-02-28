@@ -64,11 +64,11 @@ pub fn main() {
 
     let certificate = state.apply_events(&imported_bridge_exits, &bridge_exits);
 
-    info!(
-        "Certificate {}: [{}]",
-        certificate.hash(),
-        serde_json::to_string(&certificate).unwrap()
-    );
+    // info!(
+    //     "Certificate {}: [{}]",
+    //     certificate.hash(),
+    //     serde_json::to_string(&certificate).unwrap()
+    // );
 
     let l1_info_root = certificate.l1_info_root().unwrap().unwrap_or_default();
     let multi_batch_header = old_state
@@ -94,32 +94,32 @@ pub fn main() {
     let vkey = vk.bytes32().to_string();
     info!("vkey: {}", vkey);
 
-    let fixture = PessimisticProofFixture {
-        certificate,
-        pp_inputs: new_roots.into(),
-        signer: state.get_signer(),
-        vkey: vkey.clone(),
-        public_values: format!("0x{}", hex::encode(proof.public_values.as_slice())),
-        proof: format!("0x{}", hex::encode(proof.bytes())),
-    };
+    // let fixture = PessimisticProofFixture {
+    //     certificate,
+    //     pp_inputs: new_roots.into(),
+    //     signer: state.get_signer(),
+    //     vkey: vkey.clone(),
+    //     public_values: format!("0x{}", hex::encode(proof.public_values.as_slice())),
+    //     proof: format!("0x{}", hex::encode(proof.bytes())),
+    // };
 
-    if let Some(proof_dir) = args.proof_dir {
-        // Save the plonk proof to a json file.
-        let proof_path = proof_dir.join(format!(
-            "{}-exits-v{}-{}.json",
-            args.n_exits,
-            &vkey[..8],
-            Uuid::new_v4()
-        ));
-        if let Err(e) = std::fs::create_dir_all(&proof_dir) {
-            warn!("Failed to create directory: {e}");
-        }
-        info!("Writing the proof to {:?}", proof_path);
-        std::fs::write(proof_path, serde_json::to_string_pretty(&fixture).unwrap())
-            .expect("failed to write fixture");
-    } else {
-        info!("Proof: {:?}", fixture);
-    }
+    // if let Some(proof_dir) = args.proof_dir {
+    //     // Save the plonk proof to a json file.
+    //     let proof_path = proof_dir.join(format!(
+    //         "{}-exits-v{}-{}.json",
+    //         args.n_exits,
+    //         &vkey[..8],
+    //         Uuid::new_v4()
+    //     ));
+    //     if let Err(e) = std::fs::create_dir_all(&proof_dir) {
+    //         warn!("Failed to create directory: {e}");
+    //     }
+    //     info!("Writing the proof to {:?}", proof_path);
+    //     std::fs::write(proof_path, serde_json::to_string_pretty(&fixture).unwrap())
+    //         .expect("failed to write fixture");
+    // } else {
+    //     info!("Proof: {:?}", fixture);
+    // }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

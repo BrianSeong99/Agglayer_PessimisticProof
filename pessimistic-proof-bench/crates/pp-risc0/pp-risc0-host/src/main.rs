@@ -72,11 +72,11 @@ pub fn main() {
     // Apply events and get certificate
     let certificate = state.apply_events(&imported_bridge_exits, &bridge_exits);
 
-    info!(
-        "Certificate {}: [{}]",
-        certificate.hash(),
-        serde_json::to_string(&certificate).unwrap()
-    );
+    // info!(
+    //     "Certificate {}: [{}]",
+    //     certificate.hash(),
+    //     serde_json::to_string(&certificate).unwrap()
+    // );
 
     // Prepare batch header
     let l1_info_root = certificate.l1_info_root().unwrap().unwrap_or_default();
@@ -129,24 +129,24 @@ pub fn main() {
     // Get the proof output
     let output: PessimisticProofOutput = receipt.journal.decode().unwrap();
 
-    // Handle proof output directory if specified
-    if let Some(proof_dir) = args.proof_dir {
-        let proof_path = proof_dir.join(format!(
-            "{}-exits-{}.json",
-            args.n_exits,
-            Uuid::new_v4()
-        ));
+    // // Handle proof output directory if specified
+    // if let Some(proof_dir) = args.proof_dir {
+    //     let proof_path = proof_dir.join(format!(
+    //         "{}-exits-{}.json",
+    //         args.n_exits,
+    //         Uuid::new_v4()
+    //     ));
         
-        if let Err(e) = std::fs::create_dir_all(&proof_dir) {
-            warn!("Failed to create directory: {e}");
-        }
+    //     if let Err(e) = std::fs::create_dir_all(&proof_dir) {
+    //         warn!("Failed to create directory: {e}");
+    //     }
         
-        info!("Writing proof to {:?}", proof_path);
-        std::fs::write(
-            proof_path,
-            serde_json::to_string_pretty(&output).unwrap()
-        ).expect("failed to write proof");
-    } else {
-        info!("Proof output: {:?}", output);
-    }
+    //     info!("Writing proof to {:?}", proof_path);
+    //     std::fs::write(
+    //         proof_path,
+    //         serde_json::to_string_pretty(&output).unwrap()
+    //     ).expect("failed to write proof");
+    // } else {
+    //     info!("Proof output: {:?}", output);
+    // }
 }

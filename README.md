@@ -435,6 +435,47 @@ This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglaye
 
 ## Reports
 
+The Benchmark was conducted in the following machine:
+- 32 AMD EPYC 7B13 vCPUs
+- 92 GB RAM
+- 1x GeForce RTX 4090 GPU with 24 GB VRAM
+- 100 GB Storage
+
+Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
+Here's a spec of their characteristics that we utilized in this benchmark:
+
+| zkVM | Used Precompiles? | Used AVX? | Used GPU? |
+|------|-------------------|-----------|-----------|
+| SP1  | ✅               | ❌       | ✅        |
+| Pico | ✅                | ❌        | ✅        |
+| RiscZero | ❌(Will Add Soon)| ❌       | ✅       |
+| OpenVM | Coming Soon  | Coming Soon | Coming Soon |
+| Valida | -               | -       | -        |
+
+### 10 Bridge Exits & 10 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 5009642 | 100M | 100M     | -      | -      |
+| Time(Seconds) | 123.85   | 10s  | 10s      | -      | -      |
+
+### 50 Bridge Exits & 50 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 20161597  | 100M | 100M     | -      | -      |
+| Time          | 135.62   | 10s  | 10s      | -      | -      |
+
+### 100 Bridge Exits & 100 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 40011300  | 100M | 100M     | -      | -      |
+| Time          | 142.89   | 10s  | 10s      | -      | -      |
+
+### 500 Bridge Exits & 500 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 100M  | 100M | 100M     | -      | -      |
+| Time          | 10s   | 10s  | 10s      | -      | -      |
+
 ## How to Benchmark?
 
 ### 1.Benchmark on Succinct SP1
