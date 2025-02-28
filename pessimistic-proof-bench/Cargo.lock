@@ -7905,6 +7905,7 @@ dependencies = [
  "openvm-circuit",
  "openvm-keccak256-circuit",
  "openvm-keccak256-transpiler",
+ "openvm-native-compiler",
  "openvm-rv32im-circuit",
  "openvm-rv32im-transpiler",
  "openvm-sdk",

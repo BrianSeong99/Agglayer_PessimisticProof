@@ -43,6 +43,7 @@ openvm-keccak256-circuit = { git = "https://github.com/openvm-org/openvm.git", t
 openvm-keccak256-transpiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
 openvm-rv32im-transpiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
 openvm-rv32im-circuit = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
+openvm-native-compiler = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", default-features = false }
 
 [dev-dependencies]
 rstest.workspace = true
