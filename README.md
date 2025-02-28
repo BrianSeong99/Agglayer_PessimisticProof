@@ -468,14 +468,14 @@ Version used:
 
 You can build the Pico zkVM Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-bench/crates/program-pico
+cd pessimistic-proof-bench/crates/pp-pico/pp-pico-guest
 RUST_LOG=info cargo pico build --output-directory elf
 ```
 
 Then you will get an elf file at `pessimistic-proof-bench/crates/program-pico/elf/riscv32im-pico-zkvm-elf`.
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
-cd pessimistic-proof-bench/crates/test-pico
+cd pessimistic-proof-bench/crates/pp-pico/pp-pico-host
 RUST_LOG=info cargo run --release 
 ```
 

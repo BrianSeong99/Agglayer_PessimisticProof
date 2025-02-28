@@ -7,6 +7,7 @@ members = [
     "crates/pessimistic-proof-core",
     "crates/pessimistic-proof-test-suite",
     "crates/pp-sp1*",
+    "crates/pp-pico*",
     # "crates/pp-risc0/methods/guest",
     # "crates/pp-nexus/src/pp-nexus-guest"
 ]
