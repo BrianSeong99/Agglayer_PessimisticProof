@@ -462,8 +462,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 20161597  | 100M | 295698432 | -      | -      |
-| Time(Seconds) | 135.62   | 10s  | 277.53      | -      | -      |
+| Cycle Count   | 20161597  | 178470472 | 295698432 | -      | -      |
+| Time(Seconds) | 135.62   | 2303.17  | 277.53      | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
