@@ -64,7 +64,7 @@ fn main() {
 
     // Load the ELF file
     let elf = Elf::decode(
-        include_bytes!("../../../../target/riscv32im-risc0-zkvm-elf/release/program-openvm"),
+        include_bytes!("../../../../../target/riscv32im-risc0-zkvm-elf/release/pp-openvm-guest"),
         MEM_SIZE as u32,
     ).unwrap();
     info!("Loaded ELF file, length: {}", elf.instructions.len());
@@ -122,8 +122,8 @@ fn main() {
 
     // Serialize test data
     let config_serialize = standard();
-    let mut input_data = encode_to_vec(&initial_state, config_serialize)?;
-    let batch_header_bytes = encode_to_vec(&batch_header, config_serialize)?;
+    let mut input_data = encode_to_vec(&old_network_state, config_serialize)?;
+    let batch_header_bytes = encode_to_vec(&multi_batch_header, config_serialize)?;
     input_data.extend(batch_header_bytes);
 
     // Create stdin from serialized data

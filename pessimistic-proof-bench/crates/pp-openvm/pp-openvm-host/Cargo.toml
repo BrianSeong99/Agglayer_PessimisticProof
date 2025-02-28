@@ -1,5 +1,5 @@
 [package]
-name = "test-openvm"
+name = "pp-openvm-host"
 version.workspace = true
 edition.workspace = true
 
@@ -9,10 +9,10 @@ path = "src/bin/ppgen.rs"
 
 [dependencies]
 agglayer-primitives.workspace = true
-agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
-pessimistic-proof = { path = "../pessimistic-proof" }
-pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
-pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
+agglayer-types = { path = "../../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../../pessimistic-proof" }
+pessimistic-proof-test-suite = { path = "../../pessimistic-proof-test-suite" }
+pessimistic-proof-core = { path = "../../pessimistic-proof-core", default-features = false }
 
 base64.workspace = true
 bincode.workspace = true

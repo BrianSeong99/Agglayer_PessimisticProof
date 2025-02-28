@@ -1,0 +1,16 @@
+[package]
+name = "pp-openvm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pp-openvm-host = { path = "./pp-openvm-host" }
+pp-openvm-guest = { path = "./pp-openvm-guest" }
+
+# Always optimize; building and running the guest takes much longer without optimization.
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+debug = 1
+lto = true
