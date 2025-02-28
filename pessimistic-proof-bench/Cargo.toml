@@ -17,7 +17,7 @@ exclude = [
     "crates/pp-pico/pp-pico-guest", 
     "crates/pp-sp1/pp-sp1-guest",
     "crates/pp-openvm/pp-openvm-guest",
-    "crates/pp-risc0", 
+    # "crates/pp-risc0", 
 ]
 
 [workspace.package]

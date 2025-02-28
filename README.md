@@ -489,9 +489,9 @@ Version used:
 
 You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
 ```bash
-cd pessimistic-proof-bench/crates/pp-risc0/pp-risc0-host
-RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
-RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
+cd pessimistic-proof-bench
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --package pp-risc0-host # for Dev Mode and Logging cycle counts
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --package pp-risc0-host # for Actual Proof Generation, running it on GPU
 ```
 
 ### 4.[WIP] Benchmark on Axiom OpenVM

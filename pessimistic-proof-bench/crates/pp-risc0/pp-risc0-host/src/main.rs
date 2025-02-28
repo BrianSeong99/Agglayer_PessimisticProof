@@ -1,7 +1,7 @@
 use std::{path::PathBuf, time::Instant};
 use clap::Parser;
 use methods::{
-    PROGRAM_RISC0_ELF, PROGRAM_RISC0_ID
+    PP_RISC0_GUEST_ELF, PP_RISC0_GUEST_ID
 };
 use risc0_zkvm::{default_prover, ExecutorEnv};
 use serde::{Deserialize, Serialize};
@@ -112,7 +112,7 @@ pub fn main() {
     // Generate proof
     let start = Instant::now();
     let prove_info = default_prover()
-        .prove(env, PROGRAM_RISC0_ELF)
+        .prove(env, PP_RISC0_GUEST_ELF)
         .expect("proving failed");
     let duration = start.elapsed();
     
@@ -124,7 +124,7 @@ pub fn main() {
     let receipt = prove_info.receipt;
     
     // Verify the receipt
-    receipt.verify(PROGRAM_RISC0_ID).unwrap();
+    receipt.verify(PP_RISC0_GUEST_ID).unwrap();
 
     // Get the proof output
     let output: PessimisticProofOutput = receipt.journal.decode().unwrap();
