@@ -7,6 +7,11 @@ edition.workspace = true
 name = "ppgen"
 path = "src/bin/ppgen.rs"
 
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
 [dependencies]
 agglayer-primitives.workspace = true
 agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
@@ -31,7 +36,7 @@ uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
 serde_cbor = "0.11.2"
 
-pico-sdk = { git = "https://github.com/brevis-network/pico" }
+pico-sdk = { git = "https://github.com/brevis-network/pico", features = ["prover"] }
 
 [dev-dependencies]
 rstest.workspace = true
