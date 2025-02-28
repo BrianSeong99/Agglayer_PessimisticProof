@@ -446,18 +446,18 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 
 | zkVM | Used Precompiles? | Used AVX? | Used GPU? |
 |------|-------------------|-----------|-----------|
-| SP1  | ✅               | ❌       | ✅        |
-| Pico | ✅                | ❌        | ✅        |
+| SP1(Plonky3)  | ✅               | ❌       | ✅        |
+| Pico(Plonky3) | ✅                | ✅        | ❌        |
 | RiscZero | ❌(Will Add Soon)| ❌       | ✅       |
-| OpenVM | Coming Soon  | Coming Soon | Coming Soon |
+| OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
 | Valida | Coming Soon | Coming Soon  | Coming Soon |
 | Nexus (std library not supported) | - | - | - |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642 | 100M | 82313216 | -      | -      |
-| Time(Seconds) | 123.85   | 10s  | 76.81   | -      | -      |
+| Cycle Count   | 5009642 | 51569973 | 82313216 | -      | -      |
+| Time(Seconds) | 123.85   | 664.41  | 76.81   | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
@@ -468,10 +468,10 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 40011300  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 142.89   | 10s  | 10s      | -      | -      |
+| Cycle Count   | 40011300  | 100M | 576192512     | -      | -      |
+| Time(Seconds) | 142.89   | 10s  | 543.87      | -      | -      |
 
-### 500 Bridge Exits & 500 Imported Bridge Exits
+<!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
 | Cycle Count   | 194751260  | 100M | 100M     | -      | -      |
@@ -481,7 +481,7 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
 | Cycle Count   | 389952652  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      |
+| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      | -->
 
 ## How to Benchmark?
 
