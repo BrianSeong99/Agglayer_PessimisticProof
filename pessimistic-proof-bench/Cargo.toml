@@ -9,7 +9,8 @@ members = [
     "crates/pp-sp1*",
     "crates/pp-pico*",
     "crates/pp-nexus*",
-    # "crates/pp-risc0/methods/guest",
+    "crates/pp-risc0*",
+    "crates/pp-risc0/methods/pp-risc0-guest",
     # "crates/pp-nexus/src/pp-nexus-guest"
 ]
 # exclude = ["crates/pp-risc0","crates/program-pico", "crates/program-valida", "crates/test-valida", "crates/pp-openvm"]
