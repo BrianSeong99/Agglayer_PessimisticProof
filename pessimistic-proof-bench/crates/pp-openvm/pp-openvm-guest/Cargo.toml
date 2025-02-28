@@ -9,5 +9,3 @@ bincode = "1.3.3"
 pessimistic-proof-core = { path = "../../pessimistic-proof-core", default-features = false }
 openvm = { git = "https://github.com/openvm-org/openvm.git", tag = "v1.0.0-rc.1", features = ["std"] }
 serde = { version = "1.0.218", features = ["derive"] }
-
-[features]

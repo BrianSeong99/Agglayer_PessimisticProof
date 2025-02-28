@@ -1079,6 +1079,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391"
 
 [[package]]
+name = "pp-openvm-guest"
+version = "0.1.0"
+dependencies = [
+ "bincode",
+ "openvm",
+ "pessimistic-proof-core",
+ "serde",
+]
+
+[[package]]
 name = "ppv-lite86"
 version = "0.2.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1114,16 +1124,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "60946a68e5f9d28b0dc1c21bb8a97ee7d018a8b322fa57838ba31cc878e22d99"
 dependencies = [
  "unicode-ident",
-]
-
-[[package]]
-name = "program-openvm"
-version = "0.1.0"
-dependencies = [
- "bincode",
- "openvm",
- "pessimistic-proof-core",
- "serde",
 ]
 
 [[package]]
