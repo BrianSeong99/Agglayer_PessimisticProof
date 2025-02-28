@@ -47,9 +47,9 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
     - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
     - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
     - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
-    - [4.Benchmark on Nexus zkVM](#4benchmark-on-nexus-zkvm)
+    - [4.\[WIP\] Benchmark on Axiom OpenVM](#4wip-benchmark-on-axiom-openvm)
     - [5.\[WIP\] Benchmark on Lita Valida](#5wip-benchmark-on-lita-valida)
-    - [6.\[WIP\] Benchmark on Axiom OpenVM](#6wip-benchmark-on-axiom-openvm)
+    - [6.\[NOT SUPPORTED\]Benchmark on Nexus zkVM](#6not-supported-benchmark-on-nexus-zkvm)
 
 
 # Architecture of Pessimistic Proof
@@ -494,17 +494,27 @@ RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode a
 RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
 ```
 
-### 4.Benchmark on Nexus zkVM
+### 4.[WIP] Benchmark on Axiom OpenVM
 
-Version used:
-- Nexus zkVM: v0.2.4
+Version used: 
+- OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
+- stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
 
-> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
+> If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
 
-You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
+You can build the OpenVM Pessimistic Proof ELF by running this command:
 ```bash
-cd pessimistic-proof-bench/
-RUST_LOG=info cargo run -r --bin program-nexus
+cd pessimistic-proof-bench/crates/program-openvm
+cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
+cargo openvm build --no-transpile # This is for accessing the built using SDK.
+```
+
+Then you will get an elf file at `pessimistic-proof-bench/crates/program-openvm/elf/riscv32im-openvm-zkvm-elf`.
+
+You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
+```bash
+cd pessimistic-proof-bench
+RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
 ```
 
 ### 5.[WIP] Benchmark on Lita Valida
@@ -533,25 +543,17 @@ cd pessimistic-proof-bench
 cargo run --release --package test-valida --bin ppgen
 ```
 
-### 6.[WIP] Benchmark on Axiom OpenVM
+### 6.[NOT SUPPORTED] Benchmark on Nexus zkVM
 
-Version used: 
-- OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
-- stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
+> THIS IS NOT SUPPORTED YET, Nexus zkVM doesn't support running "std" library, so we can't run the Pessimistic Proof Program in Nexus zkVM.
 
-> If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
+Version used:
+- Nexus zkVM: v0.2.4
 
-You can build the OpenVM Pessimistic Proof ELF by running this command:
+> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
+
+You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
 ```bash
-cd pessimistic-proof-bench/crates/program-openvm
-cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
-cargo openvm build --no-transpile # This is for accessing the built using SDK.
-```
-
-Then you will get an elf file at `pessimistic-proof-bench/crates/program-openvm/elf/riscv32im-openvm-zkvm-elf`.
-
-You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
-```bash
-cd pessimistic-proof-bench
-RUST_LOG=info cargo run --release --package test-openvm --bin ppgen
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run -r --bin program-nexus
 ```
