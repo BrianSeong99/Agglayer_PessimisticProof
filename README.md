@@ -496,7 +496,7 @@ Version used:
 You can build the SP1 Pessimistic Proof ELF by running this command:
 ```bash
 cd pessimistic-proof-bench/crates/pp-sp1/pp-sp1-guest
-cargo prove build --output-directory pp-sp1-guest/elf
+cargo prove build --output-directory elf
 ```
 
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
@@ -534,9 +534,9 @@ Version used:
 
 You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
 ```bash
-cd pessimistic-proof-bench
-RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --package pp-risc0-host # for Dev Mode and Logging cycle counts
-RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --package pp-risc0-host # for Actual Proof Generation, running it on GPU
+cd pessimistic-proof-bench/crates/pp-risc0/pp-risc0-host
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release # for Dev Mode and Logging cycle counts
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release # for Actual Proof Generation, running it on GPU
 ```
 
 ### 4.[WIP] Benchmark on Axiom OpenVM

@@ -22,3 +22,8 @@ tag = "patch-0.16.9-sp1-4.0.0"
 [patch.crates-io.tiny-keccak]
 git = "https://github.com/sp1-patches/tiny-keccak"
 tag = "patch-2.0.2-sp1-4.0.0"
+features = ["keccak"]
+
+[patch.crates-io.k256]
+git = "https://github.com/sp1-patches/elliptic-curves"
+tag = "patch-k256-13.4-sp1-4.1.0"
