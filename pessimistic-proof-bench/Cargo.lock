@@ -8344,8 +8344,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b2492abd92da4eb2a6e5e9e74757d00b1c29c03bb867266c85752cb22a03a920"
 dependencies = [
  "bytemuck",
-#  "nvtx",
-#  "puffin",
+ "nvtx",
+ "puffin",
  "rand_core 0.6.4",
 ]
 
