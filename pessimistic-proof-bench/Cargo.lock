@@ -4492,6 +4492,8 @@ dependencies = [
 name = "methods"
 version = "0.1.0"
 dependencies = [
+ "nvtx",
+ "puffin",
  "risc0-build",
 ]
 
