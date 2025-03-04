@@ -15,7 +15,7 @@ cuda = []
 
 [dependencies]
 methods = { path = "../methods" }
-risc0-zkvm = { version = "1.2.4", features = ["cuda"] }
+risc0-zkvm = { version = "1.2.4", default-features = false, features = ['std', 'unstable', 'cuda'] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 agglayer-primitives.workspace = true
 agglayer-types = { path = "../../agglayer-types", features = ["testutils"] }
