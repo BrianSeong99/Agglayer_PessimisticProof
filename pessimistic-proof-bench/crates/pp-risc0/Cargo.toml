@@ -3,10 +3,42 @@ name = "pp-risc0"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "ppgen"
+path = "src/main.rs"
+
+[features]
+cuda = ["risc0-zkvm/cuda"]
+
 [dependencies]
-pp-risc0-host = { path = "./pp-risc0-host" }
 methods = { path = "./methods" }
-risc0-zkvm = { version = "1.2.4", features = ["cuda"]}
+risc0-zkvm = { version = "1.2.5", default-features = false, features = ["std", "unstable", "cuda"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+agglayer-primitives.workspace = true
+agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../pessimistic-proof" }
+pessimistic-proof-core = { path = "../pessimistic-proof-core", default-features = false }
+pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
+
+base64.workspace = true
+bincode.workspace = true
+clap.workspace = true
+ethers-signers.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+lazy_static.workspace = true
+anyhow.workspace = true
+rand.workspace = true
+hex-literal = "0.4"
+hex.workspace = true
+tracing.workspace = true
+uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
+regex = "1.11"
+serde_cbor = "0.11.2"
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]
