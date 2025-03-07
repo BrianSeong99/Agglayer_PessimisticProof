@@ -7391,8 +7391,6 @@ dependencies = [
 name = "pp-risc0"
 version = "0.1.0"
 dependencies = [
- "agglayer-primitives",
- "agglayer-types",
  "anyhow",
  "base64 0.22.1",
  "bincode",
@@ -7402,11 +7400,13 @@ dependencies = [
  "hex-literal",
  "lazy_static",
  "methods",
- "pessimistic-proof",
- "pessimistic-proof-core",
- "pessimistic-proof-test-suite",
  "rand 0.8.5",
  "regex",
+ "risc0-agglayer-primitives",
+ "risc0-agglayer-types",
+ "risc0-pessimistic-proof",
+ "risc0-pessimistic-proof-core",
+ "risc0-pessimistic-proof-test-suite",
  "risc0-zkvm",
  "serde",
  "serde_cbor",
@@ -8151,6 +8151,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "risc0-agglayer-primitives"
+version = "0.2.1"
+dependencies = [
+ "alloy-primitives",
+ "k256",
+ "serde",
+]
+
+[[package]]
+name = "risc0-agglayer-types"
+version = "0.2.1"
+dependencies = [
+ "bincode",
+ "ethers",
+ "hex",
+ "rand 0.8.5",
+ "risc0-agglayer-primitives",
+ "risc0-agglayer-types",
+ "risc0-pessimistic-proof",
+ "serde",
+ "serde_with",
+ "thiserror 2.0.11",
+]
+
+[[package]]
 name = "risc0-binfmt"
 version = "1.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8358,6 +8383,67 @@ dependencies = [
  "stability",
  "tempfile",
  "tracing",
+]
+
+[[package]]
+name = "risc0-pessimistic-proof"
+version = "0.2.1"
+dependencies = [
+ "bincode",
+ "hex",
+ "hex-literal",
+ "rand 0.8.5",
+ "risc0-agglayer-primitives",
+ "risc0-pessimistic-proof-core",
+ "rs_merkle",
+ "serde",
+ "serde_json",
+ "serde_with",
+ "thiserror 2.0.11",
+ "tiny-keccak",
+]
+
+[[package]]
+name = "risc0-pessimistic-proof-core"
+version = "0.1.0"
+dependencies = [
+ "bincode",
+ "hex",
+ "hex-literal",
+ "rand 0.8.5",
+ "risc0-agglayer-primitives",
+ "rs_merkle",
+ "serde",
+ "serde_json",
+ "serde_with",
+ "thiserror 2.0.11",
+ "tiny-keccak",
+ "tracing",
+]
+
+[[package]]
+name = "risc0-pessimistic-proof-test-suite"
+version = "0.2.1"
+dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "bincode",
+ "clap",
+ "ethers-signers",
+ "hex",
+ "hex-literal",
+ "lazy_static",
+ "rand 0.8.5",
+ "regex",
+ "risc0-agglayer-primitives",
+ "risc0-agglayer-types",
+ "risc0-pessimistic-proof",
+ "rstest",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.11",
+ "tracing",
+ "uuid 1.13.1",
 ]
 
 [[package]]
