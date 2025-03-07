@@ -488,8 +488,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 1.Benchmark on Succinct SP1
 
 Version used:
-- sp1-sdk: 4.1.0
-- sp1-core-machine: 4.1.0
+- sp1-sdk: 4.1.3
+- sp1-core-machine: 4.1.3
 
 > If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
 
