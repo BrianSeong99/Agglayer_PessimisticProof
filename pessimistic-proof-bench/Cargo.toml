@@ -31,6 +31,9 @@ unexpected_cfgs = { level = "warn", check-cfg = [
     'cfg(feature, values("cargo-clippy"))',
 ] }
 
+[workspace.metadata.risc0]
+unstable = ["keccak"]
+
 [workspace.dependencies]
 # Project dependencies
 agglayer-primitives = { path = "crates/agglayer-primitives" }
@@ -84,3 +87,7 @@ mockall = "0.13.1"
 rand = "0.8.5"
 rstest = "0.22.0"
 test-log = "0.2.16"
+
+[patch.crates-io]
+tiny-keccak = { git = "https://github.com/risc0/tiny-keccak", tag = "tiny-keccak/v2.0.2-risczero.0" }
+sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }

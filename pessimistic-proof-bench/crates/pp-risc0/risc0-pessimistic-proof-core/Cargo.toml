@@ -25,7 +25,3 @@ rand = "0.8.5"
 [features]
 default = []
 testutils = ["rand"]
-
-[patch.crates-io]
-tiny-keccak = { git = "https://github.com/risc0/tiny-keccak", rev = "7ff2b8465891d1cbb55a69e553e05d369ce41d72" }
-sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
