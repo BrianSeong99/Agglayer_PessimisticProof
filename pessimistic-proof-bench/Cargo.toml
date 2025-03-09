@@ -31,9 +31,6 @@ unexpected_cfgs = { level = "warn", check-cfg = [
     'cfg(feature, values("cargo-clippy"))',
 ] }
 
-[workspace.metadata.risc0]
-unstable = ["keccak"]
-
 [workspace.dependencies]
 # Project dependencies
 agglayer-primitives = { path = "crates/agglayer-primitives" }
