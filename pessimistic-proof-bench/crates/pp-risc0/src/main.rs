@@ -9,11 +9,11 @@ use tracing::{info, warn};
 use uuid::Uuid;
 use tracing_subscriber;
 
-use risc0_agglayer_types::{Certificate, U256};
-use risc0_pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
-use risc0_pessimistic_proof::PessimisticProofOutput;
-use risc0_pessimistic_proof_core::{generate_pessimistic_proof, NetworkState};
-use risc0_pessimistic_proof_test_suite::sample_data::{self as data};
+use agglayer_types::{Certificate, U256};
+use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
+use pessimistic_proof::PessimisticProofOutput;
+use pessimistic_proof_core::{generate_pessimistic_proof, NetworkState};
+use pessimistic_proof_test_suite::sample_data::{self as data};
 
 /// The arguments for the proof generator
 #[derive(Parser, Debug)]

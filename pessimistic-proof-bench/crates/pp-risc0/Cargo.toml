@@ -17,11 +17,11 @@ cuda = ["risc0-zkvm/cuda"]
 methods = { path = "./methods" }
 risc0-zkvm = { version = "1.2.5", default-features = false, features = ["std", "unstable", "cuda"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-risc0-agglayer-primitives = { path = "./risc0-agglayer-primitives" }
-risc0-agglayer-types = { path = "./risc0-agglayer-types", features = ["testutils"] }
-risc0-pessimistic-proof = { path = "./risc0-pessimistic-proof" }
-risc0-pessimistic-proof-core = { path = "./risc0-pessimistic-proof-core" }
-risc0-pessimistic-proof-test-suite = { path = "./risc0-pessimistic-proof-test-suite" }
+agglayer-primitives = { path = "../agglayer-primitives" }
+agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
+pessimistic-proof = { path = "../pessimistic-proof" }
+pessimistic-proof-core = { path = "../pessimistic-proof-core" }
+pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }
 
 base64.workspace = true
 bincode.workspace = true
@@ -39,6 +39,10 @@ tracing.workspace = true
 uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
 serde_cbor = "0.11.2"
+
+[patch.crates-io]
+tiny-keccak = { git = "https://github.com/risc0/tiny-keccak", tag = "tiny-keccak/v2.0.2-risczero.0" }
+sha2 = { git = "https://github.com/risc0/RustCrypto-hashes", tag = "sha2-v0.10.8-risczero.0" }
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]
