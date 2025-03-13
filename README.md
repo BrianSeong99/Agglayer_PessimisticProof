@@ -456,20 +456,20 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642 | 51569973 | 82313216 | -      | -      |
-| Time(Seconds) | 123.85   | 664.41  | 76.81   | -      | -      |
+| Cycle Count   | 5009642 | 51569973 | 26214400 | -      | -      |
+| Time(Seconds) | 123.85   | 664.41  | 1.70   | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 20161597  | 178470472 | 295698432 | -      | -      |
-| Time(Seconds) | 135.62   | 2303.17  | 277.53      | -      | -      |
+| Cycle Count   | 20161597  | 178470472 | 68681728 | -      | -      |
+| Time(Seconds) | 135.62   | 2303.17  | 181.60      | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 40011300  | - (Took too long) | 576192512     | -      | -      |
-| Time(Seconds) | 142.89   | - (Took too long)  | 543.87      | -      | -      |
+| Cycle Count   | 40011300  | - (Took too long) | 124780544     | -      | -      |
+| Time(Seconds) | 142.89   | - (Took too long)  | 337.91      | -      | -      |
 
 <!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
