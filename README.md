@@ -444,11 +444,11 @@ The Benchmark was conducted in the following machine:
 Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
 Here's a spec of their characteristics that we utilized in this benchmark:
 
-| zkVM | Used Precompiles? | Used AVX? | Used GPU? |
-|------|-------------------|-----------|-----------|
-| SP1(Plonky3)  | ✅               | ❌       | ✅        |
-| Pico(Plonky3) | ✅                | ❌(Will Add Soon)        | ❌        |
-| RiscZero | ❌(Will Add Soon)| ❌       | ✅       |
+| zkVM | Used Precompiles?  | Used AVX? | Used GPU? |
+|------|--------------------|-----------|-----------|
+| SP1(Plonky3)  | ✅        | ❌                | ✅        |
+| Pico(Plonky3) | ✅        | ❌(Will Add Soon) | ❌ (Not Supported)|
+| RiscZero      | ✅        | ❌                | ✅       |
 | OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
 | Valida | Coming Soon | Coming Soon  | Coming Soon |
 | Nexus (std library not supported) | - | - | - |
@@ -527,16 +527,16 @@ RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
 ### 3.Benchmark on RiscZero zkVM
 
 Version used:
-- RiscZero zkVM: v1.2.4
+- RiscZero zkVM: v1.2.5
 
 > If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
 > Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
 
 You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
 ```bash
-cd pessimistic-proof-bench
-RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --package pp-risc0 --bin ppgen # for Dev Mode and Logging cycle counts
-RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --package pp-risc0 --bin ppgen # for Actual Proof Generation, running it on GPU
+cd pessimistic-proof-bench/crates/pp-risc0
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --bin ppgen # for Dev Mode and Logging cycle counts
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --bin ppgen # for Actual Proof Generation, running it on GPU
 ```
 
 ### 4.[WIP] Benchmark on Axiom OpenVM
