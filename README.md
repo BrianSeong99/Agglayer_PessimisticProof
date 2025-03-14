@@ -81,32 +81,32 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|-----------|-----------|--------|--------|
-| Cycle Count   | 50288059         | -          | 51569973  | 23592960  | -      | -      |
-| Time(Seconds) | 67.99            | -          | 664.41    | 58.33     | -      | -      |
+| Cycle Count   | 50288059         | 50283179   | 51569973  | 23592960  | -      | -      |
+| Time(Seconds) | 67.99            | 52.22      | 664.41    | 58.33     | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|-----------|-----------|--------|--------|
-| Cycle Count   | 175315505        | -          | 178470472 | 68681728  | -      | -      |
-| Time(Seconds) | 197.17           | -          | 2303.17   | 181.60    | -      | -      |
+| Cycle Count   | 175315505        | 175304109  | 178470472 | 68681728  | -      | -      |
+| Time(Seconds) | 197.17           | 144.44     | 2303.17   | 181.60    | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|-----------|-----------|--------|--------|
-| Cycle Count   | 339822648        | -          | -         | 124780544 | -      | -      |
-| Time(Seconds) | 367.30           | -          | -         | 337.91    | -      | -      |
+| Cycle Count   | 339822648        | 339821606  | -         | 124780544 | -      | -      |
+| Time(Seconds) | 367.30           | 265.31     | -         | 337.91    | -      | -      |
 
 <!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 194751260  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 227.19   | 10s  | 10s      | -      | -      |
+|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|-----------|-----------|--------|--------|
+| Cycle Count   | 194751260        | 194740404  | 100M      | 100M      | -      | -      |
+| Time(Seconds) | 227.19           | 10s        | 10s       | -         | -      | -      |
 
 ### 1000 Bridge Exits & 1000 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 389952652  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      | -->
+|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|-----------|-----------|--------|--------|
+| Cycle Count   | 194751260        | 3220729567 | 100M      | 100M      | -      | -      |
+| Time(Seconds) | 227.19           | 2390.05    | 10s       | -         | -      | -      | -->
 
 ## How to Benchmark?
 
