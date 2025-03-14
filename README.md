@@ -79,22 +79,22 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Nexus (std library not supported) | - | - | - |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642   | 51569973  | 23592960  | -      | -      |
-| Time(Seconds) | 123.85    | 664.41    | 58.33     | -      | -      |
+|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|-----------|-----------|--------|--------|
+| Cycle Count   | 50288059         | -          | 51569973  | 23592960  | -      | -      |
+| Time(Seconds) | 67.99            | -          | 664.41    | 58.33     | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 20161597  | 178470472 | 68681728 | -      | -      |
-| Time(Seconds) | 135.62   | 2303.17  | 181.60      | -      | -      |
+|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|-----------|-----------|--------|--------|
+| Cycle Count   | 175315505        | -          | 178470472 | 68681728  | -      | -      |
+| Time(Seconds) | 197.17           | -          | 2303.17   | 181.60    | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 40011300  | - (Took too long) | 124780544     | -      | -      |
-| Time(Seconds) | 142.89   | - (Took too long)  | 337.91      | -      | -      |
+|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|-----------|-----------|--------|--------|
+| Cycle Count   | 339822648        | -          | -         | 124780544 | -      | -      |
+| Time(Seconds) | 367.30           | -          | -         | 337.91    | -      | -      |
 
 <!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
