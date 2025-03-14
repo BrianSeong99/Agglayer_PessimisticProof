@@ -83,7 +83,7 @@ impl Runner {
         let stdin = Self::prepare_stdin(state, batch_header);
         let (pk, vk) = self.client.setup(PESSIMISTIC_PROOF_ELF);
 
-        let proof = self.client.prove(&pk, &stdin).plonk().run()?;
+        let proof = self.client.prove(&pk, &stdin).compressed().run()?;
         let output = Self::extract_output(proof.public_values.clone());
 
         Ok((proof, vk, output))

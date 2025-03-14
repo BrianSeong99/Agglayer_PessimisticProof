@@ -71,7 +71,7 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 
 | zkVM | Used Precompiles?  | Used AVX? | Used GPU? |
 |------|--------------------|-----------|-----------|
-| SP1(Plonky3)  | ✅        | ❌                | ✅        |
+| SP1(Plonky3)  | ✅        | AVX256    | ✅        |
 | Pico(Plonky3) | ✅        | ❌(Will Add Soon) | ❌ (Not Supported)|
 | RiscZero      | ✅        | ❌                | ✅       |
 | OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
@@ -127,7 +127,7 @@ cargo prove build --output-directory elf
 You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
 ```bash
 cd pessimistic-proof-bench/crates/pp-sp1
-RUST_LOG=info cargo run --release --package pp-sp1-host --bin ppgen
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info cargo run --release --package pp-sp1-host --bin ppgen
 ```
 
 ### 2.Benchmark on Brevis Pico
