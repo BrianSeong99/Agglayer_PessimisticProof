@@ -17,6 +17,15 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 - [Agglayer PessimisticProof](#agglayer-pessimisticproof)
 - [Table of Contents](#table-of-contents)
+- [Benchmark on zkVMs](#benchmark-on-zkvms)
+  - [Reports](#reports)
+  - [How to Benchmark?](#how-to-benchmark)
+    - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
+    - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
+    - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
+    - [4.\[WIP\] Benchmark on Axiom OpenVM](#4wip-benchmark-on-axiom-openvm)
+    - [5.\[WIP\] Benchmark on Lita Valida](#5wip-benchmark-on-lita-valida)
+    - [6.\[NOT SUPPORTED\]Benchmark on Nexus zkVM](#6not-supported-benchmark-on-nexus-zkvm)
 - [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
   - [0.Background](#0background)
     - [Chains connected on Agglayer](#chains-connected-on-agglayer)
@@ -41,16 +50,179 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
   - [4.Generate Pessimistic Proof in Action](#4generate-pessimistic-proof-in-action)
     - [Running Pessimistic Proof Program Locally from AggLayer Repo](#running-pessimistic-proof-program-locally-from-agglayer-repo)
     - [Breakdown of the local test Pessimistic Proof script using SP1](#breakdown-of-the-local-test-pessimistic-proof-script-using-sp1)
-- [Benchmark on zkVMs](#benchmark-on-zkvms)
-  - [Reports](#reports)
-  - [How to Benchmark?](#how-to-benchmark)
-    - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
-    - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
-    - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
-    - [4.\[WIP\] Benchmark on Axiom OpenVM](#4wip-benchmark-on-axiom-openvm)
-    - [5.\[WIP\] Benchmark on Lita Valida](#5wip-benchmark-on-lita-valida)
-    - [6.\[NOT SUPPORTED\]Benchmark on Nexus zkVM](#6not-supported-benchmark-on-nexus-zkvm)
 
+# Benchmark on zkVMs
+
+In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
+
+This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglayer/tree/release/0.2.1)'s Pessimistic Proof.
+
+## Reports
+
+The Benchmark was conducted in the following machine: 
+g2-standard-32:
+- 32 vCPUs
+- 128 GB Memory
+- NVIDIA L4 with 24 GB VRAM
+- 100 GB Storage
+
+Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
+Here's a spec of their characteristics that we utilized in this benchmark:
+
+| zkVM | Used Precompiles?  | Used AVX? | Used GPU? |
+|------|--------------------|-----------|-----------|
+| SP1(Plonky3)  | ✅        | ❌                | ✅        |
+| Pico(Plonky3) | ✅        | ❌(Will Add Soon) | ❌ (Not Supported)|
+| RiscZero      | ✅        | ❌                | ✅       |
+| OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
+| Valida | Coming Soon | Coming Soon  | Coming Soon |
+| Nexus (std library not supported) | - | - | - |
+
+### 10 Bridge Exits & 10 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 5009642   | 51569973  | 23592960  | -      | -      |
+| Time(Seconds) | 123.85    | 664.41    | 58.33     | -      | -      |
+
+### 50 Bridge Exits & 50 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 20161597  | 178470472 | 68681728 | -      | -      |
+| Time(Seconds) | 135.62   | 2303.17  | 181.60      | -      | -      |
+
+### 100 Bridge Exits & 100 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 40011300  | - (Took too long) | 124780544     | -      | -      |
+| Time(Seconds) | 142.89   | - (Took too long)  | 337.91      | -      | -      |
+
+<!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 194751260  | 100M | 100M     | -      | -      |
+| Time(Seconds) | 227.19   | 10s  | 10s      | -      | -      |
+
+### 1000 Bridge Exits & 1000 Imported Bridge Exits
+|               | SP1   | Pico | RiscZero | OpenVM | Valida |
+|---------------|-------|------|----------|--------|--------|
+| Cycle Count   | 389952652  | 100M | 100M     | -      | -      |
+| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      | -->
+
+## How to Benchmark?
+
+### 1.Benchmark on Succinct SP1
+
+Version used:
+- sp1-sdk: 4.1.3
+- sp1-core-machine: 4.1.3
+
+> If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
+
+You can build the SP1 Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/pp-sp1/pp-sp1-guest
+cargo prove build --output-directory elf
+```
+
+You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
+```bash
+cd pessimistic-proof-bench/crates/pp-sp1
+RUST_LOG=info cargo run --release --package pp-sp1-host --bin ppgen
+```
+
+### 2.Benchmark on Brevis Pico
+
+Version used:
+- Pico zkVM: 1.0.0
+
+> If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
+
+You can build the Pico zkVM Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/pp-pico/pp-pico-guest
+RUST_LOG=info cargo pico build --output-directory elf
+```
+
+You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
+```bash
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
+```
+
+### 3.Benchmark on RiscZero zkVM
+
+Version used:
+- RiscZero zkVM: v1.2.5
+
+> If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
+> Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
+
+You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
+```bash
+cd pessimistic-proof-bench/crates/pp-risc0
+RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --bin ppgen # for Dev Mode and Logging cycle counts
+RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --bin ppgen # for Actual Proof Generation, running it on GPU
+```
+
+### 4.[WIP] Benchmark on Axiom OpenVM
+
+Version used: 
+- OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
+- stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
+
+> If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
+
+You can build the OpenVM Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/pp-openvm/pp-openvm-guest
+cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
+cargo openvm build --no-transpile # This is for accessing the built using SDK.
+```
+
+You can then test the pessimsitic-proof-program in OpenVM via this command at root folder: 
+```bash
+cd pessimistic-proof-bench
+RUST_LOG=info cargo run --release --package pp-openvm-host --bin ppgen
+```
+
+### 5.[WIP] Benchmark on Lita Valida
+
+Version used:
+- valida: v0.8.0-alpha-arm64
+
+> If you haven't installed valida docker tool, you can do so via following this [guide](https://lita.gitbook.io/lita-documentation/quick-start/installation-and-system-requirements). Try to run this in a Linux machine.
+
+You can build the Valida Pessimistic Proof ELF by running this command:
+```bash
+cd pessimistic-proof-bench/crates/program-valida
+# For x86_64 systems
+docker run --platform linux/amd64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
+# For arm64 systems
+docker run --platform linux/arm64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
+# Run this inside the container
+cargo +valida build --release
+```
+
+You can then test the pessimsitic-proof-program in Valida via this command at root folder: 
+```bash
+cd pessimistic-proof-bench
+cargo run --release --package test-valida --bin ppgen
+```
+
+### 6.[NOT SUPPORTED] Benchmark on Nexus zkVM
+
+> THIS IS NOT SUPPORTED YET, Nexus zkVM doesn't support running "std" library, so we can't run the Pessimistic Proof Program in Nexus zkVM.
+
+Version used:
+- Nexus zkVM: v0.2.4
+
+> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
+
+You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
+```bash
+cd pessimistic-proof-bench/
+RUST_LOG=info cargo run -r --bin program-nexus
+```
 
 # Architecture of Pessimistic Proof
 
@@ -426,176 +598,3 @@ Let's explore a bit on the ppgen.rs file.
 6. Saving the Proof locally.
 
 To Learn more about the Pessimistic Proof Generator, please refer to [here](https://github.com/Agglayer/Agglayer/tree/main/crates/pessimistic-proof-test-suite/src/bin) 
-
-# Benchmark on zkVMs
-
-In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
-
-This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglayer/tree/release/0.2.1)'s Pessimistic Proof.
-
-## Reports
-
-The Benchmark was conducted in the following machine: 
-g2-standard-32:
-- 32 vCPUs
-- 128 GB Memory
-- NVIDIA L4 with 24 GB VRAM
-- 100 GB Storage
-
-Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
-Here's a spec of their characteristics that we utilized in this benchmark:
-
-| zkVM | Used Precompiles?  | Used AVX? | Used GPU? |
-|------|--------------------|-----------|-----------|
-| SP1(Plonky3)  | ✅        | ❌                | ✅        |
-| Pico(Plonky3) | ✅        | ❌(Will Add Soon) | ❌ (Not Supported)|
-| RiscZero      | ✅        | ❌                | ✅       |
-| OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
-| Valida | Coming Soon | Coming Soon  | Coming Soon |
-| Nexus (std library not supported) | - | - | - |
-
-### 10 Bridge Exits & 10 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642   | 51569973  | 23592960  | -      | -      |
-| Time(Seconds) | 123.85    | 664.41    | 58.33     | -      | -      |
-
-### 50 Bridge Exits & 50 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 20161597  | 178470472 | 68681728 | -      | -      |
-| Time(Seconds) | 135.62   | 2303.17  | 181.60      | -      | -      |
-
-### 100 Bridge Exits & 100 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 40011300  | - (Took too long) | 124780544     | -      | -      |
-| Time(Seconds) | 142.89   | - (Took too long)  | 337.91      | -      | -      |
-
-<!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 194751260  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 227.19   | 10s  | 10s      | -      | -      |
-
-### 1000 Bridge Exits & 1000 Imported Bridge Exits
-|               | SP1   | Pico | RiscZero | OpenVM | Valida |
-|---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 389952652  | 100M | 100M     | -      | -      |
-| Time(Seconds) | 327.61   | 10s  | 10s      | -      | -      | -->
-
-## How to Benchmark?
-
-### 1.Benchmark on Succinct SP1
-
-Version used:
-- sp1-sdk: 4.1.3
-- sp1-core-machine: 4.1.3
-
-> If you haven't installed sp1 commandline tool, you can do so via following this [guide](https://docs.succinct.xyz/docs/sp1/getting-started/install).
-
-You can build the SP1 Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-bench/crates/pp-sp1/pp-sp1-guest
-cargo prove build --output-directory elf
-```
-
-You can then test the pessimsitic-proof-program in SP1 via this command at root folder: 
-```bash
-cd pessimistic-proof-bench
-RUST_LOG=info cargo run --release --package pp-sp1-host --bin ppgen
-```
-
-### 2.Benchmark on Brevis Pico
-
-Version used:
-- Pico zkVM: 1.0.0
-
-> If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
-
-You can build the Pico zkVM Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-bench/crates/pp-pico/pp-pico-guest
-RUST_LOG=info cargo pico build --output-directory elf
-```
-
-You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
-```bash
-cd pessimistic-proof-bench/
-RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
-```
-
-### 3.Benchmark on RiscZero zkVM
-
-Version used:
-- RiscZero zkVM: v1.2.5
-
-> If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
-> Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
-
-You can build & test the pessimistic-proof-program in Risc0 zkVM via this command:
-```bash
-cd pessimistic-proof-bench/crates/pp-risc0
-RISC0_DEV_MODE=1 RUST_LOG=info RISC0_INFO=1 cargo run --release --bin ppgen # for Dev Mode and Logging cycle counts
-RUSTFLAGS="-C target-cpu=native" RUST_LOG=info RISC0_INFO=1 cargo run --features cuda --release --bin ppgen # for Actual Proof Generation, running it on GPU
-```
-
-### 4.[WIP] Benchmark on Axiom OpenVM
-
-Version used: 
-- OpenVM: [v1.0.0-rc.1](https://github.com/openvm-org/openvm/releases/tag/v1.0.0-rc.1)
-- stark-backend: [v1.0.0-rc.0](https://github.com/openvm-org/stark-backend/releases/tag/v1.0.0-rc.0)
-
-> If you haven't installed OpenVM commandline tool, you can do so via following this [guide](https://book.openvm.dev/getting-started/install.html).
-
-You can build the OpenVM Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-bench/crates/pp-openvm/pp-openvm-guest
-cargo openvm build --exe-output ./elf/riscv32im-openvm-zkvm-elf # This will generate the ELF file at the specified path
-cargo openvm build --no-transpile # This is for accessing the built using SDK.
-```
-
-You can then test the pessimsitic-proof-program in OpenVM via this command at root folder: 
-```bash
-cd pessimistic-proof-bench
-RUST_LOG=info cargo run --release --package pp-openvm-host --bin ppgen
-```
-
-### 5.[WIP] Benchmark on Lita Valida
-
-Version used:
-- valida: v0.8.0-alpha-arm64
-
-> If you haven't installed valida docker tool, you can do so via following this [guide](https://lita.gitbook.io/lita-documentation/quick-start/installation-and-system-requirements). Try to run this in a Linux machine.
-
-You can build the Valida Pessimistic Proof ELF by running this command:
-```bash
-cd pessimistic-proof-bench/crates/program-valida
-# For x86_64 systems
-docker run --platform linux/amd64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
-# For arm64 systems
-docker run --platform linux/arm64 --entrypoint=/bin/bash -it --rm -v $(realpath .):/src ghcr.io/lita-xyz/llvm-valida-releases/valida-build-container:v0.8.0-alpha
-# Run this inside the container
-cargo +valida build --release
-```
-
-You can then test the pessimsitic-proof-program in Valida via this command at root folder: 
-```bash
-cd pessimistic-proof-bench
-cargo run --release --package test-valida --bin ppgen
-```
-
-### 6.[NOT SUPPORTED] Benchmark on Nexus zkVM
-
-> THIS IS NOT SUPPORTED YET, Nexus zkVM doesn't support running "std" library, so we can't run the Pessimistic Proof Program in Nexus zkVM.
-
-Version used:
-- Nexus zkVM: v0.2.4
-
-> If you haven't installed Nexus commandline tool, you can do so via following this [guide](https://docs.nexus.xyz/zkvm/proving/sdk#install-nexus-zkvm).
-
-You can build & test the pessimistic-proof-program in Nexus zkVM via this command:
-```bash
-cd pessimistic-proof-bench/
-RUST_LOG=info cargo run -r --bin program-nexus
-```
