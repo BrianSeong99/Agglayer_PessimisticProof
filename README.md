@@ -69,14 +69,14 @@ g2-standard-32:
 Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
 Here's a spec of their characteristics that we utilized in this benchmark:
 
-| zkVM | Used Precompiles?  | Used AVX? | Used GPU? |
-|------|--------------------|-----------|-----------|
-| SP1(Plonky3)  | ✅        | AVX256    | ✅        |
-| Pico(Plonky3) | ✅        | ❌(Will Add Soon) | ❌ (Not Supported)|
-| RiscZero      | ✅        | ❌                | ✅       |
-| OpenVM(Plonky3) | Coming Soon  | Coming Soon | Coming Soon |
-| Valida | Coming Soon | Coming Soon  | Coming Soon |
-| Nexus (std library not supported) | - | - | - |
+| zkVM              | Used Precompiles? | Used AVX?         | Used GPU?         |
+|-------------------|-------------------|-------------------|-------------------|
+| SP1(Plonky3)      | ✅                | AVX2              | ✅                 |
+| Pico(Plonky3)     | ✅                | AVX512            | ❌ (Not Supported) |
+| RiscZero          | ✅                | ❌                | ✅                 |
+| OpenVM(Plonky3)   | Coming Soon       | Coming Soon       | Coming Soon       |
+| Valida            | Coming Soon       | Coming Soon       | Coming Soon       |
+| Nexus (std❌)     | -                 | -                 | -                 |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
@@ -145,8 +145,8 @@ RUST_LOG=info cargo pico build --output-directory elf
 
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
-cd pessimistic-proof-bench/
-RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
+cd pessimistic-proof-bench/crates/pp-pico
+RUSTFLAGS="-C target-cpu=native -C target-feature=+avx512f,+avx512ifma,+avx512vl" RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
 ```
 
 ### 3.Benchmark on RiscZero zkVM

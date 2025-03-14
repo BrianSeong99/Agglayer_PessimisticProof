@@ -14,10 +14,10 @@ codegen-units = 1
 
 [dependencies]
 agglayer-primitives.workspace = true
-agglayer-types = { path = "../../agglayer-types", features = ["testutils"] }
-pessimistic-proof = { path = "../../pessimistic-proof" }
-pessimistic-proof-test-suite = { path = "../../pessimistic-proof-test-suite" }
-pessimistic-proof-core = { path = "../../pessimistic-proof-core", default-features = false }
+agglayer-types.workspace = true
+pessimistic-proof.workspace = true
+pessimistic-proof-core.workspace = true
+pessimistic-proof-test-suite.workspace = true
 
 base64.workspace = true
 bincode.workspace = true
@@ -34,7 +34,6 @@ hex.workspace = true
 tracing.workspace = true
 uuid = { version = "1.11.0", features = ["v4", "fast-rng"] }
 regex = "1.11"
-serde_cbor = "0.11.2"
 
 pico-sdk = { git = "https://github.com/brevis-network/pico", features = ["prover"] }
 
