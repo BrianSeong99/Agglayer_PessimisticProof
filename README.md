@@ -75,7 +75,7 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Pico(Plonky3)     | ✅                | AVX512            | ❌ (Not Supported) |
 | RiscZero          | ✅                | ❌                | ✅                 |
 | OpenVM(Plonky3)   | Coming Soon       | Coming Soon       | Coming Soon       |
-| Valida            | Coming Soon       | Coming Soon       | Coming Soon       |
+| Valida(Plonky3)   | Coming Soon       | Coming Soon       | Coming Soon       |
 | Nexus (std❌)     | -                 | -                 | -                 |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
