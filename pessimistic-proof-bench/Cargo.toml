@@ -5,20 +5,7 @@ members = [
     "crates/agglayer-types",
     "crates/pessimistic-proof",
     "crates/pessimistic-proof-core",
-    "crates/pessimistic-proof-test-suite",
-    "crates/pp-sp1*",
-    "crates/pp-pico*",
-    "crates/pp-risc0*",
-    "crates/pp-risc0/methods/pp-risc0-guest",
-    "crates/pp-openvm*"
-    # "crates/pp-nexus*",
-    # "crates/valida*"
-]
-exclude = [
-    "crates/pp-pico/pp-pico-guest", 
-    "crates/pp-sp1/pp-sp1-guest",
-    "crates/pp-openvm/pp-openvm-guest",
-    # "crates/pp-risc0", 
+    "crates/pessimistic-proof-test-suite"
 ]
 
 [workspace.package]

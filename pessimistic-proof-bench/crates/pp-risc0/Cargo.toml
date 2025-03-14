@@ -50,7 +50,7 @@ regex = "1.11"
 serde_cbor = "0.11.2"
 
 agglayer-primitives = { path = "../agglayer-primitives" }
-agglayer-types = { path = "../agglayer-types"}
+agglayer-types = { path = "../agglayer-types", features = ["testutils"] }
 pessimistic-proof = { path = "../pessimistic-proof" }
 pessimistic-proof-core = { path = "../pessimistic-proof-core" }
 pessimistic-proof-test-suite = { path = "../pessimistic-proof-test-suite" }

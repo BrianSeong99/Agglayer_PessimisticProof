@@ -435,10 +435,11 @@ This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglaye
 
 ## Reports
 
-The Benchmark was conducted in the following machine:
-- 32 AMD EPYC 7B13 vCPUs
-- 92 GB RAM
-- 1x GeForce RTX 4090 GPU with 24 GB VRAM
+The Benchmark was conducted in the following machine: 
+g2-standard-32:
+- 32 vCPUs
+- 128 GB Memory
+- NVIDIA L4 with 24 GB VRAM
 - 100 GB Storage
 
 Each zkVM has its own characteristics, so the cycle count, time, memory, and optimization strategy will be different.
@@ -456,8 +457,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
 |---------------|-------|------|----------|--------|--------|
-| Cycle Count   | 5009642 | 51569973 | 26214400 | -      | -      |
-| Time(Seconds) | 123.85   | 664.41  | 1.70   | -      | -      |
+| Cycle Count   | 5009642   | 51569973  | 23592960  | -      | -      |
+| Time(Seconds) | 123.85    | 664.41    | 58.33     | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1   | Pico | RiscZero | OpenVM | Valida |
