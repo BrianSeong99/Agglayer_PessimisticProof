@@ -87,7 +87,7 @@ pub fn main() {
         .expect("proving failed");
     let duration = start.elapsed();
     info!(
-        "Successfully generated the plonk proof with a latency of {:?}",
+        "Successfully generated the proof with a latency of {:?}",
         duration
     );
 
