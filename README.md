@@ -81,20 +81,20 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 ### 10 Bridge Exits & 10 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 50288059         | 50283179   | 50283612      | 51569973  | 23592960  | -      | -      |
-| Time(Seconds) | 67.99            | 52.22      | 106.76        | 664.41    | 58.33     | -      | -      |
+| Cycle Count   | 50288059         | 50283179   | 50283612      | 14079761  | 23592960  | -      | -      |
+| Time(Seconds) | 67.99            | 52.22      | 106.76        | 96.27     | 58.33     | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 175315505        | 175304109  | 175309776     | 178470472 | 68681728  | -      | -      |
-| Time(Seconds) | 197.17           | 144.44     | 237.49        | 2303.17   | 181.60    | -      | -      |
+| Cycle Count   | 175315505        | 175304109  | 175309776     | 29198515  | 68681728  | -      | -      |
+| Time(Seconds) | 197.17           | 144.44     | 237.49        | 207.53    | 181.60    | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
 |---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 339822648        | 339821606  | 339830706     | -         | 124780544 | -      | -      |
-| Time(Seconds) | 367.30           | 265.31     | 404.43        | -         | 337.91    | -      | -      |
+| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
+| Time(Seconds) | 367.30           | 265.31     | 404.43        | 350.58    | 337.91    | -      | -      |
 
 <!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
 |               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
@@ -146,6 +146,7 @@ RUST_LOG=info cargo pico build --output-directory elf
 You can then test the pessimistic-proof-program in Pico zkVM via this command at root folder:
 ```bash
 cd pessimistic-proof-bench/crates/pp-pico
+source pp-pico-host/.env.example
 RUSTFLAGS="-C target-cpu=native -C target-feature=+avx512f,+avx512ifma,+avx512vl" RUST_LOG=info cargo run --release --package pp-pico-host --bin ppgen
 ```
 
