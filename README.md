@@ -1,4 +1,4 @@
-# Agglayer PessimisticProof
+# Agglayer Pessimistic Proof & Benchmark in zkVMs
 
 <div align="center">
   <p align="center">
@@ -11,13 +11,13 @@
   </p>
 </div>
 
-This repo explains the design and the usage of Pessimistic Proof in AggLayer. It compares the bench performance of running pessimistic proof in SP1, Valida, Risc0, and OpenVM zkVMs.
+This repo explains the design and the usage of Pessimistic Proof in AggLayer. It compares the bench performance of running pessimistic proof in SP1, Pico, Risc0, OpenVM, and other zkVMs.
 
 # Table of Contents
 
 - [Agglayer PessimisticProof](#agglayer-pessimisticproof)
 - [Table of Contents](#table-of-contents)
-- [Benchmark on zkVMs](#benchmark-on-zkvms)
+- [Pessimistic Proof Benchmark on zkVMs](#pessimistic-proof-benchmark-on-zkvms)
   - [Reports](#reports)
   - [How to Benchmark?](#how-to-benchmark)
     - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
@@ -25,7 +25,7 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
     - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
     - [4.\[WIP\] Benchmark on Axiom OpenVM](#4wip-benchmark-on-axiom-openvm)
     - [5.\[WIP\] Benchmark on Lita Valida](#5wip-benchmark-on-lita-valida)
-    - [6.\[NOT SUPPORTED\]Benchmark on Nexus zkVM](#6not-supported-benchmark-on-nexus-zkvm)
+    - [6.\[NOT SUPPORTED\] Benchmark on Nexus zkVM](#6not-supported-benchmark-on-nexus-zkvm)
 - [Architecture of Pessimistic Proof](#architecture-of-pessimistic-proof)
   - [0.Background](#0background)
     - [Chains connected on Agglayer](#chains-connected-on-agglayer)
@@ -51,7 +51,7 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
     - [Running Pessimistic Proof Program Locally from AggLayer Repo](#running-pessimistic-proof-program-locally-from-agglayer-repo)
     - [Breakdown of the local test Pessimistic Proof script using SP1](#breakdown-of-the-local-test-pessimistic-proof-script-using-sp1)
 
-# Benchmark on zkVMs
+# Pessimistic Proof Benchmark on zkVMs
 
 In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
 
@@ -107,6 +107,9 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 |---------------|------------------|------------|-----------|-----------|--------|--------|
 | Cycle Count   | 194751260        | 3220729567 | 100M      | 100M      | -      | -      |
 | Time(Seconds) | 227.19           | 2390.05    | 10s       | -         | -      | -      | -->
+
+![Cycle Counts](./pics/Bench_CycleCount.png)
+![Time](./pics/Bench_Time.png)
 
 ## How to Benchmark?
 
