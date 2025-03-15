@@ -75,6 +75,18 @@ pub fn main() {
         .make_multi_batch_header(&certificate, state.get_signer(), l1_info_root)
         .unwrap();
 
+    // Validate inputs by running generate_pessimistic_proof first
+    let mut proof_output: PessimisticProofOutput = None;
+    match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
+        Ok(output) => {
+            proof_output = output;
+            info!("Input validation successful, proceeding with proof generation");
+        }
+        Err(e) => {
+            panic!("Input validation failed: {:?}", e);
+        }
+    }
+
     info!(
         "Generating the proof for {} bridge exit(s) and {} imported bridge exit(s)",
         bridge_exits.len(),
@@ -93,6 +105,8 @@ pub fn main() {
 
     let vkey = vk.bytes32().to_string();
     info!("vkey: {}", vkey);
+
+    println!("proof: {:?}", proof.public_values);
 
     // let fixture = PessimisticProofFixture {
     //     certificate,

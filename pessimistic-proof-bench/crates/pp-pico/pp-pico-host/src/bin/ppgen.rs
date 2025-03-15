@@ -48,6 +48,17 @@ fn get_events(n: usize, path: Option<PathBuf>) -> Vec<(TokenInfo, U256)> {
     }
 }
 
+// fn verify_proof(proof_output: &PessimisticProofOutput, public_values: &PublicValuesStruct) -> bool {
+//     let mut proof_output = proof_output.clone();
+//     assert_eq!(proof_output.prev_local_exit_root, public_values.prev_local_exit_root);
+//     assert_eq!(proof_output.prev_pessimistic_root, public_values.prev_pessimistic_root);
+//     assert_eq!(proof_output.l1_info_root, public_values.l1_info_root);
+//     assert_eq!(proof_output.origin_network, public_values.origin_network);
+//     assert_eq!(proof_output.new_local_exit_root, public_values.new_local_exit_root);
+//     assert_eq!(proof_output.new_pessimistic_root, public_values.new_pessimistic_root);
+//     true
+// }
+
 pub fn main() {
     // Initialize logger
     init_logger();
@@ -78,9 +89,12 @@ pub fn main() {
         .make_multi_batch_header(&certificate, state.get_signer(), l1_info_root)
         .unwrap();
 
+
     // Validate inputs by running generate_pessimistic_proof first
+    // let mut proof_output: PessimisticProofOutput = None;
     match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
-        Ok(_) => {
+        Ok(output) => {
+            // proof_output = output;
             info!("Input validation successful, proceeding with proof generation");
         }
         Err(e) => {
@@ -110,34 +124,9 @@ pub fn main() {
         duration
     );
 
-    // // Get the verification key
-    // let vkey = hex::encode(&proof.vk);
-    // info!("vkey: {}", vkey);
+    // // Decodes public values from the proof's public value stream.
+    // let public_buffer = proof.pv_stream.unwrap();
+    // let public_values = PublicValuesStruct::abi_decode(&public_buffer, true).unwrap();
 
-    // let fixture = PessimisticProofFixture {
-    //     certificate,
-    //     pp_inputs: PessimisticProofOutput::from_bytes(&proof.pv_stream.unwrap()).into(),
-    //     signer: state.get_signer(),
-    //     vkey: vkey.clone(),
-    //     public_values: format!("0x{}", hex::encode(proof.pv_stream.unwrap())),
-    //     proof: format!("0x{}", hex::encode(proof.proof)),
-    // };
-
-    // if let Some(proof_dir) = args.proof_dir {
-    //     // Save the proof to a json file
-    //     let proof_path = proof_dir.join(format!(
-    //         "{}-exits-v{}-{}.json",
-    //         args.n_exits,
-    //         &vkey[..8],
-    //         Uuid::new_v4()
-    //     ));
-    //     if let Err(e) = std::fs::create_dir_all(&proof_dir) {
-    //         warn!("Failed to create directory: {e}");
-    //     }
-    //     info!("Writing the proof to {:?}", proof_path);
-    //     std::fs::write(proof_path, serde_json::to_string_pretty(&fixture).unwrap())
-    //         .expect("failed to write fixture");
-    // } else {
-    //     info!("Proof: {:?}", fixture);
-    // }
+    // verify_proof(&proof_output, &public_values);
 }
