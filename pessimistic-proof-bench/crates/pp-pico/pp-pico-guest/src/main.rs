@@ -17,10 +17,10 @@ pub fn main() {
     let outputs = generate_pessimistic_proof(initial_state, &batch_header).unwrap();
 
     // Serialize the outputs
-    let pp_inputs = PessimisticProofOutput::bincode_options()
+    let pp_outputs = PessimisticProofOutput::bincode_options()
         .serialize(&outputs)
         .unwrap();
 
     // Commit the result
-    commit_bytes(&pp_inputs);
+    commit_bytes(&pp_outputs);
 }

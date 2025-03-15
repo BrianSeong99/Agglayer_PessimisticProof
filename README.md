@@ -96,17 +96,17 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
 | Time(Seconds) | 367.30           | 265.31     | 404.43        | 350.58    | 337.91    | -      | -      |
 
-<!-- ### 500 Bridge Exits & 500 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|-----------|-----------|--------|--------|
-| Cycle Count   | 194751260        | 194740404  | 100M      | 100M      | -      | -      |
-| Time(Seconds) | 227.19           | 10s        | 10s       | -         | -      | -      |
+### 500 Bridge Exits & 500 Imported Bridge Exits
+|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
+| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
+| Time(Seconds) | 367.30           | 265.31     | 404.43        | 350.58    | 337.91    | -      | -      |
 
 ### 1000 Bridge Exits & 1000 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|-----------|-----------|--------|--------|
-| Cycle Count   | 194751260        | 3220729567 | 100M      | 100M      | -      | -      |
-| Time(Seconds) | 227.19           | 2390.05    | 10s       | -         | -      | -      | -->
+|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
+|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
+| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
+| Time(Seconds) | 367.30           | 265.31     | 1808.68       | 350.58    | 337.91    | -      | -      |
 
 ![Cycle Counts](./pics/Bench_CycleCount.png)
 ![Time](./pics/Bench_Time.png)
