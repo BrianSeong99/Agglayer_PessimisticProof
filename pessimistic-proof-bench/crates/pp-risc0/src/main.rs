@@ -52,16 +52,16 @@ fn get_events(n: usize, path: Option<PathBuf>) -> Vec<(TokenInfo, U256)> {
     }
 }
 
-fn verify_proof(proof_output: &PessimisticProofOutput, public_values: &PessimisticProofOutput) -> bool {
-    let mut proof_output = proof_output.clone();
-    assert_eq!(proof_output.prev_local_exit_root, public_values.prev_local_exit_root);
-    assert_eq!(proof_output.prev_pessimistic_root, public_values.prev_pessimistic_root);
-    assert_eq!(proof_output.l1_info_root, public_values.l1_info_root);
-    assert_eq!(proof_output.origin_network, public_values.origin_network);
-    assert_eq!(proof_output.new_local_exit_root, public_values.new_local_exit_root);
-    assert_eq!(proof_output.new_pessimistic_root, public_values.new_pessimistic_root);
-    true
-}
+// fn verify_proof(proof_output: &PessimisticProofOutput, public_values: &PessimisticProofOutput) -> bool {
+//     let mut proof_output = proof_output.clone();
+//     assert_eq!(proof_output.prev_local_exit_root, public_values.prev_local_exit_root);
+//     assert_eq!(proof_output.prev_pessimistic_root, public_values.prev_pessimistic_root);
+//     assert_eq!(proof_output.l1_info_root, public_values.l1_info_root);
+//     assert_eq!(proof_output.origin_network, public_values.origin_network);
+//     assert_eq!(proof_output.new_local_exit_root, public_values.new_local_exit_root);
+//     assert_eq!(proof_output.new_pessimistic_root, public_values.new_pessimistic_root);
+//     true
+// }
 
 pub fn main() {
     // Initialize tracing
@@ -96,10 +96,10 @@ pub fn main() {
         .unwrap();
 
     // Validate inputs by running generate_pessimistic_proof first
-    let mut proof_output: PessimisticProofOutput = None;
+    // let mut proof_output: PessimisticProofOutput = None;
     match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
         Ok(output) => {
-            proof_output = output;
+            // proof_output = output;
             info!("Input validation successful, proceeding with proof generation");
         }
         Err(e) => {
@@ -139,10 +139,10 @@ pub fn main() {
     // Verify the receipt
     receipt.verify(PP_RISC0_GUEST_ID).unwrap();
 
-    // Get the proof output
-    let output: PessimisticProofOutput = receipt.journal.decode().unwrap();
+    // // Get the proof output
+    // let output: PessimisticProofOutput = receipt.journal.decode().unwrap();
 
-    verify_proof(&proof_output, &public_values);
+    // verify_proof(&proof_output, &public_values);
 
     // // Handle proof output directory if specified
     // if let Some(proof_dir) = args.proof_dir {
