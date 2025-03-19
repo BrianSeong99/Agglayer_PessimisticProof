@@ -11,6 +11,7 @@ path = "src/bin/ppgen.rs"
 agglayer-primitives.workspace = true
 agglayer-types.workspace = true
 pessimistic-proof.workspace = true
+pessimistic-proof-core.workspace = true
 pessimistic-proof-test-suite.workspace = true
 
 base64.workspace = true

@@ -4543,6 +4543,7 @@ dependencies = [
  "hex-literal",
  "lazy_static",
  "pessimistic-proof",
+ "pessimistic-proof-core",
  "pessimistic-proof-test-suite",
  "rand 0.8.5",
  "regex",

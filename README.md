@@ -79,34 +79,22 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Nexus (std❌)     | -                 | -                 | -                 |
 
 ### 10 Bridge Exits & 10 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 50288059         | 50283179   | 50283612      | 14079761  | 23592960  | -      | -      |
-| Time(Seconds) | 67.99            | 52.22      | 106.76        | 96.27     | 58.33     | -      | -      |
+|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
+|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
+| Cycle Count   | 23592960  | 50283179   | 50288059         | 50283612      | 50243342  | -      | -      |
+| Time(Seconds) | 58.33     | 52.22      | 67.99            | 106.76        | 300.46    | -      | -      |
 
 ### 50 Bridge Exits & 50 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 175315505        | 175304109  | 175309776     | 29198515  | 68681728  | -      | -      |
-| Time(Seconds) | 197.17           | 144.44     | 237.49        | 207.53    | 181.60    | -      | -      |
+|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
+|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
+| Cycle Count   | 68681728  | 175304109  | 175315505        | 175309776     | 175072496 | -      | -      |
+| Time(Seconds) | 181.60    | 144.44     | 197.17           | 237.49        | 1027.40   | -      | -      |
 
 ### 100 Bridge Exits & 100 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
-| Time(Seconds) | 367.30           | 265.31     | 404.43        | 350.58    | 337.91    | -      | -      |
-
-### 500 Bridge Exits & 500 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
-| Time(Seconds) | 367.30           | 265.31     | 404.43        | 350.58    | 337.91    | -      | -      |
-
-### 1000 Bridge Exits & 1000 Imported Bridge Exits
-|               | SP1 (Compressed) | SP1 (Core) | SP1 (Groth16) | Pico      | RiscZero  | OpenVM | Valida |
-|---------------|------------------|------------|---------------|-----------|-----------|--------|--------|
-| Cycle Count   | 339822648        | 339821606  | 339830706     | 49021147  | 124780544 | -      | -      |
-| Time(Seconds) | 367.30           | 265.31     | 1808.68       | 350.58    | 337.91    | -      | -      |
+|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
+|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
+| Cycle Count   | 124780544 | 339821606  | 339822648        | 339830706     | 339350809 | -      | -      |
+| Time(Seconds) | 337.91    | 265.31     | 367.30           | 404.43        | 1982.63   | -      | -      |
 
 ![Cycle Counts](./pics/Bench_CycleCount.png)
 ![Time](./pics/Bench_Time.png)
@@ -136,7 +124,7 @@ RUSTFLAGS="-C target-cpu=native" RUST_LOG=info cargo run --release --package pp-
 ### 2.Benchmark on Brevis Pico
 
 Version used:
-- Pico zkVM: 1.0.0
+- Pico zkVM: 1.0.1
 
 > If you haven't installed Pico commandline tool, you can do so via following this [guide](https://docs.brevis.network/getting-started/installation).
 

@@ -1,16 +1,17 @@
 use std::{path::PathBuf, time::Instant};
 
-use agglayer_primitives::Address;
-use agglayer_types::{Certificate, U256};
 use clap::Parser;
-use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
-use pessimistic_proof::PessimisticProofOutput;
-use pessimistic_proof_test_suite::sample_data::{self as data};
 use pp_sp1_host::runner::Runner;
 use serde::{Deserialize, Serialize};
 use sp1_sdk::HashableKey;
 use tracing::{info, warn};
 use uuid::Uuid;
+
+use agglayer_types::{Certificate, U256};
+use pessimistic_proof::bridge_exit::{NetworkId, TokenInfo};
+use pessimistic_proof::PessimisticProofOutput;
+use pessimistic_proof_core::{generate_pessimistic_proof, NetworkState};
+use pessimistic_proof_test_suite::sample_data::{self as data};
 
 /// The arguments for the pp generator.
 #[derive(Parser, Debug)]
@@ -56,8 +57,8 @@ pub fn main() {
     let args = PPGenArgs::parse();
 
     let mut state = data::sample_state_00();
-
     let old_state = state.state_b.clone();
+    let old_network_state = NetworkState::from(old_state.clone());
 
     let bridge_exits = get_events(args.n_exits, args.sample_path.clone());
     let imported_bridge_exits = get_events(args.n_imported_exits, args.sample_path);
@@ -76,10 +77,10 @@ pub fn main() {
         .unwrap();
 
     // Validate inputs by running generate_pessimistic_proof first
-    let mut proof_output: PessimisticProofOutput = None;
+    // let mut proof_output: PessimisticProofOutput = None;
     match generate_pessimistic_proof(old_network_state.clone(), &multi_batch_header) {
         Ok(output) => {
-            proof_output = output;
+            // proof_output = output;
             info!("Input validation successful, proceeding with proof generation");
         }
         Err(e) => {
@@ -136,50 +137,50 @@ pub fn main() {
     // }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-pub struct VerifierInputs {
-    /// The previous local exit root.
-    pub prev_local_exit_root: String,
-    /// The previous pessimistic root.
-    pub prev_pessimistic_root: String,
-    /// The l1 info root against which we prove the inclusion of the
-    /// imported bridge exits.
-    pub l1_info_root: String,
-    /// The origin network of the pessimistic proof.
-    pub origin_network: NetworkId,
-    /// The consensus hash.
-    pub consensus_hash: String,
-    /// The new local exit root.
-    pub new_local_exit_root: String,
-    /// The new pessimistic root which commits to the balance and nullifier
-    /// tree.
-    pub new_pessimistic_root: String,
-}
+// #[derive(Debug, Clone, Serialize, Deserialize)]
+// #[serde(rename_all = "kebab-case")]
+// pub struct VerifierInputs {
+//     /// The previous local exit root.
+//     pub prev_local_exit_root: String,
+//     /// The previous pessimistic root.
+//     pub prev_pessimistic_root: String,
+//     /// The l1 info root against which we prove the inclusion of the
+//     /// imported bridge exits.
+//     pub l1_info_root: String,
+//     /// The origin network of the pessimistic proof.
+//     pub origin_network: NetworkId,
+//     /// The consensus hash.
+//     pub consensus_hash: String,
+//     /// The new local exit root.
+//     pub new_local_exit_root: String,
+//     /// The new pessimistic root which commits to the balance and nullifier
+//     /// tree.
+//     pub new_pessimistic_root: String,
+// }
 
-impl From<PessimisticProofOutput> for VerifierInputs {
-    fn from(v: PessimisticProofOutput) -> Self {
-        Self {
-            prev_local_exit_root: format!("0x{}", hex::encode(v.prev_local_exit_root)),
-            prev_pessimistic_root: format!("0x{}", hex::encode(v.prev_pessimistic_root)),
-            l1_info_root: format!("0x{}", hex::encode(v.l1_info_root)),
-            origin_network: v.origin_network.into(),
-            consensus_hash: format!("0x{}", hex::encode(v.consensus_hash)),
-            new_local_exit_root: format!("0x{}", hex::encode(v.new_local_exit_root)),
-            new_pessimistic_root: format!("0x{}", hex::encode(v.new_pessimistic_root)),
-        }
-    }
-}
+// impl From<PessimisticProofOutput> for VerifierInputs {
+//     fn from(v: PessimisticProofOutput) -> Self {
+//         Self {
+//             prev_local_exit_root: format!("0x{}", hex::encode(v.prev_local_exit_root)),
+//             prev_pessimistic_root: format!("0x{}", hex::encode(v.prev_pessimistic_root)),
+//             l1_info_root: format!("0x{}", hex::encode(v.l1_info_root)),
+//             origin_network: v.origin_network.into(),
+//             consensus_hash: format!("0x{}", hex::encode(v.consensus_hash)),
+//             new_local_exit_root: format!("0x{}", hex::encode(v.new_local_exit_root)),
+//             new_pessimistic_root: format!("0x{}", hex::encode(v.new_pessimistic_root)),
+//         }
+//     }
+// }
 
-/// A fixture that can be used to test the verification of SP1 zkVM proofs
-/// inside Solidity.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-struct PessimisticProofFixture {
-    certificate: Certificate,
-    pp_inputs: VerifierInputs,
-    signer: Address,
-    vkey: String,
-    public_values: String,
-    proof: String,
-}
+// /// A fixture that can be used to test the verification of SP1 zkVM proofs
+// /// inside Solidity.
+// #[derive(Debug, Clone, Serialize, Deserialize)]
+// #[serde(rename_all = "kebab-case")]
+// struct PessimisticProofFixture {
+//     certificate: Certificate,
+//     pp_inputs: VerifierInputs,
+//     signer: Address,
+//     vkey: String,
+//     public_values: String,
+//     proof: String,
+// }

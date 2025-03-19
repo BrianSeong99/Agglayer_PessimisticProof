@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 bincode.workspace = true
 pessimistic-proof-core.workspace = true
-pico-sdk = { git = "https://github.com/brevis-network/pico" }
+pico-sdk = { git = "https://github.com/brevis-network/pico", tag = "v1.0.1" }
 serde.workspace = true
 
 [patch.crates-io.tiny-keccak]
