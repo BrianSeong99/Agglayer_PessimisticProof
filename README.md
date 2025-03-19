@@ -19,6 +19,8 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 - [Table of Contents](#table-of-contents)
 - [Pessimistic Proof Benchmark on zkVMs](#pessimistic-proof-benchmark-on-zkvms)
   - [Reports](#reports)
+    - [GPU Benchmark](#gpu-benchmark)
+    - [CPU Benchmark](#cpu-benchmark)
   - [How to Benchmark?](#how-to-benchmark)
     - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
     - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
@@ -78,26 +80,43 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | Valida(Plonky3)   | Coming Soon       | Coming Soon       | Coming Soon       |
 | Nexus (std❌)     | -                 | -                 | -                 |
 
-### 10 Bridge Exits & 10 Imported Bridge Exits
-|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
-|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
-| Cycle Count   | 23592960  | 50283179   | 50288059         | 50283612      | 50243342  | -      | -      |
-| Time(Seconds) | 58.33     | 52.22      | 67.99            | 106.76        | 300.46    | -      | -      |
+### GPU Benchmark:
 
-### 50 Bridge Exits & 50 Imported Bridge Exits
-|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
-|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
-| Cycle Count   | 68681728  | 175304109  | 175315505        | 175309776     | 175072496 | -      | -      |
-| Time(Seconds) | 181.60    | 144.44     | 197.17           | 237.49        | 1027.40   | -      | -      |
+#### Cycle Counts
+| # of Exits    | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) |
+|---------------|-----------|------------|------------------|---------------|
+| 20            | 23592960  | 50283179   | 50288059         | 50283612      |
+| 100           | 68681728  | 175304109  | 175315505        | 175309776     |
+| 200           | 124780544 | 339821606  | 339822648        | 339830706     |
+| 500           | -         | -          | -                | -             |
+| 1000          | -         | -          | -                | -             |
+| 2000          | -         | 3220728917 | -                | -             |
 
-### 100 Bridge Exits & 100 Imported Bridge Exits
-|               | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico      | OpenVM | Valida |
-|---------------|-----------|------------|------------------|---------------|-----------|--------|--------|
-| Cycle Count   | 124780544 | 339821606  | 339822648        | 339830706     | 339350809 | -      | -      |
-| Time(Seconds) | 337.91    | 265.31     | 367.30           | 404.43        | 1982.63   | -      | -      |
+#### Time(Seconds)
+| # of Exits    | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) |
+|---------------|-----------|------------|------------------|---------------|
+| 20            | 58.33     | 52.22      | 67.99            | 106.76        |
+| 100           | 181.60    | 144.44     | 197.17           | 237.49        |
+| 200           | 337.91    | 265.31     | 367.30           | 404.43        |
+| 500           | -         | -          | -                | -             |
+| 1000          | -         | -          | -                | -             |
+| 2000          | -         | 2364.36    | -                | -             |
 
-![Cycle Counts](./pics/Bench_CycleCount.png)
-![Time](./pics/Bench_Time.png)
+###CPU Benchmark:
+
+#### Cycle Counts
+| # of Exits    | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico       | OpenVM | Valida |
+|---------------|------------|------------------|---------------|------------|--------|--------|
+| 20            | -          | -                | -             | 50243342   | -      | -      |
+| 100           | -          | -                | -             | 175072496  | -      | -      |
+| 200           | -          | -                | -             | 339350809  | -      | -      | 
+
+#### Time(Seconds)
+| # of Exits    | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) | Pico       | OpenVM | Valida |
+|---------------|------------|------------------|---------------|------------|--------|--------|
+| 20            | -          | -                | -             | 300.46     | -      | -      |
+| 100           | -          | -                | -             | 1027.40    | -      | -      |
+| 200           | -          | -                | -             | 1982.63    | -      | -      | 
 
 ## How to Benchmark?
 
