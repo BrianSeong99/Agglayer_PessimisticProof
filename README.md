@@ -163,7 +163,7 @@ RUSTFLAGS="-C target-cpu=native -C target-feature=+avx512f,+avx512ifma,+avx512vl
 ### 3.Benchmark on RiscZero zkVM
 
 Version used:
-- RiscZero zkVM: v2.0.0-rc.2
+- RiscZero zkVM: v1.2.5
 
 > If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
 > Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
