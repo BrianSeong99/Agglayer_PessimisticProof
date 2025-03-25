@@ -16,7 +16,8 @@ pub struct ProofOutput {}
 
 /// A convenient interface to run the pessimistic proof ELF bytecode.
 pub struct Runner {
-    client: sp1_sdk::CudaProver,
+    // client: sp1_sdk::CudaProver,
+    client: sp1_sdk::CpuProver,
 }
 
 impl Default for Runner {
@@ -28,11 +29,13 @@ impl Default for Runner {
 impl Runner {
     /// Create a new pessimistic proof client.
     pub fn new() -> Self {
-        Self::from_client(sp1_sdk::ProverClient::builder().cuda().build())
+        // Self::from_client(sp1_sdk::ProverClient::builder().cuda().build())
+        Self::from_client(sp1_sdk::ProverClient::builder().cpu().build())
     }
 
     /// Create a new pessimistic proof client from a custom generic client.
-    pub fn from_client(client: sp1_sdk::CudaProver) -> Self {
+    // pub fn from_client(client: sp1_sdk::CudaProver) -> Self {
+    pub fn from_client(client: sp1_sdk::CpuProver) -> Self {
         Self { client }
     }
 

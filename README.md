@@ -104,6 +104,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 
 ### CPU Benchmark
 
+Both SP1 and Pico are running using Avx2 acceleration.
+
 #### Cycle Counts
 | # of Exits    | SP1 (Core) | Pico       | OpenVM | Valida |
 |---------------|------------|------------|--------|--------|
