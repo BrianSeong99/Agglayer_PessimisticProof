@@ -18,10 +18,12 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 - [Agglayer PessimisticProof](#agglayer-pessimisticproof)
 - [Table of Contents](#table-of-contents)
 - [Pessimistic Proof Benchmark on zkVMs](#pessimistic-proof-benchmark-on-zkvms)
-  - [Reports](#reports)
+  - [Result & Explanation of the Benchmark](#result--explanation-of-the-benchmark)
+    - [Result](#result)
+  - [Stats of the Benchmark](#stats-of-the-benchmark)
     - [GPU Benchmark](#gpu-benchmark)
     - [CPU Benchmark](#cpu-benchmark)
-  - [How to Benchmark?](#how-to-benchmark)
+  - [How to Run the Benchmark?](#how-to-run-the-benchmark)
     - [1.Benchmark on Succinct SP1](#1benchmark-on-succinct-sp1)
     - [2.Benchmark on Brevis Pico](#2benchmark-on-brevis-pico)
     - [3.Benchmark on RiscZero zkVM](#3benchmark-on-risczero-zkvm)
@@ -55,11 +57,32 @@ This repo explains the design and the usage of Pessimistic Proof in AggLayer. It
 
 # Pessimistic Proof Benchmark on zkVMs
 
-In this section, we will be running benchmarks on 4 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
+In this section, we will be running benchmarks on 3 different zkVMs, running Pessimistic Proof Program. Note that there are Pessimsitic Proof Program for each zkVM is slightly different as each has their own patched libraries and acceleration precompiles. 
 
 This benchmark uses Agglayer [release 0.2.1](https://github.com/agglayer/agglayer/tree/release/0.2.1)'s Pessimistic Proof.
 
-## Reports
+## Result & Explanation of the Benchmark
+
+Pessimistic Proof Program is primarily used to compute the state transition in between bridging events. It is used to verify the state transition of a chain when a user wants to bridge out assets from that chain. 
+
+More than 75% of the computation is on Keccak hash function, so the performance of Pessimistic Proof Program is highly dependent on the performance of Keccak hash function.
+
+![execution graph](./pics/execution_graph.png)
+<i>Execution graph of Pessimsitic Proof in RiscZero zkVM, where 75% of the cycles are spent on Keccak hash function.</i>
+
+![flame graph](./pics/flame_graph.png)
+<i>Flame graph of Pessimsitic Proof in RiscZero zkVM, where many segments are spent on tiny-keccak hash function.</i>
+
+### Result
+The result shows that:
+- Cycle Counts:
+  - RiscZero has the lowest cycle count by a mile, which makes it fast to execute Pessimsitic Proof Program.
+  - SP1 and Pico are very close in terms of cycle counts, meaning these Plonky3 based zkVms are similar in terms of execution performance.
+- Time:
+  - In the GPU Benchmark, SP1 is the fastest, usually about 3/4 of the time of RiscZero.
+  - In the CPU Benchmark, Pico is the fastest, about 2/3 of the time of SP1.
+
+## Stats of the Benchmark
 
 The Benchmark was conducted in the following machine: 
 g2-standard-32:
@@ -92,6 +115,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | 1000          | 412614656 | 1614299722 | 1614298245       | 1614291978    |
 | 2000          | 817954816 | 3220728917 | 3220734957       | 3220733787    |
 
+![GPU Cycle Counts](./pics/gpu_cycle_counts.png)
+
 #### Time(Seconds)
 | # of Exits    | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) |
 |---------------|-----------|------------|------------------|---------------|
@@ -101,6 +126,8 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 | 500           | 783.52    | 614.55     | 853.13           | 888.37        |
 | 1000          | 1540.10   | 1192.84    | 1665.33          | 1702.33       |
 | 2000          | 3031.65   | 2364.36    | 3307.10          | 3468.33       |
+
+![GPU Time](./pics/gpu_time.png)
 
 ### CPU Benchmark
 
@@ -113,6 +140,8 @@ Both SP1 and Pico are running using Avx2 acceleration.
 | 100           | 175309146  | 175072496  | -      | -      |
 | 200           | 339831334  | 339350809  | -      | -      | 
 
+![CPU Cycle Counts](./pics/cpu_cycle_counts.png)
+
 #### Time(Seconds)
 | # of Exits    | SP1 (Core) | Pico       | OpenVM | Valida |
 |---------------|------------|------------|--------|--------|
@@ -120,7 +149,9 @@ Both SP1 and Pico are running using Avx2 acceleration.
 | 100           | 1593.52    | 1027.40    | -      | -      |
 | 200           | 3060.59    | 1982.63    | -      | -      | 
 
-## How to Benchmark?
+![CPU Time](./pics/cpu_time.png)
+
+## How to Run the Benchmark?
 
 ### 1.Benchmark on Succinct SP1
 
