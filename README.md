@@ -85,20 +85,20 @@ Here's a spec of their characteristics that we utilized in this benchmark:
 #### Cycle Counts
 | # of Exits    | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) |
 |---------------|-----------|------------|------------------|---------------|
-| 20            | 23592960  | 50283179   | 50288059         | 50283612      |
+| 20            | 18939904  | 50283179   | 50288059         | 50283612      |
 | 100           | 68681728  | 175304109  | 175315505        | 175309776     |
 | 200           | 124780544 | 339821606  | 339822648        | 339830706     |
-| 500           | -         | 815703327  | 815690220        | 815700609     |
+| 500           |   | 815703327  | 815690220        | 815700609     |
 | 1000          | -         | 1614299722 | 1614298245       | 1614291978    |
 | 2000          | -         | 3220728917 | 3220734957       | 3220733787    |
 
 #### Time(Seconds)
 | # of Exits    | RiscZero  | SP1 (Core) | SP1 (Compressed) | SP1 (Groth16) |
 |---------------|-----------|------------|------------------|---------------|
-| 20            | 58.33     | 52.22      | 67.99            | 106.76        |
+| 20            | 59.69     | 52.22      | 67.99            | 106.76        |
 | 100           | 181.60    | 144.44     | 197.17           | 237.49        |
 | 200           | 337.91    | 265.31     | 367.30           | 404.43        |
-| 500           | -         | 614.55     | 853.13           | 888.37        |
+| 500           | 59.69    | 614.55     | 853.13           | 888.37        |
 | 1000          | -         | 1192.84    | 1665.33          | 1702.33       |
 | 2000          | -         | 2364.36    | 3307.10          | 3468.33       |
 
@@ -165,7 +165,7 @@ RUSTFLAGS="-C target-cpu=native -C target-feature=+avx512f,+avx512ifma,+avx512vl
 ### 3.Benchmark on RiscZero zkVM
 
 Version used:
-- RiscZero zkVM: v1.2.5
+- RiscZero zkVM: v2.0.0
 
 > If you haven't installed RiscZero commandline tool, you can do so via following this [guide](https://dev.risczero.com/api/zkvm/quickstart).
 > Also, make sure you have a GPU with CUDA installed, follow this [guide](https://dev.risczero.com/api/generating-proofs/local-proving#nvidia-gpu).
